@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite public",
-    "build": "vite build public",
+    "build": "vite build public --outDir ../dist",
     "preview": "vite preview public"
   },
   "devDependencies": {
