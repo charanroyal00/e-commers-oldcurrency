@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite public",
-    "build": "vite build public --outDir ../dist",
-    "preview": "vite preview public"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "devDependencies": {
+  "dependencies": {
     "vite": "^5.2.0"
   }
 }
