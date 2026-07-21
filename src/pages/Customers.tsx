@@ -1,18 +1,26 @@
-const Customers = () => {
-  return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Customers</h1>
-        <p className="mt-2 text-gray-600">
-          View and manage customer accounts.
-        </p>
-      </div>
+import { Users } from 'lucide-react'
 
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <p className="text-gray-600">Customer management interface coming soon...</p>
+const Customers = () => (
+  <div>
+    <div className="mb-8">
+      <p className="font-sans text-xs font-medium uppercase tracking-[0.2em] text-gold-600">
+        Community
+      </p>
+      <h1 className="mt-1 font-serif text-3xl font-bold text-ink-900">Customers</h1>
+      <p className="mt-2 font-sans text-sm text-ink-500">
+        View and manage customer accounts.
+      </p>
+    </div>
+    <div className="rounded-xl border border-cream-300 bg-cream-50 p-6 shadow-sm">
+      <div className="flex flex-col items-center justify-center py-12">
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-cream-300 bg-cream-200">
+          <Users className="h-7 w-7 text-ink-400" />
+        </div>
+        <p className="font-serif text-base text-ink-600">No customers yet</p>
+        <p className="mt-1 font-sans text-sm text-ink-400">Customer accounts will appear here once registered.</p>
       </div>
     </div>
-  )
-}
+  </div>
+)
 
 export default Customers

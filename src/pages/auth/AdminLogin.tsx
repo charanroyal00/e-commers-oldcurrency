@@ -47,20 +47,23 @@ const AdminLogin = () => {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4">
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-gray-950 to-gray-950" />
+    <div className="flex min-h-screen items-center justify-center bg-ink-900 px-4">
+      {/* Subtle background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gold-700/10 via-ink-900 to-ink-900" />
 
       <div className="relative w-full max-w-md">
         {/* Card */}
-        <div className="rounded-2xl border border-gray-800 bg-gray-900 p-8 shadow-2xl">
+        <div className="rounded-2xl border border-ink-700 bg-ink-800 p-8 shadow-2xl">
           {/* Logo & Title */}
           <div className="mb-8 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 shadow-lg shadow-blue-600/30">
-              <ShieldCheck className="h-8 w-8 text-white" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-gold-500 bg-gold-600/20 shadow-lg shadow-gold-600/10">
+              <ShieldCheck className="h-8 w-8 text-gold-400" />
             </div>
-            <h1 className="text-2xl font-bold text-white">Admin Portal</h1>
-            <p className="mt-1 text-sm text-gray-400">
+            <p className="font-sans text-xs font-medium uppercase tracking-[0.2em] text-gold-500">
+              The Archive
+            </p>
+            <h1 className="mt-1 font-serif text-2xl font-bold text-cream-100">Admin Portal</h1>
+            <p className="mt-1 font-sans text-sm text-ink-400">
               Old Currency Marketplace — Admin Access
             </p>
           </div>
@@ -71,12 +74,12 @@ const AdminLogin = () => {
             <div className="mb-5">
               <label
                 htmlFor="admin-email"
-                className="mb-2 block text-sm font-medium text-gray-300"
+                className="mb-2 block font-sans text-sm font-medium text-ink-300"
               >
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
+                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500" />
                 <input
                   id="admin-email"
                   name="email"
@@ -85,16 +88,14 @@ const AdminLogin = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="admin@example.com"
-                  className={`w-full rounded-lg border bg-gray-800 py-3 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.email
-                      ? 'border-red-500 focus:ring-red-500'
-                      : 'border-gray-700'
+                  className={`w-full rounded-lg border bg-ink-900 py-3 pl-10 pr-4 font-sans text-sm text-cream-100 placeholder-ink-500 focus:outline-none focus:ring-2 focus:ring-gold-500 ${
+                    errors.email ? 'border-red-500' : 'border-ink-700'
                   }`}
                   aria-describedby={errors.email ? 'admin-email-error' : undefined}
                 />
               </div>
               {errors.email && (
-                <p id="admin-email-error" className="mt-1 text-xs text-red-400" role="alert">
+                <p id="admin-email-error" className="mt-1 font-sans text-xs text-red-400" role="alert">
                   {errors.email}
                 </p>
               )}
@@ -104,12 +105,12 @@ const AdminLogin = () => {
             <div className="mb-6">
               <label
                 htmlFor="admin-password"
-                className="mb-2 block text-sm font-medium text-gray-300"
+                className="mb-2 block font-sans text-sm font-medium text-ink-300"
               >
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500" />
                 <input
                   id="admin-password"
                   name="password"
@@ -118,28 +119,22 @@ const AdminLogin = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Enter your password"
-                  className={`w-full rounded-lg border bg-gray-800 py-3 pl-10 pr-12 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.password
-                      ? 'border-red-500 focus:ring-red-500'
-                      : 'border-gray-700'
+                  className={`w-full rounded-lg border bg-ink-900 py-3 pl-10 pr-12 font-sans text-sm text-cream-100 placeholder-ink-500 focus:outline-none focus:ring-2 focus:ring-gold-500 ${
+                    errors.password ? 'border-red-500' : 'border-ink-700'
                   }`}
                   aria-describedby={errors.password ? 'admin-password-error' : undefined}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 focus:outline-none"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-500 hover:text-ink-300 focus:outline-none"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
-                    <Eye className="h-5 w-5" />
-                  )}
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p id="admin-password-error" className="mt-1 text-xs text-red-400" role="alert">
+                <p id="admin-password-error" className="mt-1 font-sans text-xs text-red-400" role="alert">
                   {errors.password}
                 </p>
               )}
@@ -148,25 +143,22 @@ const AdminLogin = () => {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+              className="w-full rounded-lg bg-gold-600 py-3 font-sans text-sm font-semibold text-ink-900 transition-colors hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 focus:ring-offset-ink-800"
             >
               Sign In as Admin
             </button>
           </form>
 
           {/* Footer */}
-          <p className="mt-6 text-center text-xs text-gray-600">
+          <p className="mt-6 text-center font-sans text-xs italic text-ink-600">
             This portal is restricted to authorized administrators only.
           </p>
         </div>
 
         {/* Bottom note */}
-        <p className="mt-4 text-center text-xs text-gray-600">
+        <p className="mt-4 text-center font-sans text-xs text-ink-500">
           Are you a seller?{' '}
-          <a
-            href="/seller/login"
-            className="text-blue-500 hover:text-blue-400 hover:underline"
-          >
+          <a href="/seller/login" className="text-gold-500 hover:text-gold-400 hover:underline">
             Login here
           </a>
         </p>

@@ -1,18 +1,26 @@
-const Sellers = () => {
-  return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Sellers</h1>
-        <p className="mt-2 text-gray-600">
-          Manage seller accounts and verify KYC documents.
-        </p>
-      </div>
+import { Store } from 'lucide-react'
 
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <p className="text-gray-600">Seller management interface coming soon...</p>
+const Sellers = () => (
+  <div>
+    <div className="mb-8">
+      <p className="font-sans text-xs font-medium uppercase tracking-[0.2em] text-gold-600">
+        Merchants
+      </p>
+      <h1 className="mt-1 font-serif text-3xl font-bold text-ink-900">Sellers</h1>
+      <p className="mt-2 font-sans text-sm text-ink-500">
+        Manage seller accounts and verify KYC documents.
+      </p>
+    </div>
+    <div className="rounded-xl border border-cream-300 bg-cream-50 p-6 shadow-sm">
+      <div className="flex flex-col items-center justify-center py-12">
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-cream-300 bg-cream-200">
+          <Store className="h-7 w-7 text-ink-400" />
+        </div>
+        <p className="font-serif text-base text-ink-600">No sellers registered yet</p>
+        <p className="mt-1 font-sans text-sm text-ink-400">Sellers will appear here once they register.</p>
       </div>
     </div>
-  )
-}
+  </div>
+)
 
 export default Sellers
