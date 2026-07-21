@@ -1,0 +1,1888 @@
+/* =====================================================
+   NUMIS — RESET
+===================================================== */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root {
+
+    --white: #ffffff;
+
+    --cream: #faf8f3;
+
+    --cream-light: #fdfcf9;
+
+    --gold: #bd9148;
+
+    --gold-light: #d8bb83;
+
+    --black: #292622;
+
+    --text: #3d3832;
+
+    --muted: #777067;
+
+    --card-border: #e8e0d4;
+
+}
+
+
+/* =====================================================
+   HTML & BODY
+===================================================== */
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+html,
+body {
+
+    width: 100%;
+
+    min-height: 100%;
+
+}
+
+
+body {
+
+    overflow-x: hidden;
+
+    overflow-y: auto;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: var(--text);
+
+    background: var(--cream);
+
+}
+
+
+/* =====================================================
+   LOADING SCREEN
+===================================================== */
+
+.loader {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 32px 48px;
+
+    background: #ffffff;
+
+}
+
+
+.loader-brand {
+
+    color: var(--black);
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 20px;
+
+    letter-spacing: 0.18em;
+
+}
+
+
+.loader-brand span {
+
+    color: var(--gold);
+
+    font-size: 8px;
+
+    vertical-align: top;
+
+}
+
+
+.loader-center {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 100%;
+
+    text-align: center;
+
+    transform: translate(-50%, -50%);
+
+}
+
+
+.loader-eyebrow {
+
+    margin-bottom: 20px;
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    letter-spacing: 0.3em;
+
+}
+
+
+.loader-center h1 {
+
+    color: var(--black);
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(42px, 6vw, 80px);
+
+    font-weight: 400;
+
+    line-height: 0.95;
+
+}
+
+
+.loader-bottom {
+
+    width: 100%;
+
+}
+
+
+.loader-meta {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    color: #8b8379;
+
+    font-size: 9px;
+
+    letter-spacing: 0.2em;
+
+}
+
+
+.loader-percentage {
+
+    color: var(--gold);
+
+}
+
+
+.loader-track {
+
+    width: 100%;
+
+    height: 1px;
+
+    background: #e8e1d7;
+
+}
+
+
+.loader-progress {
+
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--gold);
+
+}
+
+
+.loader-footer {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 12px;
+
+    color: #aaa197;
+
+    font-size: 8px;
+
+    letter-spacing: 0.2em;
+
+}
+
+
+/* =====================================================
+   MAIN WEBSITE
+===================================================== */
+
+.main-content {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100vh;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+
+            ellipse at center,
+
+            #ffffff 0%,
+
+            #fffdfa 38%,
+
+            #faf7f1 72%,
+
+            #f0e9df 100%
+
+        );
+
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+
+    position: absolute;
+
+    top: 16px;
+
+    left: 50%;
+
+    z-index: 100;
+
+    width: calc(100% - 128px);
+
+    max-width: 1240px;
+
+    height: 64px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    border: 1px solid rgba(226, 219, 208, 0.8);
+
+    border-radius: 22px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+
+        0 10px 30px rgba(91, 68, 38, 0.06);
+
+    transform: translateX(-50%);
+
+}
+
+
+.nav-logo {
+
+    color: var(--black);
+
+    text-decoration: none;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 20px;
+
+    letter-spacing: 0.18em;
+
+}
+
+
+.nav-logo span {
+
+    color: var(--gold);
+
+    font-size: 8px;
+
+    vertical-align: top;
+
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 36px;
+
+}
+
+
+.nav-links a {
+
+    color: #403b35;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    transition: color 0.3s ease;
+
+}
+
+
+.nav-links a:hover {
+
+    color: var(--gold);
+
+}
+
+
+.nav-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.nav-actions button {
+
+    height: 38px;
+
+    padding: 0 18px;
+
+    border: 1px solid #e5ddd1;
+
+    border-radius: 999px;
+
+    color: var(--black);
+
+    background: #ffffff;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+}
+
+
+/* SEARCH BUTTON */
+
+.nav-search {
+
+    position: relative;
+
+    width: 38px;
+
+    padding: 0 !important;
+
+    font-size: 0 !important;
+
+}
+
+
+.nav-search::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 10px;
+
+    left: 11px;
+
+    width: 12px;
+
+    height: 12px;
+
+    border: 1.5px solid #766b5e;
+
+    border-radius: 50%;
+
+}
+
+
+.nav-search::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 23px;
+
+    left: 23px;
+
+    width: 6px;
+
+    height: 1.5px;
+
+    background: #766b5e;
+
+    transform: rotate(45deg);
+
+}
+
+
+/* ACCOUNT */
+
+.nav-account {
+
+    min-width: 88px;
+
+    color: #ffffff !important;
+
+    border: none !important;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #d8b776,
+
+            #b98b46
+
+        ) !important;
+
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+}
+
+
+.hero-stage {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+
+/* =====================================================
+   BACKGROUND WAVES
+===================================================== */
+
+.background-wave {
+
+    position: absolute;
+
+    z-index: 0;
+
+    width: 520px;
+
+    height: 180px;
+
+    border-top: 1px solid rgba(190, 155, 97, 0.18);
+
+    border-radius: 50%;
+
+}
+
+
+.wave-one {
+
+    left: -100px;
+
+    bottom: -50px;
+
+    transform: rotate(10deg);
+
+}
+
+
+.wave-two {
+
+    right: -100px;
+
+    bottom: -50px;
+
+    transform: rotate(-10deg);
+
+}
+
+
+/* =====================================================
+   FEATURE CARDS
+===================================================== */
+
+.feature-card {
+
+    position: absolute;
+
+    z-index: 10;
+
+    width: 312px;
+
+    height: 138px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 20px 22px;
+
+    border: 1px solid var(--card-border);
+
+    border-left: 2px solid var(--gold);
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    box-shadow:
+
+        0 12px 32px rgba(95, 70, 38, 0.07);
+
+    backdrop-filter: blur(12px);
+
+}
+
+
+/* CARD POSITIONS */
+
+.card-authenticated {
+
+    top: 27%;
+
+    left: calc(50% - 625px);
+
+}
+
+
+.card-historic {
+
+    bottom: 23%;
+
+    left: calc(50% - 625px);
+
+}
+
+
+.card-rare {
+
+    top: 27%;
+
+    right: calc(50% - 625px);
+
+}
+
+
+.card-collectible {
+
+    right: calc(50% - 625px);
+
+    bottom: 23%;
+
+}
+
+
+/* =====================================================
+   FEATURE ICON
+===================================================== */
+
+.feature-icon {
+
+    flex-shrink: 0;
+
+    width: 68px;
+
+    height: 68px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: var(--gold);
+
+    background: #f8f2e8;
+
+    font-size: 29px;
+
+}
+
+
+/* =====================================================
+   CARD CONTENT
+===================================================== */
+
+.feature-content {
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+
+.feature-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 9px;
+
+}
+
+
+.feature-top span {
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+
+}
+
+
+.feature-top div {
+
+    width: 35px;
+
+    height: 1px;
+
+    background: var(--gold);
+
+    opacity: 0.55;
+
+}
+
+
+.feature-card h3 {
+
+    color: var(--black);
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 17px;
+
+    font-weight: 400;
+
+}
+
+
+.feature-card p {
+
+    margin-top: 9px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    line-height: 1.55;
+
+}
+
+
+/* =====================================================
+   COIN CONTAINER
+===================================================== */
+
+.coin-container {
+
+    position: absolute;
+
+    top: 48%;
+
+    left: 50%;
+
+    z-index: 5;
+
+    width: 430px;
+
+    height: 430px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    perspective: 1200px;
+
+    transform: translate(-50%, -50%);
+
+}
+
+
+/* =====================================================
+   COIN
+===================================================== */
+
+.coin {
+
+    position: relative;
+
+    width: 390px;
+
+    height: 390px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    transform-style: preserve-3d;
+
+    backface-visibility: visible;
+
+    background:
+
+        radial-gradient(
+
+            circle at 35% 25%,
+
+            #ffffff 0%,
+
+            #f7eee1 40%,
+
+            #ead8bc 72%,
+
+            #c9a66d 100%
+
+        );
+
+    border: 5px solid #d3b275;
+
+    box-shadow:
+
+        0 0 0 4px #ffffff,
+
+        0 0 0 7px #c9a66d,
+
+        0 0 0 10px #f2e3ca,
+
+        0 25px 40px rgba(100, 73, 36, 0.16),
+
+        inset 0 0 32px rgba(155, 116, 59, 0.13);
+
+}
+
+
+/* COIN RINGS */
+
+.coin::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 15px;
+
+    border: 1px solid rgba(170, 130, 68, 0.45);
+
+    border-radius: 50%;
+
+}
+
+
+.coin::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 25px;
+
+    border: 1px solid rgba(170, 130, 68, 0.25);
+
+    border-radius: 50%;
+
+}
+
+
+/* =====================================================
+   COIN CONTENT
+===================================================== */
+
+.coin-inner {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 75%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    backface-visibility: hidden;
+
+}
+
+
+.coin-emblem {
+
+    margin-bottom: 25px;
+
+    color: var(--gold);
+
+    font-size: 35px;
+
+}
+
+
+.coin-inner h1 {
+
+    color: var(--black);
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 47px;
+
+    font-weight: 400;
+
+    line-height: 0.95;
+
+    letter-spacing: -0.045em;
+
+}
+
+
+.coin-inner h1 span {
+
+    color: #ae8547;
+
+}
+
+
+.coin-divider {
+
+    width: 58px;
+
+    height: 1px;
+
+    margin: 21px auto 17px;
+
+    background: var(--gold);
+
+    opacity: 0.55;
+
+}
+
+
+.coin-inner p {
+
+    width: 235px;
+
+    color: #4e4943;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =====================================================
+   HERO BUTTONS
+===================================================== */
+
+.hero-actions {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 4%;
+
+    z-index: 20;
+
+    display: flex;
+
+    gap: 14px;
+
+    transform: translateX(-50%);
+
+}
+
+
+.primary-button,
+.secondary-button {
+
+    width: 190px;
+
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 22px;
+
+    border-radius: 999px;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+}
+
+
+.primary-button {
+
+    color: white;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #d8b574,
+
+            #b4863f
+
+        );
+
+    box-shadow:
+
+        0 8px 18px rgba(166, 121, 54, 0.18);
+
+}
+
+
+.secondary-button {
+
+    color: #554d44;
+
+    border: 1px solid #e1d8ca;
+
+    background: rgba(255, 255, 255, 0.9);
+
+}
+
+
+.primary-button span,
+.secondary-button span {
+
+    font-size: 17px;
+
+}
+
+
+.secondary-button span {
+
+    color: var(--gold);
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.archive-footer {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 620px;
+
+    padding: 120px 7vw 30px;
+
+    overflow: hidden;
+
+    color: var(--black);
+
+    background:
+
+        radial-gradient(
+
+            ellipse at 50% 0%,
+
+            #ffffff 0%,
+
+            #faf7f1 52%,
+
+            #eee6da 100%
+
+        );
+
+}
+
+
+/* =====================================================
+   FOOTER RINGS
+===================================================== */
+
+.footer-ring {
+
+    position: absolute;
+
+    top: -300px;
+
+    left: 50%;
+
+    z-index: 0;
+
+    border: 1px solid rgba(189, 145, 72, 0.16);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    transform: translateX(-50%);
+
+}
+
+
+.footer-ring-one {
+
+    width: 800px;
+
+    height: 800px;
+
+}
+
+
+.footer-ring-two {
+
+    top: -260px;
+
+    width: 700px;
+
+    height: 700px;
+
+    border-color: rgba(189, 145, 72, 0.1);
+
+}
+
+
+/* =====================================================
+   FOOTER GLOW
+===================================================== */
+
+.footer-glow {
+
+    position: absolute;
+
+    top: 80px;
+
+    left: 50%;
+
+    z-index: 0;
+
+    width: 380px;
+
+    height: 380px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            rgba(214, 177, 111, 0.20) 0%,
+
+            rgba(214, 177, 111, 0.09) 35%,
+
+            rgba(214, 177, 111, 0.03) 58%,
+
+            transparent 75%
+
+        );
+
+    filter: blur(30px);
+
+    transform: translateX(-50%);
+
+}
+
+
+/* =====================================================
+   FOOTER CTA
+===================================================== */
+
+.footer-cta {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 760px;
+
+    margin: 0 auto 120px;
+
+    text-align: center;
+
+}
+
+
+.footer-eyebrow {
+
+    display: block;
+
+    margin-bottom: 22px;
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    letter-spacing: 0.28em;
+
+}
+
+
+.footer-cta h2 {
+
+    color: var(--black);
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(54px, 8vw, 110px);
+
+    font-weight: 400;
+
+    line-height: 0.85;
+
+    letter-spacing: -0.055em;
+
+}
+
+
+.footer-cta h2 span {
+
+    display: block;
+
+    color: var(--gold);
+
+}
+
+
+.footer-cta p {
+
+    max-width: 360px;
+
+    margin: 32px auto;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+}
+
+
+/* CTA BUTTON */
+
+.footer-cta-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 32px;
+
+    min-width: 205px;
+
+    height: 48px;
+
+    padding: 0 24px;
+
+    border-radius: 999px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #d8b574,
+
+            #b4863f
+
+        );
+
+    box-shadow:
+
+        0 12px 25px rgba(166, 121, 54, 0.16);
+
+    transition:
+
+        transform 0.3s ease,
+
+        box-shadow 0.3s ease;
+
+}
+
+
+.footer-cta-button span {
+
+    font-size: 18px;
+
+}
+
+
+.footer-cta-button:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+
+        0 18px 30px rgba(166, 121, 54, 0.22);
+
+}
+
+
+/* =====================================================
+   FOOTER MAIN
+===================================================== */
+
+.footer-main {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 80px;
+
+    padding-top: 38px;
+
+    border-top: 1px solid rgba(189, 145, 72, 0.25);
+
+}
+
+
+/* BRAND */
+
+.footer-brand {
+
+    max-width: 270px;
+
+}
+
+
+.footer-logo {
+
+    display: inline-block;
+
+    color: var(--black);
+
+    text-decoration: none;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 25px;
+
+    letter-spacing: 0.18em;
+
+}
+
+
+.footer-logo span {
+
+    color: var(--gold);
+
+    font-size: 9px;
+
+    vertical-align: top;
+
+}
+
+
+.footer-brand p {
+
+    max-width: 210px;
+
+    margin: 20px 0 26px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+}
+
+
+.footer-location {
+
+    color: #9a9084;
+
+    font-size: 8px;
+
+    letter-spacing: 0.16em;
+
+}
+
+
+/* FOOTER LINKS */
+
+.footer-links {
+
+    display: flex;
+
+    gap: clamp(60px, 8vw, 130px);
+
+}
+
+
+.footer-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+
+    min-width: 90px;
+
+}
+
+
+.footer-column-title {
+
+    margin-bottom: 9px;
+
+    color: var(--gold);
+
+    font-size: 9px;
+
+    letter-spacing: 0.2em;
+
+}
+
+
+.footer-column a {
+
+    color: #70685e;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    transition: color 0.3s ease;
+
+}
+
+
+.footer-column a:hover {
+
+    color: var(--gold);
+
+}
+
+
+/* FOOTER BOTTOM */
+
+.footer-bottom {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 80px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(189, 145, 72, 0.16);
+
+    color: #a0988e;
+
+    font-size: 8px;
+
+    letter-spacing: 0.14em;
+
+}
+
+
+.back-to-top {
+
+    cursor: pointer;
+
+}
+
+
+/* =====================================================
+   LARGE SCREEN CONTROL
+===================================================== */
+
+@media (max-width: 1300px) {
+
+    .card-authenticated,
+    .card-historic {
+
+        left: 4.5%;
+
+    }
+
+
+    .card-rare,
+    .card-collectible {
+
+        right: 4.5%;
+
+    }
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .feature-card {
+
+        width: 250px;
+
+        height: 120px;
+
+        padding: 15px;
+
+        gap: 13px;
+
+    }
+
+
+    .feature-icon {
+
+        width: 54px;
+
+        height: 54px;
+
+        font-size: 23px;
+
+    }
+
+
+    .feature-card h3 {
+
+        font-size: 14px;
+
+    }
+
+
+    .feature-card p {
+
+        font-size: 9px;
+
+    }
+
+
+    .coin-container {
+
+        width: 380px;
+
+        height: 380px;
+
+    }
+
+
+    .coin {
+
+        width: 350px;
+
+        height: 350px;
+
+    }
+
+
+    .coin-inner h1 {
+
+        font-size: 41px;
+
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .loader {
+
+        padding: 25px 20px;
+
+    }
+
+
+    .navbar {
+
+        width: calc(100% - 32px);
+
+        height: 60px;
+
+        padding: 0 18px;
+
+    }
+
+
+    .nav-links {
+
+        display: none;
+
+    }
+
+
+    .feature-card {
+
+        width: 145px;
+
+        height: 105px;
+
+        padding: 10px;
+
+        gap: 8px;
+
+    }
+
+
+    .feature-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 17px;
+
+    }
+
+
+    .feature-top {
+
+        margin-bottom: 5px;
+
+    }
+
+
+    .feature-card h3 {
+
+        font-size: 10px;
+
+    }
+
+
+    .feature-card p {
+
+        margin-top: 5px;
+
+        font-size: 7px;
+
+    }
+
+
+    .card-authenticated {
+
+        top: 24%;
+
+        left: 2%;
+
+    }
+
+
+    .card-historic {
+
+        bottom: 20%;
+
+        left: 2%;
+
+    }
+
+
+    .card-rare {
+
+        top: 24%;
+
+        right: 2%;
+
+    }
+
+
+    .card-collectible {
+
+        right: 2%;
+
+        bottom: 20%;
+
+    }
+
+
+    .coin-container {
+
+        top: 46%;
+
+        width: 280px;
+
+        height: 280px;
+
+    }
+
+
+    .coin {
+
+        width: 255px;
+
+        height: 255px;
+
+    }
+
+
+    .coin-emblem {
+
+        margin-bottom: 12px;
+
+        font-size: 22px;
+
+    }
+
+
+    .coin-inner h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    .coin-divider {
+
+        margin: 12px auto;
+
+    }
+
+
+    .coin-inner p {
+
+        width: 160px;
+
+        font-size: 7px;
+
+    }
+
+
+    .hero-actions {
+
+        bottom: 3%;
+
+        flex-direction: column;
+
+        gap: 7px;
+
+    }
+
+
+    .primary-button,
+    .secondary-button {
+
+        height: 38px;
+
+    }
+
+
+    .archive-footer {
+
+        padding: 90px 24px 25px;
+
+    }
+
+
+    .footer-cta {
+
+        margin-bottom: 80px;
+
+    }
+
+
+    .footer-cta h2 {
+
+        font-size: 58px;
+
+    }
+
+
+    .footer-main {
+
+        flex-direction: column;
+
+        gap: 55px;
+
+    }
+
+
+    .footer-links {
+
+        justify-content: space-between;
+
+        gap: 20px;
+
+    }
+
+
+    .footer-column {
+
+        min-width: auto;
+
+    }
+
+
+    .footer-bottom {
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        margin-top: 55px;
+
+    }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 450px) {
+
+    .feature-card {
+
+        width: 125px;
+
+    }
+
+
+    .feature-icon {
+
+        display: none;
+
+    }
+
+
+    .feature-card h3 {
+
+        font-size: 9px;
+
+    }
+
+
+    .feature-card p {
+
+        font-size: 6.5px;
+
+    }
+
+
+    .footer-links {
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 38px 20px;
+
+    }
+
+}
