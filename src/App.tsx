@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import DashboardLayout from './components/layout/DashboardLayout'
+import AdminLogin from './pages/auth/AdminLogin'
+import SellerLogin from './pages/auth/SellerLogin'
 import Dashboard from './pages/Dashboard'
 import Products from './pages/Products'
 import Orders from './pages/Orders'
@@ -12,6 +14,11 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Auth Routes — no layout wrapper */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/seller/login" element={<SellerLogin />} />
+
+        {/* Dashboard Routes — wrapped in layout */}
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
