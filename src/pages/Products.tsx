@@ -11,7 +11,7 @@ const Products = () => (
         Manage all old currency listings in the marketplace.
       </p>
     </div>
-    <div className="rounded-xl border border-cream-300 bg-cream-50 p-6 shadow-sm">
+    <div className="rounded-xl border-2 border-cream-300 bg-white p-6 shadow-md">
       <div className="flex flex-col items-center justify-center py-12">
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-cream-300 bg-cream-200">
           <Package className="h-7 w-7 text-ink-400" />

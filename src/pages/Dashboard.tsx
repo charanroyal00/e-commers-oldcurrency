@@ -7,7 +7,7 @@ interface StatCardProps {
 }
 
 const StatCard = ({ title, value, icon: Icon }: StatCardProps) => (
-  <div className="rounded-xl border border-cream-300 bg-cream-50 p-6 shadow-sm">
+  <div className="rounded-xl border-2 border-cream-300 bg-white p-6 shadow-md">
     <div className="flex items-start justify-between">
       <div>
         <p className="font-sans text-xs font-medium uppercase tracking-widest text-ink-500">
@@ -15,7 +15,7 @@ const StatCard = ({ title, value, icon: Icon }: StatCardProps) => (
         </p>
         <p className="mt-3 font-serif text-4xl font-bold text-ink-900">{value}</p>
       </div>
-      <div className="rounded-full border border-gold-400 bg-gold-500/10 p-3">
+      <div className="rounded-full border-2 border-gold-400 bg-gold-500/10 p-3">
         <Icon className="h-6 w-6 text-gold-600" aria-hidden="true" />
       </div>
     </div>
@@ -57,7 +57,7 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Activity */}
-      <div className="mt-8 rounded-xl border border-cream-300 bg-cream-50 p-6 shadow-sm">
+      <div className="mt-8 rounded-xl border-2 border-cream-300 bg-white p-6 shadow-md">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-serif text-xl font-bold text-ink-900">Recent Activity</h2>
           <span className="font-sans text-xs text-ink-400 uppercase tracking-widest">Live Feed</span>

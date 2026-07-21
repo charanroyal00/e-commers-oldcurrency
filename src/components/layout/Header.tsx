@@ -6,7 +6,7 @@ interface HeaderProps {
 
 const Header = ({ onMenuClick }: HeaderProps) => {
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-cream-300 bg-cream-100 px-4 md:px-6">
+    <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b-2 border-cream-300 bg-cream-100 px-4 md:px-6">
       {/* Left */}
       <div className="flex items-center gap-4">
         {/* Mobile hamburger */}

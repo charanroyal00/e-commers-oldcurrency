@@ -34,7 +34,7 @@ const navItems: NavItem[] = [
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-cream-300 bg-ink-900 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r-2 border-ink-700 bg-ink-900 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
