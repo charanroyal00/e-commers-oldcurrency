@@ -157,7 +157,7 @@ const SellerLogin = () => {
 
           {/* Register */}
           <a
-            href="#"
+            href="/seller/register"
             className="block w-full rounded-lg border border-gold-500 py-3 text-center font-sans text-sm font-semibold text-gold-700 transition-colors hover:bg-gold-500/10 focus:outline-none focus:ring-2 focus:ring-gold-500"
           >
             Register as a Seller
