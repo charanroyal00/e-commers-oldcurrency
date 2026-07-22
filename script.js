@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   Account.addEventListener("click" , ()=> {
-    window.location.href="/public/registration-form.html"
+    window.location.href="/registration-form.html"
   });
 
   /* =================================================
