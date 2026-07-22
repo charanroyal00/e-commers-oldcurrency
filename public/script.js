@@ -2,1320 +2,1159 @@
    NUMIS — HERO + FOOTER ANIMATION
 ===================================================== */
 
-
 document.addEventListener("DOMContentLoaded", () => {
-
-
-    /* =================================================
+  /* =================================================
        REGISTER GSAP PLUGIN
     ================================================= */
 
-    gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 
-
-
-    /* =================================================
+  /* =================================================
        SELECT ELEMENTS
     ================================================= */
 
-    const loader =
-        document.querySelector(".loader");
+  const loader = document.querySelector(".loader");
 
+  const loaderProgress = document.querySelector(".loader-progress");
 
-    const loaderProgress =
-        document.querySelector(".loader-progress");
+  const loaderPercentage = document.querySelector(".loader-percentage");
 
+  const navbar = document.querySelector(".navbar");
 
-    const loaderPercentage =
-        document.querySelector(".loader-percentage");
+  const coinContainer = document.querySelector(".coin-container");
 
+  const coin = document.querySelector(".coin");
 
-    const navbar =
-        document.querySelector(".navbar");
+  const coinEmblem = document.querySelector(".coin-emblem");
 
+  const coinHeading = document.querySelector(".coin-inner h1");
 
-    const coinContainer =
-        document.querySelector(".coin-container");
+  const coinDivider = document.querySelector(".coin-divider");
 
+  const coinDescription = document.querySelector(".coin-inner p");
 
-    const coin =
-        document.querySelector(".coin");
+  const heroActions = document.querySelector(".hero-actions");
 
+  const backgroundWaves = document.querySelectorAll(".background-wave");
 
-    const coinEmblem =
-        document.querySelector(".coin-emblem");
+  const Account = document.querySelector(".nav-account");
 
-
-    const coinHeading =
-        document.querySelector(".coin-inner h1");
-
-
-    const coinDivider =
-        document.querySelector(".coin-divider");
-
-
-    const coinDescription =
-        document.querySelector(".coin-inner p");
-
-
-    const heroActions =
-        document.querySelector(".hero-actions");
-
-
-    const backgroundWaves =
-        document.querySelectorAll(".background-wave");
-
-
-
-    /* =================================================
+  /* =================================================
        FEATURE CARDS
     ================================================= */
 
-    const authenticatedCard =
-        document.querySelector(".card-authenticated");
+  const authenticatedCard = document.querySelector(".card-authenticated");
 
+  const historicCard = document.querySelector(".card-historic");
 
-    const historicCard =
-        document.querySelector(".card-historic");
+  const rareCard = document.querySelector(".card-rare");
 
+  const collectibleCard = document.querySelector(".card-collectible");
 
-    const rareCard =
-        document.querySelector(".card-rare");
+  const featureCards = [
+    authenticatedCard,
 
+    historicCard,
 
-    const collectibleCard =
-        document.querySelector(".card-collectible");
+    rareCard,
 
+    collectibleCard,
+  ];
 
-    const featureCards = [
-
-        authenticatedCard,
-
-        historicCard,
-
-        rareCard,
-
-        collectibleCard
-
-    ];
-
-
-
-    /* =================================================
+  /* =================================================
        CARD CONTENT
     ================================================= */
 
-    const featureIcons =
-        document.querySelectorAll(".feature-icon");
+  const featureIcons = document.querySelectorAll(".feature-icon");
 
+  const featureTop = document.querySelectorAll(".feature-top");
 
-    const featureTop =
-        document.querySelectorAll(".feature-top");
+  const featureTitles = document.querySelectorAll(".feature-card h3");
 
+  const featureDescriptions = document.querySelectorAll(".feature-card p");
 
-    const featureTitles =
-        document.querySelectorAll(".feature-card h3");
-
-
-    const featureDescriptions =
-        document.querySelectorAll(".feature-card p");
-
-
-
-    /* =================================================
+  /* =================================================
        SAFETY CHECK
     ================================================= */
 
-    if (
+  if (
+    !loader ||
+    !loaderProgress ||
+    !loaderPercentage ||
+    !navbar ||
+    !coinContainer ||
+    !coin ||
+    !heroActions ||
+    featureCards.some((card) => !card)
+  ) {
+    console.error("NUMIS: Required elements are missing.");
 
-        !loader ||
+    return;
+  }
 
-        !loaderProgress ||
+  Account.addEventListener("click" , ()=> {
+    window.location.href="/public/registration-form.html"
+  });
 
-        !loaderPercentage ||
-
-        !navbar ||
-
-        !coinContainer ||
-
-        !coin ||
-
-        !heroActions ||
-
-        featureCards.some(card => !card)
-
-    ) {
-
-        console.error(
-            "NUMIS: Required elements are missing."
-        );
-
-        return;
-
-    }
-
-
-
-    /* =================================================
+  /* =================================================
        INITIAL STATES
     ================================================= */
 
-    gsap.set(navbar, {
+  gsap.set(navbar, {
+    y: -40,
 
-        y: -40,
+    opacity: 0,
+  });
 
-        opacity: 0
+  gsap.set(coinContainer, {
+    scale: 0.65,
 
-    });
+    opacity: 0,
+  });
 
+  gsap.set(coin, {
+    rotationY: -90,
 
-    gsap.set(coinContainer, {
+    opacity: 0,
+  });
 
-        scale: 0.65,
+  gsap.set(featureCards, {
+    opacity: 0,
 
-        opacity: 0
+    y: 35,
+  });
 
-    });
+  gsap.set(heroActions, {
+    opacity: 0,
 
+    y: 30,
+  });
 
-    gsap.set(coin, {
+  gsap.set(
+    [coinEmblem, coinHeading, coinDivider, coinDescription],
 
-        rotationY: -90,
+    {
+      opacity: 0,
 
-        opacity: 0
+      y: 20,
+    },
+  );
 
-    });
+  gsap.set(
+    [...featureIcons, ...featureTop, ...featureTitles, ...featureDescriptions],
 
+    {
+      opacity: 0,
 
-    gsap.set(featureCards, {
+      y: 10,
+    },
+  );
 
-        opacity: 0,
-
-        y: 35
-
-    });
-
-
-    gsap.set(heroActions, {
-
-        opacity: 0,
-
-        y: 30
-
-    });
-
-
-    gsap.set(
-
-        [
-
-            coinEmblem,
-
-            coinHeading,
-
-            coinDivider,
-
-            coinDescription
-
-        ],
-
-        {
-
-            opacity: 0,
-
-            y: 20
-
-        }
-
-    );
-
-
-    gsap.set(
-
-        [
-
-            ...featureIcons,
-
-            ...featureTop,
-
-            ...featureTitles,
-
-            ...featureDescriptions
-
-        ],
-
-        {
-
-            opacity: 0,
-
-            y: 10
-
-        }
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        LOADER PROGRESS
     ================================================= */
 
-    const loaderObject = {
+  const loaderObject = {
+    progress: 0,
+  };
 
-        progress: 0
+  const masterTimeline = gsap.timeline();
 
-    };
+  masterTimeline.to(
+    loaderObject,
 
+    {
+      progress: 100,
 
-    const masterTimeline =
-        gsap.timeline();
+      duration: 2.8,
 
+      ease: "power2.inOut",
 
+      onUpdate: () => {
+        const progress = Math.round(loaderObject.progress);
 
-    masterTimeline.to(
+        loaderProgress.style.width = `${progress}%`;
 
-        loaderObject,
+        loaderPercentage.textContent = `${String(progress).padStart(2, "0")}%`;
+      },
+    },
+  );
 
-        {
-
-            progress: 100,
-
-            duration: 2.8,
-
-            ease: "power2.inOut",
-
-            onUpdate: () => {
-
-
-                const progress =
-                    Math.round(
-                        loaderObject.progress
-                    );
-
-
-                loaderProgress.style.width =
-                    `${progress}%`;
-
-
-                loaderPercentage.textContent =
-                    `${String(progress).padStart(2, "0")}%`;
-
-            }
-
-        }
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        LOADER EXIT
     ================================================= */
 
-    masterTimeline.to(
+  masterTimeline.to(
+    loader,
 
-        loader,
+    {
+      opacity: 0,
 
-        {
+      duration: 1,
 
-            opacity: 0,
+      ease: "power2.inOut",
 
-            duration: 1,
+      onComplete: () => {
+        loader.style.visibility = "hidden";
 
-            ease: "power2.inOut",
+        loader.style.pointerEvents = "none";
+      },
+    },
+  );
 
-            onComplete: () => {
-
-
-                loader.style.visibility =
-                    "hidden";
-
-
-                loader.style.pointerEvents =
-                    "none";
-
-            }
-
-        }
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        NAVBAR REVEAL
     ================================================= */
 
-    masterTimeline.to(
+  masterTimeline.to(
+    navbar,
 
-        navbar,
+    {
+      y: 0,
 
-        {
+      opacity: 1,
 
-            y: 0,
+      duration: 1.1,
 
-            opacity: 1,
+      ease: "power3.out",
+    },
+  );
 
-            duration: 1.1,
-
-            ease: "power3.out"
-
-        }
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        COIN CONTAINER REVEAL
     ================================================= */
 
-    masterTimeline.to(
+  masterTimeline.to(
+    coinContainer,
 
-        coinContainer,
+    {
+      scale: 1,
 
-        {
+      opacity: 1,
 
-            scale: 1,
+      duration: 1.4,
 
-            opacity: 1,
+      ease: "expo.out",
+    },
 
-            duration: 1.4,
+    "-=0.6",
+  );
 
-            ease: "expo.out"
-
-        },
-
-        "-=0.6"
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        COIN REVEAL
     ================================================= */
 
-    masterTimeline.to(
+  masterTimeline.to(
+    coin,
 
-        coin,
+    {
+      rotationY: 0,
 
-        {
+      opacity: 1,
 
-            rotationY: 0,
+      duration: 1.6,
 
-            opacity: 1,
+      ease: "power4.out",
+    },
 
-            duration: 1.6,
+    "-=1",
+  );
 
-            ease: "power4.out"
-
-        },
-
-        "-=1"
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        COIN CONTENT REVEAL
     ================================================= */
 
-    masterTimeline.to(
+  masterTimeline.to(
+    coinEmblem,
 
-        coinEmblem,
+    {
+      opacity: 1,
 
-        {
+      y: 0,
 
-            opacity: 1,
+      duration: 0.6,
 
-            y: 0,
+      ease: "power3.out",
+    },
 
-            duration: 0.6,
+    "-=0.8",
+  );
 
-            ease: "power3.out"
+  masterTimeline.to(
+    coinHeading,
 
-        },
+    {
+      opacity: 1,
 
-        "-=0.8"
+      y: 0,
 
-    );
+      duration: 0.8,
 
+      ease: "power3.out",
+    },
 
-    masterTimeline.to(
+    "-=0.4",
+  );
 
-        coinHeading,
+  masterTimeline.to(
+    coinDivider,
 
-        {
+    {
+      opacity: 1,
 
-            opacity: 1,
+      y: 0,
 
-            y: 0,
+      duration: 0.5,
 
-            duration: 0.8,
+      ease: "power3.out",
+    },
 
-            ease: "power3.out"
+    "-=0.45",
+  );
 
-        },
+  masterTimeline.to(
+    coinDescription,
 
-        "-=0.4"
+    {
+      opacity: 1,
 
-    );
+      y: 0,
 
+      duration: 0.7,
 
-    masterTimeline.to(
+      ease: "power3.out",
+    },
 
-        coinDivider,
+    "-=0.3",
+  );
 
-        {
-
-            opacity: 1,
-
-            y: 0,
-
-            duration: 0.5,
-
-            ease: "power3.out"
-
-        },
-
-        "-=0.45"
-
-    );
-
-
-    masterTimeline.to(
-
-        coinDescription,
-
-        {
-
-            opacity: 1,
-
-            y: 0,
-
-            duration: 0.7,
-
-            ease: "power3.out"
-
-        },
-
-        "-=0.3"
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        CARD REVEAL
     ================================================= */
 
-    masterTimeline.to(
+  masterTimeline.to(
+    authenticatedCard,
 
-        authenticatedCard,
+    {
+      opacity: 1,
 
-        {
+      y: 0,
 
-            opacity: 1,
+      duration: 0.8,
 
-            y: 0,
+      ease: "power3.out",
+    },
 
-            duration: 0.8,
+    "-=0.6",
+  );
 
-            ease: "power3.out"
+  masterTimeline.to(
+    historicCard,
 
-        },
+    {
+      opacity: 1,
 
-        "-=0.6"
+      y: 0,
 
-    );
+      duration: 0.8,
 
+      ease: "power3.out",
+    },
 
-    masterTimeline.to(
+    "-=0.55",
+  );
 
-        historicCard,
+  masterTimeline.to(
+    rareCard,
 
-        {
+    {
+      opacity: 1,
 
-            opacity: 1,
+      y: 0,
 
-            y: 0,
+      duration: 0.8,
 
-            duration: 0.8,
+      ease: "power3.out",
+    },
 
-            ease: "power3.out"
+    "-=0.55",
+  );
 
-        },
+  masterTimeline.to(
+    collectibleCard,
 
-        "-=0.55"
+    {
+      opacity: 1,
 
-    );
+      y: 0,
 
+      duration: 0.8,
 
-    masterTimeline.to(
+      ease: "power3.out",
+    },
 
-        rareCard,
+    "-=0.55",
+  );
 
-        {
-
-            opacity: 1,
-
-            y: 0,
-
-            duration: 0.8,
-
-            ease: "power3.out"
-
-        },
-
-        "-=0.55"
-
-    );
-
-
-    masterTimeline.to(
-
-        collectibleCard,
-
-        {
-
-            opacity: 1,
-
-            y: 0,
-
-            duration: 0.8,
-
-            ease: "power3.out"
-
-        },
-
-        "-=0.55"
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        CARD CONTENT REVEAL
     ================================================= */
 
-    masterTimeline.to(
+  masterTimeline.to(
+    featureIcons,
 
-        featureIcons,
+    {
+      opacity: 1,
 
-        {
+      y: 0,
 
-            opacity: 1,
+      duration: 0.5,
 
-            y: 0,
+      stagger: 0.08,
 
-            duration: 0.5,
+      ease: "power3.out",
+    },
 
-            stagger: 0.08,
+    "-=0.5",
+  );
 
-            ease: "power3.out"
+  masterTimeline.to(
+    [...featureTop, ...featureTitles, ...featureDescriptions],
 
-        },
+    {
+      opacity: 1,
 
-        "-=0.5"
+      y: 0,
 
-    );
+      duration: 0.6,
 
+      stagger: 0.04,
 
-    masterTimeline.to(
+      ease: "power3.out",
+    },
 
-        [
+    "-=0.35",
+  );
 
-            ...featureTop,
-
-            ...featureTitles,
-
-            ...featureDescriptions
-
-        ],
-
-        {
-
-            opacity: 1,
-
-            y: 0,
-
-            duration: 0.6,
-
-            stagger: 0.04,
-
-            ease: "power3.out"
-
-        },
-
-        "-=0.35"
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        BUTTON REVEAL
     ================================================= */
 
-    masterTimeline.to(
+  masterTimeline.to(
+    heroActions,
 
-        heroActions,
+    {
+      opacity: 1,
 
-        {
+      y: 0,
 
-            opacity: 1,
+      duration: 0.8,
 
-            y: 0,
+      ease: "power3.out",
+    },
 
-            duration: 0.8,
+    "-=0.3",
+  );
 
-            ease: "power3.out"
-
-        },
-
-        "-=0.3"
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        CONTINUOUS 3D COIN ROTATION
     ================================================= */
 
-    gsap.to(
+  gsap.to(
+    coin,
 
-        coin,
+    {
+      rotationY: "+=360",
 
-        {
+      duration: 16,
 
-            rotationY: "+=360",
+      repeat: -1,
 
-            duration: 16,
+      ease: "none",
+    },
+  );
 
-            repeat: -1,
-
-            ease: "none"
-
-        }
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        COIN FLOATING EFFECT
     ================================================= */
 
-    gsap.to(
+  gsap.to(
+    coinContainer,
 
-        coinContainer,
+    {
+      y: -8,
 
-        {
+      duration: 3,
 
-            y: -8,
+      repeat: -1,
 
-            duration: 3,
+      yoyo: true,
 
-            repeat: -1,
+      ease: "sine.inOut",
+    },
+  );
 
-            yoyo: true,
-
-            ease: "sine.inOut"
-
-        }
-
-    );
-
-
-
-    /* =================================================
+  /* =================================================
        CARD FLOATING EFFECT
     ================================================= */
 
-    featureCards.forEach(
+  featureCards.forEach((card, index) => {
+    gsap.to(
+      card,
 
-        (card, index) => {
+      {
+        y: -3,
 
+        duration: 3 + index * 0.25,
 
-            gsap.to(
+        repeat: -1,
 
-                card,
+        yoyo: true,
 
-                {
+        ease: "sine.inOut",
 
-                    y: -3,
-
-                    duration: 3 + index * 0.25,
-
-                    repeat: -1,
-
-                    yoyo: true,
-
-                    ease: "sine.inOut",
-
-                    delay: index * 0.2
-
-                }
-
-            );
-
-        }
-
+        delay: index * 0.2,
+      },
     );
+  });
 
-
-
-    /* =================================================
+  /* =================================================
        ICON FLOATING EFFECT
     ================================================= */
 
-    featureIcons.forEach(
+  featureIcons.forEach((icon, index) => {
+    gsap.to(
+      icon,
 
-        (icon, index) => {
+      {
+        y: -3,
 
+        rotation: 4,
 
-            gsap.to(
+        duration: 2.5,
 
-                icon,
+        repeat: -1,
 
-                {
+        yoyo: true,
 
-                    y: -3,
+        ease: "sine.inOut",
 
-                    rotation: 4,
-
-                    duration: 2.5,
-
-                    repeat: -1,
-
-                    yoyo: true,
-
-                    ease: "sine.inOut",
-
-                    delay: index * 0.2
-
-                }
-
-            );
-
-        }
-
+        delay: index * 0.2,
+      },
     );
+  });
 
-
-
-    /* =================================================
+  /* =================================================
        BACKGROUND WAVE ANIMATION
     ================================================= */
 
-    if (backgroundWaves.length) {
+  if (backgroundWaves.length) {
+    gsap.to(
+      backgroundWaves,
 
+      {
+        x: 15,
 
-        gsap.to(
+        duration: 5,
 
-            backgroundWaves,
+        repeat: -1,
 
-            {
+        yoyo: true,
 
-                x: 15,
+        stagger: 0.5,
 
-                duration: 5,
+        ease: "sine.inOut",
+      },
+    );
+  }
 
-                repeat: -1,
-
-                yoyo: true,
-
-                stagger: 0.5,
-
-                ease: "sine.inOut"
-
-            }
-
-        );
-
-    }
-
-
-
-    /* =================================================
+  /* =================================================
        HERO BUTTON HOVER
     ================================================= */
 
-    document
+  document
 
-        .querySelectorAll(
+    .querySelectorAll(".primary-button, .secondary-button")
 
-            ".primary-button, .secondary-button"
+    .forEach((button) => {
+      button.addEventListener(
+        "mouseenter",
 
-        )
+        () => {
+          gsap.to(
+            button,
 
-        .forEach(button => {
+            {
+              y: -4,
 
+              duration: 0.3,
 
-            button.addEventListener(
+              ease: "power2.out",
+            },
+          );
+        },
+      );
 
-                "mouseenter",
+      button.addEventListener(
+        "mouseleave",
 
-                () => {
+        () => {
+          gsap.to(
+            button,
 
+            {
+              y: 0,
 
-                    gsap.to(
+              duration: 0.3,
 
-                        button,
+              ease: "power2.out",
+            },
+          );
+        },
+      );
+    });
 
-                        {
+    /* ==========================================================
+        NUMIS SHOWCASE ANIMATION
+========================================================== */
 
-                            y: -4,
+document.addEventListener("DOMContentLoaded", () => {
 
-                            duration: 0.3,
+gsap.registerPlugin(ScrollTrigger);
 
-                            ease: "power2.out"
+/*=============================================
+        ELEMENTS
+=============================================*/
 
-                        }
+const cards = gsap.utils.toArray(".editorial-card");
+const images = gsap.utils.toArray(".card-image img");
+const section = document.querySelector(".showcase-section");
 
-                    );
+/*=============================================
+        INITIAL STATE
+=============================================*/
 
-                }
+gsap.set(cards,{
+    opacity:0,
+    y:80,
+    scale:.95
+});
 
-            );
+gsap.set(".showcase-heading .heading-tag",{
+    opacity:0,
+    y:25
+});
 
+gsap.set(".showcase-heading h2",{
+    opacity:0,
+    y:40
+});
 
-            button.addEventListener(
+gsap.set(".showcase-heading p",{
+    opacity:0,
+    y:30
+});
 
-                "mouseleave",
+/*=============================================
+        HEADING
+=============================================*/
 
-                () => {
+const headingTL = gsap.timeline({
+    scrollTrigger:{
+        trigger:section,
+        start:"top 75%"
+    }
+});
 
+headingTL
+.to(".showcase-heading .heading-tag",{
+    opacity:1,
+    y:0,
+    duration:.6
+})
+.to(".showcase-heading h2",{
+    opacity:1,
+    y:0,
+    duration:.9,
+    ease:"power3.out"
+},"-=.3")
+.to(".showcase-heading p",{
+    opacity:1,
+    y:0,
+    duration:.8
+},"-=.5");
 
-                    gsap.to(
+/*=============================================
+        CARDS STAGGER
+=============================================*/
 
-                        button,
+gsap.to(cards,{
 
-                        {
+    opacity:1,
 
-                            y: 0,
+    y:0,
 
-                            duration: 0.3,
+    scale:1,
 
-                            ease: "power2.out"
+    stagger:.18,
 
-                        }
+    duration:1,
 
-                    );
+    ease:"power3.out",
 
-                }
+    scrollTrigger:{
+        trigger:".editorial-layout",
+        start:"top 72%"
+    }
 
-            );
+});
 
-        });
+/*=============================================
+        FLOATING IMAGES
+=============================================*/
 
+images.forEach((img,index)=>{
 
+gsap.to(img,{
 
-    /* =================================================
+    y:-10,
+
+    duration:3+(index*.25),
+
+    repeat:-1,
+
+    yoyo:true,
+
+    ease:"sine.inOut"
+
+});
+
+});
+
+/*=============================================
+        CARD HOVER
+=============================================*/
+
+cards.forEach(card=>{
+
+const img=card.querySelector("img");
+const info=card.querySelector(".card-info");
+
+card.addEventListener("mouseenter",()=>{
+
+gsap.to(img,{
+    scale:1.08,
+    y:-12,
+    duration:.6,
+    ease:"power2.out"
+});
+
+gsap.to(info,{
+    opacity:1,
+    y:0,
+    duration:.45
+});
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+gsap.to(img,{
+    scale:1,
+    y:0,
+    rotationX:0,
+    rotationY:0,
+    duration:.6
+});
+
+gsap.to(info,{
+    opacity:0,
+    y:25,
+    duration:.3
+});
+
+});
+
+});
+
+/*=============================================
+        3D PARALLAX
+=============================================*/
+
+cards.forEach(card=>{
+
+const img = card.querySelector("img");
+
+card.addEventListener("mousemove",(e)=>{
+
+const rect = card.getBoundingClientRect();
+
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+
+const rotateY = ((x / rect.width) - 0.5) * 18;
+const rotateX = ((0.5 - y / rect.height)) * 18;
+
+gsap.to(img,{
+    rotationY:rotateY,
+    rotationX:rotateX,
+    transformPerspective:1000,
+    transformOrigin:"center center",
+    duration:.35,
+    ease:"power2.out"
+});
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+gsap.to(img,{
+    rotationX:0,
+    rotationY:0,
+    duration:.7,
+    ease:"power3.out"
+});
+
+});
+
+});
+
+/*=============================================
+        SPOTLIGHT FOLLOW
+=============================================*/
+
+const light=document.createElement("div");
+
+light.className="mouse-light";
+
+document.body.appendChild(light);
+
+document.addEventListener("mousemove",(e)=>{
+
+gsap.to(light,{
+    x:e.clientX-175,
+    y:e.clientY-175,
+    duration:.35,
+    ease:"power2.out"
+});
+
+});
+
+/*=============================================
+        SUBTLE CARD FLOAT
+=============================================*/
+
+cards.forEach((card,index)=>{
+
+gsap.to(card,{
+
+    y:-6,
+
+    repeat:-1,
+
+    yoyo:true,
+
+    ease:"sine.inOut",
+
+    duration:4+(index*.3)
+
+});
+
+});
+
+/*=============================================
+        PARALLAX ON SCROLL
+=============================================*/
+
+images.forEach((img,index)=>{
+
+gsap.to(img,{
+
+    yPercent:-12,
+
+    ease:"none",
+
+    scrollTrigger:{
+
+        trigger:img,
+
+        start:"top bottom",
+
+        end:"bottom top",
+
+        scrub:true
+
+    }
+
+});
+
+});
+
+});
+
+  /* =================================================
        FOOTER ELEMENTS
     ================================================= */
 
-    const archiveFooter =
-        document.querySelector(".archive-footer");
+  const archiveFooter = document.querySelector(".archive-footer");
 
+  const footerGlow = document.querySelector(".footer-glow");
 
-    const footerGlow =
-        document.querySelector(".footer-glow");
+  const footerCta = document.querySelector(".footer-cta");
 
+  const footerMain = document.querySelector(".footer-main");
 
-    const footerCta =
-        document.querySelector(".footer-cta");
+  const footerBottom = document.querySelector(".footer-bottom");
 
+  const footerLinks = document.querySelectorAll(".footer-column");
 
-    const footerMain =
-        document.querySelector(".footer-main");
+  const footerRings = document.querySelectorAll(".footer-ring");
 
-
-    const footerBottom =
-        document.querySelector(".footer-bottom");
-
-
-    const footerLinks =
-        document.querySelectorAll(".footer-column");
-
-
-    const footerRings =
-        document.querySelectorAll(".footer-ring");
-
-
-
-    /* =================================================
+  /* =================================================
        FOOTER ANIMATION
     ================================================= */
 
-    if (archiveFooter) {
+  if (archiveFooter) {
+    /* INITIAL STATES */
 
+    gsap.set(footerCta, {
+      opacity: 0,
 
-        /* INITIAL STATES */
+      y: 60,
+    });
 
+    gsap.set(footerMain, {
+      opacity: 0,
 
-        gsap.set(footerCta, {
+      y: 40,
+    });
 
-            opacity: 0,
+    gsap.set(footerBottom, {
+      opacity: 0,
+    });
 
-            y: 60
+    gsap.set(footerLinks, {
+      opacity: 0,
 
-        });
+      y: 25,
+    });
 
+    /* FOOTER SCROLL REVEAL */
 
-        gsap.set(footerMain, {
+    const footerTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: archiveFooter,
 
-            opacity: 0,
+        start: "top 75%",
 
-            y: 40
+        toggleActions: "play none none reverse",
+      },
+    });
 
-        });
+    footerTimeline.to(
+      footerCta,
 
+      {
+        opacity: 1,
 
-        gsap.set(footerBottom, {
+        y: 0,
 
-            opacity: 0
+        duration: 1.2,
 
-        });
+        ease: "power3.out",
+      },
+    );
 
+    footerTimeline.to(
+      footerMain,
 
-        gsap.set(footerLinks, {
+      {
+        opacity: 1,
 
-            opacity: 0,
+        y: 0,
 
-            y: 25
+        duration: 1,
 
-        });
+        ease: "power3.out",
+      },
 
+      "-=0.65",
+    );
 
+    footerTimeline.to(
+      footerLinks,
 
-        /* FOOTER SCROLL REVEAL */
+      {
+        opacity: 1,
 
+        y: 0,
 
-        const footerTimeline =
-            gsap.timeline({
+        duration: 0.7,
 
-                scrollTrigger: {
+        stagger: 0.12,
 
-                    trigger: archiveFooter,
+        ease: "power3.out",
+      },
 
-                    start: "top 75%",
+      "-=0.65",
+    );
 
-                    toggleActions:
-                        "play none none reverse"
+    footerTimeline.to(
+      footerBottom,
 
-                }
+      {
+        opacity: 1,
 
-            });
+        duration: 0.8,
 
+        ease: "power2.out",
+      },
 
+      "-=0.35",
+    );
 
-        footerTimeline.to(
+    /* GLOW BREATHING */
 
-            footerCta,
+    if (footerGlow) {
+      gsap.to(
+        footerGlow,
 
-            {
+        {
+          scale: 1.25,
 
-                opacity: 1,
+          opacity: 0.65,
 
-                y: 0,
+          duration: 5,
 
-                duration: 1.2,
+          repeat: -1,
 
-                ease: "power3.out"
+          yoyo: true,
 
-            }
-
-        );
-
-
-        footerTimeline.to(
-
-            footerMain,
-
-            {
-
-                opacity: 1,
-
-                y: 0,
-
-                duration: 1,
-
-                ease: "power3.out"
-
-            },
-
-            "-=0.65"
-
-        );
-
-
-        footerTimeline.to(
-
-            footerLinks,
-
-            {
-
-                opacity: 1,
-
-                y: 0,
-
-                duration: 0.7,
-
-                stagger: 0.12,
-
-                ease: "power3.out"
-
-            },
-
-            "-=0.65"
-
-        );
-
-
-        footerTimeline.to(
-
-            footerBottom,
-
-            {
-
-                opacity: 1,
-
-                duration: 0.8,
-
-                ease: "power2.out"
-
-            },
-
-            "-=0.35"
-
-        );
-
-
-
-        /* GLOW BREATHING */
-
-
-        if (footerGlow) {
-
-
-            gsap.to(
-
-                footerGlow,
-
-                {
-
-                    scale: 1.25,
-
-                    opacity: 0.65,
-
-                    duration: 5,
-
-                    repeat: -1,
-
-                    yoyo: true,
-
-                    ease: "sine.inOut"
-
-                }
-
-            );
-
-        }
-
-
-
-        /* CTA FLOAT */
-
-
-        gsap.to(
-
-            footerCta,
-
-            {
-
-                y: -5,
-
-                duration: 4,
-
-                repeat: -1,
-
-                yoyo: true,
-
-                ease: "sine.inOut"
-
-            }
-
-        );
-
-
-
-        /* ARCHIVE RING ONE */
-
-
-        if (footerRings[0]) {
-
-
-            gsap.to(
-
-                footerRings[0],
-
-                {
-
-                    rotation: 360,
-
-                    duration: 90,
-
-                    repeat: -1,
-
-                    ease: "none"
-
-                }
-
-            );
-
-        }
-
-
-
-        /* ARCHIVE RING TWO */
-
-
-        if (footerRings[1]) {
-
-
-            gsap.to(
-
-                footerRings[1],
-
-                {
-
-                    rotation: -360,
-
-                    duration: 120,
-
-                    repeat: -1,
-
-                    ease: "none"
-
-                }
-
-            );
-
-        }
-
+          ease: "sine.inOut",
+        },
+      );
     }
 
+    /* CTA FLOAT */
 
+    gsap.to(
+      footerCta,
 
-    /* =================================================
+      {
+        y: -5,
+
+        duration: 4,
+
+        repeat: -1,
+
+        yoyo: true,
+
+        ease: "sine.inOut",
+      },
+    );
+
+    /* ARCHIVE RING ONE */
+
+    if (footerRings[0]) {
+      gsap.to(
+        footerRings[0],
+
+        {
+          rotation: 360,
+
+          duration: 90,
+
+          repeat: -1,
+
+          ease: "none",
+        },
+      );
+    }
+
+    /* ARCHIVE RING TWO */
+
+    if (footerRings[1]) {
+      gsap.to(
+        footerRings[1],
+
+        {
+          rotation: -360,
+
+          duration: 120,
+
+          repeat: -1,
+
+          ease: "none",
+        },
+      );
+    }
+  }
+
+  /* =================================================
        FOOTER CTA BUTTON HOVER
     ================================================= */
 
-    const footerButton =
-        document.querySelector(".footer-cta-button");
+  const footerButton = document.querySelector(".footer-cta-button");
 
+  if (footerButton) {
+    footerButton.addEventListener(
+      "mouseenter",
 
-    if (footerButton) {
+      () => {
+        gsap.to(
+          footerButton,
 
+          {
+            y: -4,
 
-        footerButton.addEventListener(
+            scale: 1.03,
 
-            "mouseenter",
+            duration: 0.3,
 
-            () => {
-
-
-                gsap.to(
-
-                    footerButton,
-
-                    {
-
-                        y: -4,
-
-                        scale: 1.03,
-
-                        duration: 0.3,
-
-                        ease: "power2.out"
-
-                    }
-
-                );
-
-            }
-
+            ease: "power2.out",
+          },
         );
+      },
+    );
 
+    footerButton.addEventListener(
+      "mouseleave",
 
-        footerButton.addEventListener(
+      () => {
+        gsap.to(
+          footerButton,
 
-            "mouseleave",
+          {
+            y: 0,
 
-            () => {
+            scale: 1,
 
+            duration: 0.3,
 
-                gsap.to(
-
-                    footerButton,
-
-                    {
-
-                        y: 0,
-
-                        scale: 1,
-
-                        duration: 0.3,
-
-                        ease: "power2.out"
-
-                    }
-
-                );
-
-            }
-
+            ease: "power2.out",
+          },
         );
+      },
+    );
+  }
 
-    }
-
-
-
-    /* =================================================
+  /* =================================================
        BACK TO TOP
     ================================================= */
 
-    const backToTop =
-        document.querySelector(".back-to-top");
+  const backToTop = document.querySelector(".back-to-top");
 
+  if (backToTop) {
+    backToTop.addEventListener(
+      "click",
 
-    if (backToTop) {
+      () => {
+        window.scrollTo({
+          top: 0,
 
-
-        backToTop.addEventListener(
-
-            "click",
-
-            () => {
-
-
-                window.scrollTo({
-
-                    top: 0,
-
-                    behavior: "smooth"
-
-                });
-
-            }
-
-        );
-
-    }
-
-
+          behavior: "smooth",
+        });
+      },
+    );
+  }
 });
