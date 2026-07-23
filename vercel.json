@@ -1,14 +1,14 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/admin/:path*", "destination": "/admin.html" },
-    { "source": "/seller/:path*", "destination": "/admin.html" },
-    { "source": "/dashboard/:path*", "destination": "/admin.html" },
-    { "source": "/products/:path*", "destination": "/admin.html" },
-    { "source": "/orders/:path*", "destination": "/admin.html" },
-    { "source": "/sellers/:path*", "destination": "/admin.html" },
-    { "source": "/customers/:path*", "destination": "/admin.html" },
-    { "source": "/analytics/:path*", "destination": "/admin.html" },
-    { "source": "/settings/:path*", "destination": "/admin.html" }
+    { "source": "/admin/:path*", "destination": "/admin" },
+    { "source": "/seller/:path*", "destination": "/admin" },
+    { "source": "/dashboard/:path*", "destination": "/admin" },
+    { "source": "/products/:path*", "destination": "/admin" },
+    { "source": "/orders/:path*", "destination": "/admin" },
+    { "source": "/sellers/:path*", "destination": "/admin" },
+    { "source": "/customers/:path*", "destination": "/admin" },
+    { "source": "/analytics/:path*", "destination": "/admin" },
+    { "source": "/settings/:path*", "destination": "/admin" }
   ]
 }
