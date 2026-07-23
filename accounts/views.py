@@ -3,12 +3,14 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import User
+from .models import User, Category, Product
 from .serializers import (
     RegisterSerializer,
     ForgotPasswordSerializer,
     VerifyOTPSerializer,
-    ResetPasswordSerializer
+    ResetPasswordSerializer,
+    CategorySerializer,
+    ProductSerializer
 )
 
 
@@ -70,3 +72,31 @@ class ResetPasswordView(generics.GenericAPIView):
             return Response(data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# -------------------------------
+# Category APIs
+# -------------------------------
+
+class CategoryListCreateView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+# -------------------------------
+# Product APIs
+# -------------------------------
+
+class ProductListCreateView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer

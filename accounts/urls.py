@@ -4,7 +4,11 @@ from .views import (
     LoginView,
     ForgotPasswordView,
     VerifyOTPView,
-    ResetPasswordView
+    ResetPasswordView,
+    CategoryListCreateView,
+    CategoryDetailView,
+    ProductListCreateView,
+    ProductDetailView,
 )
 
 urlpatterns = [
@@ -13,4 +17,12 @@ urlpatterns = [
     path("forgot-password/", ForgotPasswordView.as_view(), name="forgot-password"),
     path("verify-otp/", VerifyOTPView.as_view(), name="verify-otp"),
     path("reset-password/", ResetPasswordView.as_view(), name="reset-password"),
+
+    # Category APIs
+    path("categories/", CategoryListCreateView.as_view(), name="category-list"),
+    path("categories/<int:pk>/", CategoryDetailView.as_view(), name="category-detail"),
+
+    # Product APIs
+    path("products/", ProductListCreateView.as_view(), name="product-list"),
+    path("products/<int:pk>/", ProductDetailView.as_view(), name="product-detail"),
 ]

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Category, Product
 import random
 from django.utils import timezone
 
@@ -86,12 +86,22 @@ class ResetPasswordSerializer(serializers.Serializer):
         user = User.objects.get(email=email)
         user.set_password(new_password)
 
-        # Clear OTP after successful password reset
         user.otp = None
         user.otp_created_at = None
-
         user.save()
 
         return {
             "message": "Password reset successfully."
         }
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = "__all__"
