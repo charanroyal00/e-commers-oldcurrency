@@ -119,7 +119,7 @@ updateHero();
 
 const demoProducts = [
   {
-    id: 1,
+    id: 888976,
 
     name: "Victoria Silver Rupee",
 
@@ -320,7 +320,7 @@ ${product.description}
 
 </strong>
 
-<a href="product-details.html?id=${product.id}">
+<a href="product-information.html?id=${product.id}">
 
 View Details →
 
@@ -530,7 +530,7 @@ document.addEventListener("click", (e) => {
 
   const id = card.dataset.id;
 
-  window.location.href = `product-details.html?id=${id}`;
+  window.location.href = `product-information.html?id=${id}`;
 });
 
 /*========================================================

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NUMIS • Product Information</title>
+
+    <link rel="stylesheet"
+          href="./css/product-information.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--========================
+
+        BACKGROUND ORBS
+
+    ========================-->
+
+    <div class="background-orb orb-one"></div>
+    <div class="background-orb orb-two"></div>
+    <div class="background-orb orb-three"></div>
+
+    <!--========================
+
+        NAVBAR
+
+    ========================-->
+
+    <nav class="navbar">
+
+        <a href="index.html"
+           class="logo">
+
+            NUMIS<span>®</span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="products.html">Explore</a>
+
+            <a href="auctions.html">Auctions</a>
+
+            <a href="collections.html">Collections</a>
+
+            <a href="journal.html">Journal</a>
+
+        </div>
+
+        <div class="nav-buttons">
+
+            <a href="wishlist.html"
+               class="icon-btn">
+
+                ♡
+
+            </a>
+
+            <a href="auth.html"
+               class="primary-btn">
+
+                Account
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!--========================
+
+        BREADCRUMB
+
+    ========================-->
+
+    <section class="breadcrumb">
+
+        <a href="index.html">
+
+            Home
+
+        </a>
+
+        <span>/</span>
+
+        <a href="products.html">
+
+            Products
+
+        </a>
+
+        <span>/</span>
+
+        <span id="breadcrumbCategory">
+
+            Coins
+
+        </span>
+
+        <span>/</span>
+
+        <strong id="breadcrumbName">
+
+            Product
+
+        </strong>
+
+    </section>
+
+    <!--========================
+
+        PRODUCT HERO
+
+    ========================-->
+
+    <section class="product-hero">
+
+        <!-- LEFT GALLERY -->
+
+        <div class="gallery-wrapper">
+
+            <div class="thumbnail-column"
+                 id="thumbnailContainer">
+
+                <!-- JS Creates Images -->
+
+            </div>
+
+            <div class="main-image-card">
+
+                <div class="coin-glow"></div>
+
+                <img id="mainImage"
+                     src=""
+                     alt="Product Image">
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT INFORMATION -->
+
+        <div class="product-information">
+
+            <span class="product-label"
+                  id="productLabel">
+
+                AUTHENTICATED
+
+            </span>
+
+            <h1 id="productName">
+
+                Victoria Silver Rupee
+
+            </h1>
+
+            <div class="rating-row">
+
+                <div class="stars">
+
+                    ★★★★★
+
+                </div>
+
+                <span>
+
+                    4.9 (184 Reviews)
+
+                </span>
+
+            </div>
+
+            <div class="certificate">
+
+                ✓ Certificate of Authenticity Included
+
+            </div>
+
+            <div class="price-row">
+
+                <h2 id="productPrice">
+
+                    ₹18,500
+
+                </h2>
+
+                <span id="productStock">
+
+                    Only 4 Available
+
+                </span>
+
+            </div>
+
+            <p id="shortDescription">
+
+                Historic authenticated collectible preserved
+                in museum quality condition.
+
+            </p>
+
+            <!-- ACTIONS -->
+
+            <div class="purchase-actions">
+
+                <button class="buy-btn">
+
+                    Buy Now
+
+                </button>
+
+                <button class="wishlist-btn">
+
+                    ♡ Wishlist
+
+                </button>
+
+            </div>
+
+            <!-- QUICK SPECS -->
+
+            <div class="quick-specs">
+
+                <div>
+
+                    <span>Country</span>
+
+                    <strong id="country">
+
+                        India
+
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>Year</span>
+
+                    <strong id="year">
+
+                        1886
+
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>Grade</span>
+
+                    <strong id="grade">
+
+                        UNC
+
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>Rarity</span>
+
+                    <strong id="rarity">
+
+                        Extremely Rare
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!--========================
+
+        STICKY PURCHASE CARD
+
+    ========================-->
+
+    <aside class="floating-purchase">
+
+        <span>
+
+            VERIFIED COLLECTIBLE
+
+        </span>
+
+        <h2 id="stickyPrice">
+
+            ₹18,500
+
+        </h2>
+
+        <button>
+
+            Buy Now
+
+        </button>
+
+        <button class="outline">
+
+            Add To Wishlist
+
+        </button>
+
+        <div class="secure-note">
+
+            ✓ Secure Payment
+
+            <br>
+
+            ✓ Authenticity Guaranteed
+
+        </div>
+
+    </aside>
+
+        <!--======================================
+
+            SPECIFICATIONS
+
+    =======================================-->
+
+    <section class="product-section">
+
+        <div class="section-heading">
+
+            <span>TECHNICAL DETAILS</span>
+
+            <h2>Specifications</h2>
+
+        </div>
+
+        <div class="specifications-grid">
+
+            <div class="spec-card">
+
+                <span>Country</span>
+
+                <h3 id="specCountry">India</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Year of Issue</span>
+
+                <h3 id="specYear">1886</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Denomination</span>
+
+                <h3 id="specDenomination">1 Rupee</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Material</span>
+
+                <h3 id="specMaterial">Silver</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Weight</span>
+
+                <h3 id="specWeight">11.66 g</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Diameter</span>
+
+                <h3 id="specDiameter">30.5 mm</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Mint</span>
+
+                <h3 id="specMint">Bombay</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Grade</span>
+
+                <h3 id="specGrade">UNC</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Certificate</span>
+
+                <h3 id="specCertificate">Verified</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Rarity</span>
+
+                <h3 id="specRarity">Extremely Rare</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Seller</span>
+
+                <h3 id="specSeller">NUMIS Official</h3>
+
+            </div>
+
+            <div class="spec-card">
+
+                <span>Stock</span>
+
+                <h3 id="specStock">4 Available</h3>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!--======================================
+
+            HISTORICAL STORY
+
+    =======================================-->
+
+    <section class="product-section story-section">
+
+        <div class="section-heading">
+
+            <span>HISTORY</span>
+
+            <h2>The Story Behind This Collectible</h2>
+
+        </div>
+
+        <div class="story-layout">
+
+            <div class="story-text">
+
+                <p id="historyOne">
+
+                    This authenticated collectible represents one of the
+                    most remarkable examples preserved from its era.
+
+                </p>
+
+                <p id="historyTwo">
+
+                    It has been professionally examined, catalogued and
+                    certified before becoming part of the NUMIS archive.
+
+                </p>
+
+                <p id="historyThree">
+
+                    Rich historical significance combined with exceptional
+                    preservation makes this an outstanding investment for
+                    serious collectors.
+
+                </p>
+
+            </div>
+
+            <div class="story-image">
+
+                <img id="historyImage"
+                     src="images/history.png"
+                     alt="History">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!--======================================
+
+        CERTIFICATE
+
+    =======================================-->
+
+    <section class="certificate-section">
+
+        <div class="certificate-card">
+
+            <div class="certificate-left">
+
+                <span>CERTIFICATE OF AUTHENTICITY</span>
+
+                <h2>
+
+                    Verified & Museum Authenticated
+
+                </h2>
+
+                <p>
+
+                    Every collectible available on NUMIS undergoes
+                    professional authentication, historical verification
+                    and quality grading before being listed.
+
+                </p>
+
+            </div>
+
+            <div class="certificate-right">
+
+                <div class="certificate-badge">
+
+                    ✓ VERIFIED
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!--======================================
+
+        360 VIEW
+
+    =======================================-->
+
+    <section class="viewer-section">
+
+        <div class="section-heading">
+
+            <span>INTERACTIVE VIEW</span>
+
+            <h2>360° Product Preview</h2>
+
+        </div>
+
+        <div class="viewer-card">
+
+            <img id="viewerImage"
+                 src=""
+                 alt="360 View">
+
+            <button class="viewer-btn">
+
+                Rotate Product
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!--======================================
+
+        RELATED PRODUCTS
+
+    =======================================-->
+
+    <section class="product-section">
+
+        <div class="section-heading">
+
+            <span>YOU MAY ALSO LIKE</span>
+
+            <h2>Similar Collectibles</h2>
+
+        </div>
+
+        <div class="related-grid"
+             id="relatedGrid">
+
+            <!-- JS Creates Cards -->
+
+        </div>
+
+    </section>
+
+
+
+    <!--======================================
+
+        FOOTER
+
+    =======================================-->
+
+    <footer class="footer">
+
+        <div class="footer-left">
+
+            <h2>NUMIS®</h2>
+
+            <p>
+
+                Preserving history through authenticated
+                coins, currency notes and rare collectibles.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <a href="#">Explore</a>
+
+            <a href="#">Auctions</a>
+
+            <a href="#">Collections</a>
+
+            <a href="#">Journal</a>
+
+            <a href="#">Privacy</a>
+
+            <a href="#">Terms</a>
+
+            <a href="#">Contact</a>
+
+            <a href="#">Support</a>
+
+        </div>
+
+    </footer>
+
+
+
+    <!--======================================
+
+        GSAP
+
+    =======================================-->
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <script src="./js/product-information.js"></script>
+
+</body>
+
+</html>
