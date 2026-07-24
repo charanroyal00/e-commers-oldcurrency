@@ -1,0 +1,14 @@
+{
+  "name": "numis-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite public",
+    "build": "vite build public --outDir ../dist",
+    "preview": "vite preview public"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}
