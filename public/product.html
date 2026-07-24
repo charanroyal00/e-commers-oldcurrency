@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Numis • Explore Collection</title>
+
+    <link rel="stylesheet" href="./css/product.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="page-background"></div>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+
+        NUMIS<span>®</span>
+
+    </a>
+
+    <div class="nav-links">
+
+        <a href="index.html">Home</a>
+
+        <a href="products.html">Explore</a>
+
+        <a href="auctions.html">Auctions</a>
+
+        <a href="collections.html">Collections</a>
+
+        <a href="journal.html">Journal</a>
+
+    </div>
+
+    <a href="auth.html" class="login-btn">
+
+        Account
+
+    </a>
+
+</nav>
+
+<!-- ================= HERO ================= -->
+
+<section class="products-hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <span class="eyebrow">
+
+            MUSEUM ARCHIVE
+
+        </span>
+
+        <h1 id="categoryTitle">
+
+            Rare Coins
+
+        </h1>
+
+        <p id="categoryDescription">
+
+            Discover authenticated collectibles curated from India's most prestigious numismatic collections.
+
+        </p>
+
+        <div class="hero-stats">
+
+            <div>
+
+                <h3 id="productCount">
+
+                    188
+
+                </h3>
+
+                <span>Objects</span>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    47
+
+                </h3>
+
+                <span>Collections</span>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    12
+
+                </h3>
+
+                <span>Countries</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="hero-coin">
+
+        <div class="coin-ring"></div>
+
+        <div class="coin-disc"></div>
+
+    </div>
+
+</section>
+
+<!-- ================= BREADCRUMB ================= -->
+
+<section class="breadcrumb">
+
+    <a href="index.html">
+
+        Home
+
+    </a>
+
+    <span>/</span>
+
+    <span>
+
+        Explore
+
+    </span>
+
+    <span>/</span>
+
+    <strong id="breadcrumbCategory">
+
+        Rare Coins
+
+    </strong>
+
+</section>
+
+<!-- ================= FILTER BAR ================= -->
+
+<section class="top-filter">
+
+    <div class="search-box">
+
+        <input
+
+            type="text"
+
+            placeholder="Search historical objects..."
+
+            id="searchInput"
+
+        >
+
+    </div>
+
+    <div class="filter-actions">
+
+        <select id="sort">
+
+            <option>Newest</option>
+
+            <option>Oldest</option>
+
+            <option>Price Low → High</option>
+
+            <option>Price High → Low</option>
+
+            <option>Most Rare</option>
+
+        </select>
+
+    </div>
+
+</section>
+
+<div class="products-layout">
+        <!-- ======================
+            FILTER SIDEBAR
+    ======================= -->
+
+    <aside class="sidebar">
+
+        <div class="filter-card">
+
+            <span class="filter-small">
+                FILTERS
+            </span>
+
+            <h3>
+                Refine Collection
+            </h3>
+
+        </div>
+
+        <div class="filter-group">
+
+            <h4>Era</h4>
+
+            <label><input type="checkbox"> Ancient</label>
+
+            <label><input type="checkbox"> Mughal</label>
+
+            <label><input type="checkbox"> British India</label>
+
+            <label><input type="checkbox"> Republic of India</label>
+
+        </div>
+
+        <div class="filter-group">
+
+            <h4>Material</h4>
+
+            <label><input type="checkbox"> Gold</label>
+
+            <label><input type="checkbox"> Silver</label>
+
+            <label><input type="checkbox"> Copper</label>
+
+            <label><input type="checkbox"> Nickel</label>
+
+        </div>
+
+        <div class="filter-group">
+
+            <h4>Condition</h4>
+
+            <label><input type="checkbox"> UNC</label>
+
+            <label><input type="checkbox"> XF</label>
+
+            <label><input type="checkbox"> VF</label>
+
+            <label><input type="checkbox"> AU</label>
+
+        </div>
+
+        <div class="filter-group">
+
+            <h4>Price</h4>
+
+            <input type="range">
+
+        </div>
+
+    </aside>
+
+
+    <!-- ======================
+            PRODUCT GRID
+    ======================= -->
+
+    <section class="products-grid" id="productsGrid">
+
+
+        <!-- CARD -->
+
+        <article class="product-card large">
+
+            <div class="product-image">
+
+                <img src="images/demo-coin.png" alt="">
+
+            </div>
+
+            <div class="product-content">
+
+                <span class="product-category">
+
+                    BRITISH INDIA
+
+                </span>
+
+                <h2>
+
+                    Victoria Silver Rupee
+
+                </h2>
+
+                <p>
+
+                    Museum authenticated silver rupee from 1886.
+
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+
+                        ₹18,500
+
+                    </strong>
+
+                    <a href="#">
+
+                        View Details →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="product-card tall">
+
+            <div class="product-image">
+
+                <img src="images/demo-note.png" alt="">
+
+            </div>
+
+            <div class="product-content">
+
+                <span class="product-category">
+
+                    RARE NOTE
+
+                </span>
+
+                <h2>
+
+                    ₹10 Error Note
+
+                </h2>
+
+                <p>
+
+                    Exceptional misprint collectible.
+
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+
+                        ₹32,000
+
+                    </strong>
+
+                    <a href="#">
+
+                        View Details →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="product-card">
+
+            <div class="product-image">
+
+                <img src="images/demo-coin2.png" alt="">
+
+            </div>
+
+            <div class="product-content">
+
+                <span class="product-category">
+
+                    MUGHAL
+
+                </span>
+
+                <h2>
+
+                    Akbar Mohur
+
+                </h2>
+
+                <p>
+
+                    Gold imperial issue.
+
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+
+                        ₹74,000
+
+                    </strong>
+
+                    <a href="#">
+
+                        View Details →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="product-card wide">
+
+            <div class="product-image">
+
+                <img src="images/demo-coin3.png" alt="">
+
+            </div>
+
+            <div class="product-content">
+
+                <span class="product-category">
+
+                    REPUBLIC
+
+                </span>
+
+                <h2>
+
+                    Commemorative Collection
+
+                </h2>
+
+                <p>
+
+                    Limited authenticated commemorative series.
+
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+
+                        ₹14,900
+
+                    </strong>
+
+                    <a href="#">
+
+                        View Details →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="product-card">
+
+            <div class="product-image">
+
+                <img src="images/demo-note2.png" alt="">
+
+            </div>
+
+            <div class="product-content">
+
+                <span class="product-category">
+
+                    STAR NOTE
+
+                </span>
+
+                <h2>
+
+                    ₹100 Star Series
+
+                </h2>
+
+                <p>
+
+                    Premium preserved note.
+
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+
+                        ₹8,200
+
+                    </strong>
+
+                    <a href="#">
+
+                        View Details →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="product-card">
+
+            <div class="product-image">
+
+                <img src="images/demo-coin4.png" alt="">
+
+            </div>
+
+            <div class="product-content">
+
+                <span class="product-category">
+
+                    SILVER
+
+                </span>
+
+                <h2>
+
+                    Bombay Mint Coin
+
+                </h2>
+
+                <p>
+
+                    Historic silver collectible.
+
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+
+                        ₹11,600
+
+                    </strong>
+
+                    <a href="#">
+
+                        View Details →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+    </section>
+
+</div>
+
+
+<!-- ======================
+        LOAD MORE
+======================= -->
+
+<section class="load-more-section">
+
+    <button class="load-btn">
+
+        Load More Collection
+
+    </button>
+
+</section>
+
+
+<!-- ======================
+        NEWSLETTER
+======================= -->
+
+<section class="newsletter">
+
+    <span>
+
+        EXCLUSIVE ARCHIVE
+
+    </span>
+
+    <h2>
+
+        Stay Connected With The Museum
+
+    </h2>
+
+    <p>
+
+        Receive curated releases, rare discoveries, auction announcements, and editorial stories directly in your inbox.
+
+    </p>
+
+    <form>
+
+        <input
+
+            type="email"
+
+            placeholder="Your Email Address"
+
+        >
+
+        <button>
+
+            Subscribe
+
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- ======================
+        FOOTER
+======================= -->
+
+<footer class="footer">
+
+    <div class="footer-left">
+
+        <h2>
+
+            NUMIS®
+
+        </h2>
+
+        <p>
+
+            Preserving History.
+            Curating Legacy.
+
+        </p>
+
+    </div>
+
+    <div class="footer-links">
+
+        <a href="#">
+
+            About
+
+        </a>
+
+        <a href="#">
+
+            Collections
+
+        </a>
+
+        <a href="#">
+
+            Auctions
+
+        </a>
+
+        <a href="#">
+
+            Contact
+
+        </a>
+
+    </div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+<script src="./js/product.js"></script>
+
+</body>
+
+</html>
