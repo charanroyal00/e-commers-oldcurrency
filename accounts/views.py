@@ -1,16 +1,19 @@
 from rest_framework import generics, status
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import User, Category, Product
+from .models import User, Category, Product, Cart
+from django.db.models import Q
 from .serializers import (
     RegisterSerializer,
     ForgotPasswordSerializer,
     VerifyOTPSerializer,
     ResetPasswordSerializer,
     CategorySerializer,
-    ProductSerializer
+    ProductSerializer,
+    CartSerializer,
 )
 
 
@@ -93,10 +96,48 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
 # -------------------------------
 
 class ProductListCreateView(generics.ListCreateAPIView):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+
+        search = self.request.query_params.get("search")
+        category = self.request.query_params.get("category")
+        seller = self.request.query_params.get("seller")
+
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) |
+                Q(description__icontains=search)
+            )
+
+        if category:
+            queryset = queryset.filter(category_id=category)
+
+        if seller:
+            queryset = queryset.filter(seller_id=seller)
+
+        return queryset
 
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    parser_classes = [
+        MultiPartParser,
+        FormParser
+    ]
+
+# -------------------------------
+# Cart APIs
+# -------------------------------
+
+class CartListCreateView(generics.ListCreateAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
+
+class CartDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
