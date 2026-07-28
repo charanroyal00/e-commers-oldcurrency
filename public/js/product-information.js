@@ -73,13 +73,13 @@ const products = [
       "Because of its excellent preservation, limited availability, and strong collector demand, this coin represents both historical heritage and long-term collectible value.",
 
     images: [
-      "images/products/victoria-1.png",
+      "assests/auction.png",
 
-      "images/products/victoria-2.png",
+      "assests/auction.png",
 
-      "images/products/victoria-3.png",
+      "assests/auction.png",
 
-      "images/products/victoria-4.png",
+      "assests/auction.png",
     ],
   },
 
@@ -522,34 +522,85 @@ renderRelatedProducts();
 
 /*==========================================================
 
+                ADD TO CART
+
+==========================================================*/
+
+function addToCart(product){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingProduct = cart.find(item => item.id === product.id);
+
+    if(existingProduct){
+
+        existingProduct.quantity += 1;
+
+    }
+
+    else{
+
+        cart.push({
+
+            id:product.id,
+
+            name:product.name,
+
+            category:product.category,
+
+            year:product.year,
+
+            grade:product.grade,
+
+            price:Number(product.price.replace(/[₹,]/g,"")),
+
+            image:product.images[0],
+
+            quantity:1
+
+        });
+
+    }
+
+    localStorage.setItem("cart",JSON.stringify(cart));
+
+}
+
+/*==========================================================
+
                 BUY BUTTON
 
 ==========================================================*/
 
-const buyButton = document.querySelector(".buy-btn");
+const buyButton=document.querySelector(".buy-btn");
 
-if (buyButton) {
-  buyButton.addEventListener("click", () => {
+if(buyButton){
+
+buyButton.addEventListener("click",()=>{
+
+    addToCart(product);
+
     gsap.fromTo(
-      buyButton,
 
-      {
-        scale: 1,
-      },
+        buyButton,
 
-      {
-        scale: 1.06,
+        {
+            scale:1
+        },
 
-        yoyo: true,
+        {
+            scale:1.08,
+            duration:.25,
+            repeat:1,
+            yoyo:true
+        }
 
-        repeat: 1,
-
-        duration: 0.18,
-      },
     );
 
-    alert(`Proceeding to checkout for\n\n${product.name}`);
-  });
+    window.location.href="cart.html";
+
+});
+
 }
 
 /*==========================================================
@@ -592,12 +643,18 @@ if (wishlistButton) {
 
 ==========================================================*/
 
-const stickyBuy = document.querySelector(".floating-purchase button");
+const stickyBuy=document.querySelector(".floating-purchase button");
 
-if (stickyBuy) {
-  stickyBuy.addEventListener("click", () => {
-    buyButton.click();
-  });
+if(stickyBuy){
+
+stickyBuy.addEventListener("click",()=>{
+
+    addToCart(product);
+
+    window.location.href="cart.html";
+
+});
+
 }
 
 /*==========================================================
