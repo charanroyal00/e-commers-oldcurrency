@@ -6,6 +6,10 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+
+
+const wishlistButton = document.querySelector(".wishlist-btn");
+
 /*==========================================================
 
                 URL PARAMETERS
@@ -568,6 +572,43 @@ function addToCart(product){
 
 /*==========================================================
 
+                ADD TO WISHLIST
+
+==========================================================*/
+
+function addToWishlist(product){
+
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+    const exists = wishlist.some(item => item.id === product.id);
+
+    if(exists){
+        return;
+    }
+
+    wishlist.push({
+
+        id: product.id,
+        name: product.name,
+        category: product.category,
+        year: product.year,
+        grade: product.grade,
+        price: Number(product.price.replace(/[₹,]/g,"")),
+        image: product.images[0]
+
+    });
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+    console.log("Wishlist Updated:", wishlist);
+
+}
+
+
+
+
+/*==========================================================
+
                 BUY BUTTON
 
 ==========================================================*/
@@ -603,38 +644,32 @@ buyButton.addEventListener("click",()=>{
 
 }
 
-/*==========================================================
 
-                WISHLIST
-
-==========================================================*/
-
-const wishlistButton = document.querySelector(".wishlist-btn");
 
 if (wishlistButton) {
-  wishlistButton.addEventListener("click", () => {
-    wishlistButton.innerHTML = "❤ Added";
 
-    wishlistButton.style.borderColor = "#b8893d";
+    wishlistButton.addEventListener("click", () => {
 
-    wishlistButton.style.color = "#b8893d";
+        addToWishlist(product);
 
-    gsap.fromTo(
-      wishlistButton,
+        wishlistButton.innerHTML = "❤ Added";
 
-      {
-        scale: 0.8,
-      },
+        wishlistButton.style.borderColor = "#b8893d";
 
-      {
-        scale: 1,
+        wishlistButton.style.color = "#b8893d";
 
-        duration: 0.35,
+        gsap.fromTo(
+            wishlistButton,
+            { scale: 0.8 },
+            {
+                scale: 1,
+                duration: 0.35,
+                ease: "back.out(2)"
+            }
+        );
 
-        ease: "back.out(2)",
-      },
-    );
-  });
+    });
+
 }
 
 /*==========================================================
@@ -869,6 +904,18 @@ gsap.to(".orb-three", {
 
   ease: "sine.inOut",
 });
+
+const wishlistLink = document.querySelector(".outline");
+
+if(wishlistLink){
+
+    wishlistLink.addEventListener("click",()=>{
+
+        window.location.href="wishlist.html";
+
+    });
+
+}
 
 /*==========================================================
 

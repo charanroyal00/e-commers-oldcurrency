@@ -475,17 +475,18 @@ document.querySelectorAll("button").forEach((button) => {
 
 ==========================================================*/
 
-gsap.to(".checkout-btn", {
-  boxShadow: "0 18px 45px rgba(184,137,61,.35)",
+const checkoutGlow = document.querySelector(".checkout-btn");
 
-  duration: 1.6,
+if (checkoutGlow) {
 
-  repeat: -1,
+    gsap.to(checkoutGlow, {
+        boxShadow: "0 18px 45px rgba(184,137,61,.35)",
+        duration: 1.6,
+        repeat: -1,
+        yoyo: true
+    });
 
-  yoyo: true,
-
-  ease: "sine.inOut",
-});
+}
 
 /*==========================================================
 

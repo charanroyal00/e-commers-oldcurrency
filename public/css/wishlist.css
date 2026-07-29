@@ -1,6 +1,6 @@
 /*==========================================================
 
-                    NUMIS CART PAGE
+                    NUMIS WISHLIST PAGE
 
 ==========================================================*/
 
@@ -36,7 +36,7 @@
 
 /*==========================================================
 
-                    RESET
+                        RESET
 
 ==========================================================*/
 
@@ -75,9 +75,9 @@ a {
 }
 
 button {
-  cursor: pointer;
-
   border: none;
+
+  cursor: pointer;
 
   font-family: inherit;
 }
@@ -88,7 +88,7 @@ section {
 
 /*==========================================================
 
-                BACKGROUND ORBS
+                    BACKGROUND ORBS
 
 ==========================================================*/
 
@@ -144,7 +144,7 @@ section {
 
 /*==========================================================
 
-                    NAVBAR
+                        NAVBAR
 
 ==========================================================*/
 
@@ -203,9 +203,9 @@ section {
 .nav-links a {
   color: #555;
 
-  transition: 0.3s;
-
   position: relative;
+
+  transition: 0.35s;
 }
 
 .nav-links a:hover {
@@ -217,15 +217,15 @@ section {
 
   position: absolute;
 
+  left: 0;
+
+  bottom: -8px;
+
   width: 0;
 
   height: 2px;
 
   background: var(--gold);
-
-  bottom: -8px;
-
-  left: 0;
 
   transition: 0.35s;
 }
@@ -276,7 +276,7 @@ section {
 
 /*==========================================================
 
-                BREADCRUMB
+                    BREADCRUMB
 
 ==========================================================*/
 
@@ -300,11 +300,11 @@ section {
 
 /*==========================================================
 
-                HERO
+                        HERO
 
 ==========================================================*/
 
-.cart-hero {
+.wishlist-hero {
   width: min(1450px, 92%);
 
   margin: auto;
@@ -332,7 +332,7 @@ section {
   margin-bottom: 30px;
 }
 
-.cart-hero h1 {
+.wishlist-hero h1 {
   font-family: "Cormorant Garamond", serif;
 
   font-size: 5rem;
@@ -340,7 +340,7 @@ section {
   margin-bottom: 25px;
 }
 
-.cart-hero p {
+.wishlist-hero p {
   max-width: 760px;
 
   margin: auto;
@@ -354,11 +354,11 @@ section {
 
 /*==========================================================
 
-                MAIN LAYOUT
+                    MAIN LAYOUT
 
 ==========================================================*/
 
-.cart-container {
+.wishlist-container {
   width: min(1450px, 92%);
 
   margin: auto;
@@ -388,19 +388,13 @@ section {
   font-size: 2.5rem;
 }
 
-#itemCount {
+#wishlistCount {
   color: var(--gold);
 
   font-weight: 600;
 }
 
-/*==========================================================
-
-                    CART ITEMS
-
-==========================================================*/
-
-#cartItems {
+#wishlistItems {
   display: flex;
 
   flex-direction: column;
@@ -408,10 +402,16 @@ section {
   gap: 28px;
 }
 
-.cart-item {
+/*==========================================================
+
+                    WISHLIST ITEMS
+
+==========================================================*/
+
+.wishlist-item {
   display: grid;
 
-  grid-template-columns: 180px 1fr 180px;
+  grid-template-columns: 180px 1fr 220px;
 
   gap: 30px;
 
@@ -419,7 +419,7 @@ section {
 
   padding: 30px;
 
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.86);
 
   backdrop-filter: blur(18px);
 
@@ -429,14 +429,14 @@ section {
 
   box-shadow: var(--shadow);
 
-  transition: 0.4s ease;
-
   overflow: hidden;
 
   position: relative;
+
+  transition: 0.4s ease;
 }
 
-.cart-item::before {
+.wishlist-item::before {
   content: "";
 
   position: absolute;
@@ -449,17 +449,12 @@ section {
 
   height: 100%;
 
-  background: linear-gradient(
-    to bottom,
-
-    var(--gold),
-    transparent
-  );
+  background: linear-gradient(to bottom, var(--gold), transparent);
 
   transition: 0.35s;
 }
 
-.cart-item:hover {
+.wishlist-item:hover {
   transform: translateY(-8px);
 
   border-color: rgba(184, 137, 61, 0.35);
@@ -467,17 +462,17 @@ section {
   box-shadow: 0 35px 80px rgba(0, 0, 0, 0.1);
 }
 
-.cart-item:hover::before {
+.wishlist-item:hover::before {
   opacity: 1;
 }
 
 /*==========================================================
 
-                    IMAGE
+                        IMAGE
 
 ==========================================================*/
 
-.cart-image {
+.wishlist-image {
   width: 170px;
 
   height: 170px;
@@ -497,7 +492,7 @@ section {
   overflow: hidden;
 }
 
-.cart-image img {
+.wishlist-image img {
   width: 78%;
 
   object-fit: contain;
@@ -505,15 +500,23 @@ section {
   transition: 0.45s;
 }
 
-.cart-item:hover img {
+.wishlist-item:hover .wishlist-image img {
   transform: scale(1.08) rotate(-4deg);
 }
 
 /*==========================================================
 
-                PRODUCT DETAILS
+                    PRODUCT DETAILS
 
 ==========================================================*/
+
+.wishlist-details {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
 
 .product-category {
   display: inline-block;
@@ -527,6 +530,8 @@ section {
   font-weight: 600;
 
   margin-bottom: 14px;
+
+  text-transform: uppercase;
 }
 
 .product-name {
@@ -534,72 +539,24 @@ section {
 
   font-size: 2rem;
 
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .product-info {
-  color: #757575;
-
-  margin-bottom: 28px;
+  color: #777;
 
   line-height: 1.8;
+
+  margin-bottom: 25px;
 }
 
 /*==========================================================
 
-                QUANTITY
+                    ACTIONS
 
 ==========================================================*/
 
-.quantity-controls {
-  display: flex;
-
-  align-items: center;
-
-  gap: 20px;
-}
-
-.quantity-controls button {
-  width: 46px;
-
-  height: 46px;
-
-  border-radius: 50%;
-
-  background: #fff;
-
-  border: 1px solid var(--border);
-
-  font-size: 1.2rem;
-
-  transition: 0.3s;
-}
-
-.quantity-controls button:hover {
-  background: var(--gold);
-
-  color: #fff;
-
-  transform: scale(1.08);
-}
-
-.quantity {
-  width: 50px;
-
-  text-align: center;
-
-  font-weight: 600;
-
-  font-size: 1.05rem;
-}
-
-/*==========================================================
-
-                PRICE
-
-==========================================================*/
-
-.cart-price {
+.wishlist-actions {
   display: flex;
 
   flex-direction: column;
@@ -610,36 +567,129 @@ section {
 }
 
 .price {
-  color: var(--gold);
-
   font-family: "Cormorant Garamond", serif;
 
-  font-size: 2.2rem;
+  color: var(--gold);
 
-  margin-bottom: 20px;
+  font-size: 2.3rem;
+
+  margin-bottom: 25px;
 }
 
-.remove-btn {
-  background: none;
+/*==========================================================
 
-  color: #666;
+                MOVE TO CART BUTTON
+
+==========================================================*/
+
+.move-cart-btn {
+  width: 180px;
+
+  height: 50px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, #c89c4d, #b8893d);
+
+  color: #fff;
 
   font-size: 0.95rem;
+
+  font-weight: 600;
+
+  transition: 0.35s;
+
+  margin-bottom: 14px;
+}
+
+.move-cart-btn:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 15px 35px rgba(184, 137, 61, 0.28);
+}
+
+/*==========================================================
+
+                    REMOVE BUTTON
+
+==========================================================*/
+
+.remove-btn {
+  width: 180px;
+
+  height: 48px;
+
+  border-radius: 16px;
+
+  background: #fff;
+
+  border: 1px solid rgba(184, 137, 61, 0.15);
+
+  color: #666;
 
   transition: 0.35s;
 }
 
 .remove-btn:hover {
-  color: #c0392b;
+  border-color: #d64545;
+
+  color: #d64545;
+
+  transform: translateY(-3px);
 }
 
 /*==========================================================
 
-                SUMMARY CARD
+                    PREMIUM BADGE
 
 ==========================================================*/
 
-.summary-card {
+.product-category::before {
+  content: "♥ ";
+
+  color: var(--gold);
+
+  font-size: 0.9rem;
+}
+
+/*==========================================================
+
+                    CARD GLOW
+
+==========================================================*/
+
+.wishlist-item::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 32px;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25),
+    transparent 45%
+  );
+
+
+  transition: 0.45s;
+}
+
+.wishlist-item:hover::after {
+  opacity: 1;
+}
+
+/*==========================================================
+
+                    SUMMARY CARD
+
+==========================================================*/
+
+.wishlist-summary {
   position: sticky;
 
   top: 130px;
@@ -657,7 +707,7 @@ section {
   box-shadow: var(--shadow);
 }
 
-.summary-card span {
+.wishlist-summary span {
   display: block;
 
   color: var(--gold);
@@ -669,7 +719,7 @@ section {
   margin-bottom: 16px;
 }
 
-.summary-card h2 {
+.wishlist-summary h2 {
   font-family: "Cormorant Garamond", serif;
 
   font-size: 2.6rem;
@@ -682,6 +732,8 @@ section {
 
   justify-content: space-between;
 
+  align-items: center;
+
   margin-bottom: 22px;
 
   color: #666;
@@ -689,33 +741,25 @@ section {
 
 .summary-row strong {
   color: #222;
+
+  font-weight: 600;
 }
 
-.summary-card hr {
+.wishlist-summary hr {
   border: none;
 
   height: 1px;
 
   background: rgba(184, 137, 61, 0.15);
 
-  margin: 30px 0;
+  margin: 32px 0;
 }
 
-.summary-total {
-  display: flex;
+/*==========================================================
 
-  justify-content: space-between;
+                ACTION BUTTONS
 
-  align-items: center;
-
-  margin-bottom: 35px;
-}
-
-.summary-total h2 {
-  color: var(--gold);
-
-  margin: 0;
-}
+==========================================================*/
 
 .checkout-btn {
   width: 100%;
@@ -759,7 +803,7 @@ section {
 
 /*==========================================================
 
-                TRUST SECTION
+                    TRUST SECTION
 
 ==========================================================*/
 
@@ -781,12 +825,22 @@ section {
   background: #faf8f4;
 
   border: 1px solid rgba(184, 137, 61, 0.12);
+
+  transition: 0.35s;
+}
+
+.trust-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
 }
 
 .trust-card h4 {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 
   color: var(--gold);
+
+  font-size: 1rem;
 }
 
 .trust-card p {
@@ -799,11 +853,11 @@ section {
 
 /*==========================================================
 
-                    EMPTY CART
+                    EMPTY WISHLIST
 
 ==========================================================*/
 
-.empty-cart {
+.empty-wishlist {
   width: min(900px, 92%);
 
   margin: 120px auto;
@@ -812,7 +866,7 @@ section {
 
   text-align: center;
 
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.84);
 
   backdrop-filter: blur(18px);
 
@@ -823,7 +877,7 @@ section {
   box-shadow: var(--shadow);
 }
 
-.empty-cart.hidden {
+.empty-wishlist.hidden {
   display: none;
 }
 
@@ -853,7 +907,7 @@ section {
   object-fit: contain;
 }
 
-.empty-cart span {
+.empty-wishlist span {
   display: inline-block;
 
   color: var(--gold);
@@ -865,7 +919,7 @@ section {
   margin-bottom: 18px;
 }
 
-.empty-cart h2 {
+.empty-wishlist h2 {
   font-family: "Cormorant Garamond", serif;
 
   font-size: 3.2rem;
@@ -873,7 +927,7 @@ section {
   margin-bottom: 18px;
 }
 
-.empty-cart p {
+.empty-wishlist p {
   max-width: 620px;
 
   margin: 0 auto 35px;
@@ -983,19 +1037,21 @@ section {
 
 /*==========================================================
 
-                PREMIUM HOVER GLOW
+                PREMIUM BUTTON SHINE
 
 ==========================================================*/
 
 .checkout-btn,
-.primary-btn {
+.primary-btn,
+.move-cart-btn {
   position: relative;
 
   overflow: hidden;
 }
 
 .checkout-btn::before,
-.primary-btn::before {
+.primary-btn::before,
+.move-cart-btn::before {
   content: "";
 
   position: absolute;
@@ -1019,7 +1075,8 @@ section {
 }
 
 .checkout-btn:hover::before,
-.primary-btn:hover::before {
+.primary-btn:hover::before,
+.move-cart-btn:hover::before {
   left: 150%;
 }
 
@@ -1030,11 +1087,11 @@ section {
 ==========================================================*/
 
 @media (max-width: 1200px) {
-  .cart-container {
+  .wishlist-container {
     grid-template-columns: 1fr;
   }
 
-  .summary-card {
+  .wishlist-summary {
     position: relative;
 
     top: 0;
@@ -1046,24 +1103,20 @@ section {
     display: none;
   }
 
-  .cart-item {
+  .wishlist-item {
     grid-template-columns: 1fr;
 
     text-align: center;
   }
 
-  .cart-image {
+  .wishlist-image {
     margin: auto;
   }
 
-  .cart-price {
+  .wishlist-actions {
     align-items: center;
 
     margin-top: 20px;
-  }
-
-  .quantity-controls {
-    justify-content: center;
   }
 
   .footer {
@@ -1078,19 +1131,19 @@ section {
 }
 
 @media (max-width: 650px) {
-  .cart-hero h1 {
+  .wishlist-hero h1 {
     font-size: 3rem;
   }
 
   .section-title {
     flex-direction: column;
 
-    gap: 15px;
-
     align-items: flex-start;
+
+    gap: 15px;
   }
 
-  .summary-card {
+  .wishlist-summary {
     padding: 30px;
   }
 
@@ -1101,12 +1154,14 @@ section {
 
 /*==========================================================
 
-                GSAP INITIAL STATE
+                    GSAP INITIAL STATE
 
 ==========================================================*/
 
-.summary-card,
+.wishlist-summary,
+.empty-wishlist,
 .trust-card,
 .footer {
-    transform: translateY(50px);
+
+  transform: translateY(50px);
 }
