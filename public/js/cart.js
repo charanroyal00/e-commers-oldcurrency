@@ -271,7 +271,7 @@ if (checkoutBtn) {
       duration: 0.18,
     });
 
-    alert("Checkout page will be connected later.");
+    window.location.href="./cart-checkout.html"
   });
 }
 
