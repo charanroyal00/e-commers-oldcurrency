@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>NUMIS | Wishlist</title>
+
+    <link rel="stylesheet" href="./css/wishlist.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  </head>
+
+  <body>
+    <!--======================================================
+
+                        BACKGROUND
+
+    =======================================================-->
+
+    <div class="background-orb orb-one"></div>
+
+    <div class="background-orb orb-two"></div>
+
+    <div class="background-orb orb-three"></div>
+
+    <!--======================================================
+
+                            NAVBAR
+
+    =======================================================-->
+
+    <header class="navbar">
+      <div class="logo">NUM<span>IS</span></div>
+
+      <nav class="nav-links">
+        <a href="index.html">Explore</a>
+
+        <a href="auctions.html">Auctions</a>
+
+        <a href="collections.html">Collections</a>
+
+        <a href="journal.html">Journal</a>
+      </nav>
+
+      <div class="nav-buttons">
+        <a href="product.html" class="secondary-btn"> Continue Shopping </a>
+
+        <a href="cart.html" class="secondary-btn"> Cart </a>
+
+        <a href="wishlist.html" class="primary-btn"> Wishlist </a>
+      </div>
+    </header>
+
+    <!--======================================================
+
+                        BREADCRUMB
+
+    =======================================================-->
+
+    <section class="breadcrumb">
+      <a href="index.html">Home</a>
+
+      <span>/</span>
+
+      <a href="product.html">Products</a>
+
+      <span>/</span>
+
+      <strong>Wishlist</strong>
+    </section>
+
+    <!--======================================================
+
+                            HERO
+
+    =======================================================-->
+
+    <section class="wishlist-hero">
+      <span class="hero-label"> CURATED FAVORITES </span>
+
+      <h1>Your Personal Wishlist</h1>
+
+      <p>
+        Save rare coins, historic banknotes and premium collectibles to revisit
+        later. Compare, organize and move your favorite pieces to your cart
+        whenever you're ready.
+      </p>
+    </section>
+
+    <!--======================================================
+
+                        MAIN CONTAINER
+
+    =======================================================-->
+
+    <main class="wishlist-container">
+      <!-- LEFT COLUMN -->
+
+      <section class="wishlist-products">
+        <div class="section-title">
+          <h2>Saved Collection</h2>
+
+          <span id="wishlistCount"> 0 Items </span>
+        </div>
+
+        <!-- Wishlist items will be inserted here -->
+
+        <div id="wishlistItems"></div>
+      </section>
+
+      <!--======================================================
+
+                        SUMMARY CARD
+
+        =======================================================-->
+
+      <aside class="wishlist-summary">
+        <span> SAVED COLLECTION </span>
+
+        <h2>Wishlist Overview</h2>
+
+        <div class="summary-row">
+          <p>Saved Items</p>
+
+          <strong id="savedItems"> 0 </strong>
+        </div>
+
+        <div class="summary-row">
+          <p>Estimated Value</p>
+
+          <strong id="estimatedValue"> ₹0 </strong>
+        </div>
+
+        <div class="summary-row">
+          <p>Ready to Purchase</p>
+
+          <strong> Anytime </strong>
+        </div>
+
+        <hr />
+
+        <button id="moveAllBtn" class="checkout-btn">Move All To Cart</button>
+
+        <a href="cart.html" class="continue-shopping"> View Shopping Cart </a>
+
+        <a href="product.html" class="continue-shopping">
+          Continue Exploring
+        </a>
+
+        <!--====================
+
+                TRUST SECTION
+
+            =====================-->
+
+        <div class="trust-section">
+          <div class="trust-card">
+            <h4>❤ Your Favorites</h4>
+
+            <p>
+              Save collectibles you're interested in and purchase them whenever
+              you're ready.
+            </p>
+          </div>
+
+          <div class="trust-card">
+            <h4>✓ Authentic Archive</h4>
+
+            <p>
+              Every collectible listed is professionally verified before being
+              offered.
+            </p>
+          </div>
+
+          <div class="trust-card">
+            <h4>🔒 Secure Marketplace</h4>
+
+            <p>
+              Protected checkout and trusted sellers ensure a premium buying
+              experience.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!--======================================================
+
+                        EMPTY WISHLIST
+
+    =======================================================-->
+
+    <section id="emptyWishlist" class="empty-wishlist hidden">
+      <div class="empty-coin">
+        <img src="images/products/coin1.png" alt="Coin" />
+      </div>
+
+      <span> YOUR COLLECTION AWAITS </span>
+
+      <h2>Your Wishlist is Empty</h2>
+
+      <p>
+        Browse our premium archive and save your favorite collectibles to build
+        your personal collection before purchasing.
+      </p>
+
+      <a href="product.html" class="primary-btn"> Explore Collection </a>
+    </section>
+
+    <!--======================================================
+
+                            FOOTER
+
+    =======================================================-->
+
+    <footer class="footer">
+      <div class="footer-left">
+        <h2>NUM<span>IS</span></h2>
+
+        <p>
+          Discover authenticated rare coins, historic banknotes and
+          museum-quality collectibles from trusted sellers around the world.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div>
+          <h4>Marketplace</h4>
+
+          <a href="product.html"> Products </a>
+
+          <a href="auctions.html"> Auctions </a>
+
+          <a href="collections.html"> Collections </a>
+        </div>
+
+        <div>
+          <h4>Company</h4>
+
+          <a href="#"> About </a>
+
+          <a href="#"> Journal </a>
+
+          <a href="#"> Contact </a>
+        </div>
+
+        <div>
+          <h4>Support</h4>
+
+          <a href="#"> Help Center </a>
+
+          <a href="#"> Privacy </a>
+
+          <a href="#"> Terms </a>
+        </div>
+      </div>
+    </footer>
+
+    <!--======================================================
+
+                    WISHLIST ITEM TEMPLATE
+
+    =======================================================-->
+
+    <template id="wishlistItemTemplate">
+      <article class="wishlist-item">
+        <div class="wishlist-image">
+          <img src="" alt="Product Image" />
+        </div>
+
+        <div class="wishlist-details">
+          <span class="product-category"> COIN </span>
+
+          <h3 class="product-name">Victoria Silver Rupee</h3>
+
+          <p class="product-info">British India • 1886 • UNC Grade</p>
+        </div>
+
+        <div class="wishlist-actions">
+          <h3 class="price">₹18,500</h3>
+
+          <button class="move-cart-btn">Move To Cart</button>
+
+          <button class="remove-btn">Remove</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <script src="./js/wishlist.js"></script>
+  </body>
+</html>

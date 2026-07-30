@@ -6,6 +6,10 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+
+
+const wishlistButton = document.querySelector(".wishlist-btn");
+
 /*==========================================================
 
                 URL PARAMETERS
@@ -73,13 +77,13 @@ const products = [
       "Because of its excellent preservation, limited availability, and strong collector demand, this coin represents both historical heritage and long-term collectible value.",
 
     images: [
-      "images/products/victoria-1.png",
+      "assests/auction.png",
 
-      "images/products/victoria-2.png",
+      "assests/auction.png",
 
-      "images/products/victoria-3.png",
+      "assests/auction.png",
 
-      "images/products/victoria-4.png",
+      "assests/auction.png",
     ],
   },
 
@@ -522,68 +526,150 @@ renderRelatedProducts();
 
 /*==========================================================
 
-                BUY BUTTON
+                ADD TO CART
 
 ==========================================================*/
 
-const buyButton = document.querySelector(".buy-btn");
+function addToCart(product){
 
-if (buyButton) {
-  buyButton.addEventListener("click", () => {
-    gsap.fromTo(
-      buyButton,
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-      {
-        scale: 1,
-      },
+    const existingProduct = cart.find(item => item.id === product.id);
 
-      {
-        scale: 1.06,
+    if(existingProduct){
 
-        yoyo: true,
+        existingProduct.quantity += 1;
 
-        repeat: 1,
+    }
 
-        duration: 0.18,
-      },
-    );
+    else{
 
-    alert(`Proceeding to checkout for\n\n${product.name}`);
-  });
+        cart.push({
+
+            id:product.id,
+
+            name:product.name,
+
+            category:product.category,
+
+            year:product.year,
+
+            grade:product.grade,
+
+            price:Number(product.price.replace(/[₹,]/g,"")),
+
+            image:product.images[0],
+
+            quantity:1
+
+        });
+
+    }
+
+    localStorage.setItem("cart",JSON.stringify(cart));
+
 }
 
 /*==========================================================
 
-                WISHLIST
+                ADD TO WISHLIST
 
 ==========================================================*/
 
-const wishlistButton = document.querySelector(".wishlist-btn");
+function addToWishlist(product){
 
-if (wishlistButton) {
-  wishlistButton.addEventListener("click", () => {
-    wishlistButton.innerHTML = "❤ Added";
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-    wishlistButton.style.borderColor = "#b8893d";
+    const exists = wishlist.some(item => item.id === product.id);
 
-    wishlistButton.style.color = "#b8893d";
+    if(exists){
+        return;
+    }
+
+    wishlist.push({
+
+        id: product.id,
+        name: product.name,
+        category: product.category,
+        year: product.year,
+        grade: product.grade,
+        price: Number(product.price.replace(/[₹,]/g,"")),
+        image: product.images[0]
+
+    });
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+    console.log("Wishlist Updated:", wishlist);
+
+}
+
+
+
+
+/*==========================================================
+
+                BUY BUTTON
+
+==========================================================*/
+
+const buyButton=document.querySelector(".buy-btn");
+
+if(buyButton){
+
+buyButton.addEventListener("click",()=>{
+
+    addToCart(product);
 
     gsap.fromTo(
-      wishlistButton,
 
-      {
-        scale: 0.8,
-      },
+        buyButton,
 
-      {
-        scale: 1,
+        {
+            scale:1
+        },
 
-        duration: 0.35,
+        {
+            scale:1.08,
+            duration:.25,
+            repeat:1,
+            yoyo:true
+        }
 
-        ease: "back.out(2)",
-      },
     );
-  });
+
+    window.location.href="cart.html";
+
+});
+
+}
+
+
+
+if (wishlistButton) {
+
+    wishlistButton.addEventListener("click", () => {
+
+        addToWishlist(product);
+
+        wishlistButton.innerHTML = "❤ Added";
+
+        wishlistButton.style.borderColor = "#b8893d";
+
+        wishlistButton.style.color = "#b8893d";
+
+        gsap.fromTo(
+            wishlistButton,
+            { scale: 0.8 },
+            {
+                scale: 1,
+                duration: 0.35,
+                ease: "back.out(2)"
+            }
+        );
+
+    });
+
 }
 
 /*==========================================================
@@ -592,12 +678,18 @@ if (wishlistButton) {
 
 ==========================================================*/
 
-const stickyBuy = document.querySelector(".floating-purchase button");
+const stickyBuy=document.querySelector(".floating-purchase button");
 
-if (stickyBuy) {
-  stickyBuy.addEventListener("click", () => {
-    buyButton.click();
-  });
+if(stickyBuy){
+
+stickyBuy.addEventListener("click",()=>{
+
+    addToCart(product);
+
+    window.location.href="cart.html";
+
+});
+
 }
 
 /*==========================================================
@@ -812,6 +904,18 @@ gsap.to(".orb-three", {
 
   ease: "sine.inOut",
 });
+
+const wishlistLink = document.querySelector(".outline");
+
+if(wishlistLink){
+
+    wishlistLink.addEventListener("click",()=>{
+
+        window.location.href="wishlist.html";
+
+    });
+
+}
 
 /*==========================================================
 

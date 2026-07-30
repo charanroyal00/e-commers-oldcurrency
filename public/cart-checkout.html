@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>NUMIS | Secure Checkout</title>
+
+    <link rel="stylesheet" href="./css/cart-checkout.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  </head>
+
+  <body>
+
+    <!--======================================================
+
+                        BACKGROUND ORBS
+
+    =======================================================-->
+
+    <div class="background-orb orb-one"></div>
+
+    <div class="background-orb orb-two"></div>
+
+    <div class="background-orb orb-three"></div>
+
+    <!--======================================================
+
+                            NAVBAR
+
+    =======================================================-->
+
+    <header class="navbar">
+
+      <div class="logo">
+        NUM<span>IS</span>
+      </div>
+
+      <nav class="nav-links">
+
+        <a href="index.html">
+          Explore
+        </a>
+
+        <a href="auctions.html">
+          Auctions
+        </a>
+
+        <a href="collections.html">
+          Collections
+        </a>
+
+        <a href="journal.html">
+          Journal
+        </a>
+
+      </nav>
+
+      <div class="nav-buttons">
+
+        <a href="product.html" class="secondary-btn">
+          Continue Shopping
+        </a>
+
+        <a href="cart.html" class="secondary-btn">
+          Cart
+        </a>
+
+        <a href="checkout.html" class="primary-btn">
+          Checkout
+        </a>
+
+      </div>
+
+    </header>
+
+    <!--======================================================
+
+                        BREADCRUMB
+
+    =======================================================-->
+
+    <section class="breadcrumb">
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <span>/</span>
+
+      <a href="cart.html">
+        Cart
+      </a>
+
+      <span>/</span>
+
+      <strong>
+        Checkout
+      </strong>
+
+    </section>
+
+    <!--======================================================
+
+                        HERO
+
+    =======================================================-->
+
+    <section class="checkout-hero">
+
+      <span class="hero-label">
+
+        SECURE PURCHASE
+
+      </span>
+
+      <h1>
+
+        Complete Your Collection
+
+      </h1>
+
+      <p>
+
+        Every collectible purchased through NUMIS is professionally
+        authenticated, securely packaged, and fully protected throughout
+        the delivery process.
+
+      </p>
+
+    </section>
+
+    <!--======================================================
+
+                        MAIN CONTENT
+
+    =======================================================-->
+
+    <main class="checkout-container">
+
+      <!--==================================================
+
+                SHIPPING INFORMATION
+
+      ===================================================-->
+
+      <section class="checkout-form">
+
+        <div class="section-heading">
+
+          <span>
+
+            SHIPPING DETAILS
+
+          </span>
+
+          <h2>
+
+            Delivery Information
+
+          </h2>
+
+          <p>
+
+            Please provide your shipping details to ensure your
+            authenticated collectibles are delivered safely.
+
+          </p>
+
+        </div>
+
+        <!--==============================================
+
+                    CUSTOMER DETAILS
+
+        ==============================================-->
+
+        <form id="checkoutForm">
+
+          <div class="form-row">
+
+            <div class="input-group">
+
+              <label for="fullName">
+
+                Full Name
+
+              </label>
+
+              <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+              />
+
+            </div>
+
+            <div class="input-group">
+
+              <label for="email">
+
+                Email Address
+
+              </label>
+
+              <input
+                type="email"
+                id="email"
+                placeholder="example@email.com"
+              />
+
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="input-group">
+
+              <label for="phone">
+
+                Phone Number
+
+              </label>
+
+              <input
+                type="tel"
+                id="phone"
+                placeholder="+91 XXXXX XXXXX"
+              />
+
+            </div>
+
+            <div class="input-group">
+
+              <label for="pincode">
+
+                PIN Code
+
+              </label>
+
+              <input
+                type="text"
+                id="pincode"
+                placeholder="201009"
+              />
+
+            </div>
+
+          </div>
+
+          <div class="input-group">
+
+            <label for="address">
+
+              Address
+
+            </label>
+
+            <textarea
+              id="address"
+              rows="4"
+              placeholder="House Number, Street, Area..."
+            ></textarea>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="input-group">
+
+              <label for="city">
+
+                City
+
+              </label>
+
+              <input
+                type="text"
+                id="city"
+                placeholder="Ghaziabad"
+              />
+
+            </div>
+
+            <div class="input-group">
+
+              <label for="state">
+
+                State
+
+              </label>
+
+              <input
+                type="text"
+                id="state"
+                placeholder="Uttar Pradesh"
+              />
+
+            </div>
+
+          </div>
+                <!--======================================================
+
+                    SHIPPING ADDRESS
+
+    =======================================================-->
+
+      <section class="checkout-card">
+
+        <div class="card-heading">
+          <span>02</span>
+          <h2>Shipping Information</h2>
+        </div>
+
+        <div class="form-grid">
+
+          <div class="form-group full-width">
+            <label for="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Harsh Goel"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              placeholder="+91 98765 43210"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="altPhone">Alternate Phone</label>
+            <input
+              type="tel"
+              id="altPhone"
+              placeholder="Optional"
+            />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="address">Street Address</label>
+            <input
+              type="text"
+              id="address"
+              placeholder="House No., Street, Area"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="city">City</label>
+            <input
+              type="text"
+              id="city"
+              placeholder="New Delhi"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="state">State</label>
+            <input
+              type="text"
+              id="state"
+              placeholder="Delhi"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="zip">PIN Code</label>
+            <input
+              type="text"
+              id="zip"
+              maxlength="6"
+              placeholder="110001"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="country">Country</label>
+
+            <select id="country">
+              <option value="India" selected>India</option>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Canada</option>
+              <option>Australia</option>
+              <option>Singapore</option>
+            </select>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!--======================================================
+
+                    DELIVERY OPTIONS
+
+    =======================================================-->
+
+      <section class="checkout-card">
+
+        <div class="card-heading">
+          <span>03</span>
+          <h2>Delivery Method</h2>
+        </div>
+
+        <div class="delivery-options">
+
+          <label class="delivery-card active">
+
+            <input
+              type="radio"
+              name="delivery"
+              value="standard"
+              checked
+            />
+
+            <div>
+
+              <h3>Standard Delivery</h3>
+
+              <p>
+                5–7 Business Days
+              </p>
+
+            </div>
+
+            <strong>FREE</strong>
+
+          </label>
+
+          <label class="delivery-card">
+
+            <input
+              type="radio"
+              name="delivery"
+              value="express"
+            />
+
+            <div>
+
+              <h3>Express Delivery</h3>
+
+              <p>
+                2–3 Business Days
+              </p>
+
+            </div>
+
+            <strong>₹499</strong>
+
+          </label>
+
+          <label class="delivery-card">
+
+            <input
+              type="radio"
+              name="delivery"
+              value="priority"
+            />
+
+            <div>
+
+              <h3>Priority Insured Delivery</h3>
+
+              <p>
+                Fully insured premium shipping
+              </p>
+
+            </div>
+
+            <strong>₹999</strong>
+
+          </label>
+
+        </div>
+
+      </section>
+            <!--======================================================
+
+                        ORDER SUMMARY
+
+    =======================================================-->
+
+      <aside class="checkout-summary">
+
+        <span class="summary-label">
+          ORDER SUMMARY
+        </span>
+
+        <h2>
+          Collection Total
+        </h2>
+
+        <!--==============================================
+
+                    ORDER ITEMS
+
+        ==============================================-->
+
+        <div id="checkoutItems" class="checkout-items">
+
+          <!-- Items will be inserted by checkout.js -->
+
+        </div>
+
+        <!--==============================================
+
+                    PRICE SUMMARY
+
+        ==============================================-->
+
+        <div class="summary-box">
+
+          <div class="summary-row">
+
+            <p>
+              Subtotal
+            </p>
+
+            <strong id="subtotal">
+              ₹0
+            </strong>
+
+          </div>
+
+          <div class="summary-row">
+
+            <p>
+              Shipping
+            </p>
+
+            <strong id="shippingCost">
+              Free
+            </strong>
+
+          </div>
+
+          <div class="summary-row">
+
+            <p>
+              Authentication
+            </p>
+
+            <strong>
+              Included
+            </strong>
+
+          </div>
+
+          <hr />
+
+          <div class="summary-total">
+
+            <h3>
+              Grand Total
+            </h3>
+
+            <h2 id="grandTotal">
+              ₹0
+            </h2>
+
+          </div>
+
+        </div>
+
+        <!--==============================================
+
+                    PAYMENT SECURITY
+
+        ==============================================-->
+
+        <div class="payment-security">
+
+          <h3>
+
+            Secure Payment
+
+          </h3>
+
+          <p>
+
+            Your payment is protected using
+            256-bit SSL encryption. Every order
+            is authenticated before dispatch.
+
+          </p>
+
+        </div>
+
+        <!--==============================================
+
+                    PAYMENT BUTTON
+
+        ==============================================-->
+
+        <button
+          id="paymentBtn"
+          class="checkout-btn"
+        >
+
+          Proceed to Secure Payment
+
+        </button>
+
+        <a
+          href="cart.html"
+          class="continue-shopping"
+        >
+
+          ← Back to Cart
+
+        </a>
+
+      </aside>
+
+    </main>
+
+    <!--======================================================
+
+                        TRUST SECTION
+
+    =======================================================-->
+
+    <section class="trust-section">
+
+      <div class="trust-card">
+
+        <h3>
+
+          ✓ Certified Authenticity
+
+        </h3>
+
+        <p>
+
+          Every collectible listed on NUMIS is
+          professionally verified before shipping.
+
+        </p>
+
+      </div>
+
+      <div class="trust-card">
+
+        <h3>
+
+          🔒 Secure Transactions
+
+        </h3>
+
+        <p>
+
+          Industry-standard encrypted payments
+          with complete buyer protection.
+
+        </p>
+
+      </div>
+
+      <div class="trust-card">
+
+        <h3>
+
+          📦 Museum Grade Packaging
+
+        </h3>
+
+        <p>
+
+          Premium protective packaging ensures
+          your collectibles arrive safely.
+
+        </p>
+
+      </div>
+
+    </section>
+
+    <!--======================================================
+
+                            FOOTER
+
+    =======================================================-->
+
+    <footer class="footer">
+
+      <div class="footer-left">
+
+        <h2>
+
+          NUM<span>IS</span>
+
+        </h2>
+
+        <p>
+
+          Discover authenticated rare coins,
+          historic banknotes and museum-quality
+          collectibles from trusted sellers
+          around the world.
+
+        </p>
+
+      </div>
+
+      <div class="footer-links">
+
+        <div>
+
+          <h4>
+
+            Marketplace
+
+          </h4>
+
+          <a href="product.html">
+
+            Products
+
+          </a>
+
+          <a href="auctions.html">
+
+            Auctions
+
+          </a>
+
+          <a href="collections.html">
+
+            Collections
+
+          </a>
+
+        </div>
+
+        <div>
+
+          <h4>
+
+            Company
+
+          </h4>
+
+          <a href="#">
+
+            About
+
+          </a>
+
+          <a href="#">
+
+            Journal
+
+          </a>
+
+          <a href="#">
+
+            Contact
+
+          </a>
+
+        </div>
+
+        <div>
+
+          <h4>
+
+            Support
+
+          </h4>
+
+          <a href="#">
+
+            Help Center
+
+          </a>
+
+          <a href="#">
+
+            Privacy
+
+          </a>
+
+          <a href="#">
+
+            Terms
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+    <!--======================================================
+
+                        SCRIPTS
+
+    =======================================================-->
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <script src="./js/cart-checkout.js"></script>
+
+  </body>
+
+</html>
