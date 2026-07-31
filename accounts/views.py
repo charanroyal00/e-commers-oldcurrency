@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import User, Category, Product, Cart, Wishlist, Checkout
+from .models import User, Category, Product, Cart, Wishlist, Checkout, Order
 from django.db.models import Q
 from .serializers import (
     RegisterSerializer,
@@ -16,6 +16,7 @@ from .serializers import (
     CartSerializer,
     WishlistSerializer,
     CheckoutSerializer,
+    OrderSerializer,
 )
 
 
@@ -169,3 +170,13 @@ class CheckoutListCreateView(generics.ListCreateAPIView):
 class CheckoutDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Checkout.objects.all()
     serializer_class = CheckoutSerializer
+
+# Order APIs
+
+class OrderListCreateView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer

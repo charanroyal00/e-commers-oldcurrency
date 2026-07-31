@@ -15,6 +15,8 @@ from .views import (
     WishlistDetailView,
     CheckoutListCreateView,
     CheckoutDetailView,
+    OrderListCreateView,
+    OrderDetailView,
 )
 
 urlpatterns = [
@@ -43,4 +45,8 @@ urlpatterns = [
     # Checkout APIs
     path("checkout/", CheckoutListCreateView.as_view(), name="checkout-list"),
     path("checkout/<int:pk>/", CheckoutDetailView.as_view(), name="checkout-detail"),
+
+    # Order APIs
+    path("orders/", OrderListCreateView.as_view(), name="order-list"),
+    path("orders/<int:pk>/", OrderDetailView.as_view(), name="order-detail"),
 ]
