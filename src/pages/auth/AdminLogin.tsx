@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Eye, EyeOff, Lock, Mail, ShieldCheck } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { authAPI } from '../../services/api'
 
 const AdminLogin = () => {
   const navigate = useNavigate()
@@ -38,13 +39,18 @@ const AdminLogin = () => {
     setErrors((prev) => ({ ...prev, [name]: '' }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (validate()) {
-      // TODO: connect to Django API POST /api/login/
-      navigate('/dashboard')
+      try {
+        await authAPI.login({ email: formData.email, password: formData.password })
+        navigate('/dashboard')
+      } catch (err: any) {
+        setErrors((prev) => ({ ...prev, password: err.message || 'Login failed' }))
+      }
     }
   }
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-ink-900 px-4">

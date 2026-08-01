@@ -16,9 +16,13 @@ function App() {
     <Router>
       <Routes>
         {/* Auth Routes */}
-        <Route path="/admin/login"    element={<AdminLogin />} />
-        <Route path="/seller/login"   element={<SellerLogin />} />
+        <Route path="/admin/login"     element={<AdminLogin />} />
+        <Route path="/seller/login"    element={<SellerLogin />} />
         <Route path="/seller/register" element={<SellerRegister />} />
+        <Route path="/auth/register"   element={<SellerRegister />} />
+        <Route path="/auth/login"      element={<SellerLogin />} />
+        <Route path="/register"        element={<SellerRegister />} />
+        <Route path="/login"           element={<SellerLogin />} />
 
         {/* Dashboard Routes */}
         <Route path="/" element={<DashboardLayout />}>
