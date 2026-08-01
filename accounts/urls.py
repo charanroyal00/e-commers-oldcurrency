@@ -11,6 +11,12 @@ from .views import (
     ProductDetailView,
     CartListCreateView,
     CartDetailView,
+    WishlistListCreateView,
+    WishlistDetailView,
+    CheckoutListCreateView,
+    CheckoutDetailView,
+    OrderListCreateView,
+    OrderDetailView,
 )
 
 urlpatterns = [
@@ -31,4 +37,16 @@ urlpatterns = [
     # Cart APIs
     path("cart/", CartListCreateView.as_view(), name="cart-list"),
     path("cart/<int:pk>/", CartDetailView.as_view(), name="cart-detail"),
+
+    # Wishlist APIs
+    path("wishlist/", WishlistListCreateView.as_view(), name="wishlist-list"),
+    path("wishlist/<int:pk>/", WishlistDetailView.as_view(), name="wishlist-detail"),
+
+    # Checkout APIs
+    path("checkout/", CheckoutListCreateView.as_view(), name="checkout-list"),
+    path("checkout/<int:pk>/", CheckoutDetailView.as_view(), name="checkout-detail"),
+
+    # Order APIs
+    path("orders/", OrderListCreateView.as_view(), name="order-list"),
+    path("orders/<int:pk>/", OrderDetailView.as_view(), name="order-detail"),
 ]
