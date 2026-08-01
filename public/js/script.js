@@ -3,6 +3,7 @@
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
+
   /* =================================================
        REGISTER GSAP PLUGIN
     ================================================= */
@@ -92,10 +93,76 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  Account.addEventListener("click" , ()=> {
-    window.location.href="/public/registration-form.html"
+  Account.addEventListener("click", () => {
+    window.location.href = "./auth/auth.html";
   });
 
+  const API_URL = "http://127.0.0.1:8000/api";
+
+const categoryContainer = document.querySelector(".category-grid");
+
+async function loadCategories() {
+
+    try {
+
+        const response = await fetch(`${API_URL}/categories/`);
+
+        if (!response.ok) {
+            throw new Error("Unable to fetch categories");
+        }
+
+        const categories = await response.json();
+
+        categoryContainer.innerHTML = "";
+
+        categories.forEach(category => {
+
+            categoryContainer.innerHTML += `
+                <div class="category-card">
+
+                    <h3>${category.name}</h3>
+
+                    <p>${category.description ?? ""}</p>
+
+                    <button
+                        class="explore-btn"
+                        data-id="${category.id}">
+                        Explore Collection
+                    </button>
+
+                </div>
+            `;
+
+        });
+
+        // Attach event only to buttons
+        categoryContainer.addEventListener("click", (e) => {
+    const button = e.target.closest(".explore-btn");
+
+    if (!button) return;
+
+    const id = button.dataset.id;
+
+    console.log(id);
+
+    window.location.href = `product.html?category=${id}`;
+});
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        categoryContainer.innerHTML = `
+            <h2>Unable to load categories.</h2>
+        `;
+
+    }
+
+}
+console.log(categoryContainer);
+loadCategories();
   /* =================================================
        INITIAL STATES
     ================================================= */
@@ -614,283 +681,259 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
 
-    /* ==========================================================
+  /* ==========================================================
         NUMIS SHOWCASE ANIMATION
 ========================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    gsap.registerPlugin(ScrollTrigger);
 
-gsap.registerPlugin(ScrollTrigger);
-
-/*=============================================
+    /*=============================================
         ELEMENTS
 =============================================*/
 
-const cards = gsap.utils.toArray(".editorial-card");
-const images = gsap.utils.toArray(".card-image img");
-const section = document.querySelector(".showcase-section");
+    const cards = gsap.utils.toArray(".editorial-card");
+    const images = gsap.utils.toArray(".card-image img");
+    const section = document.querySelector(".showcase-section");
 
-/*=============================================
+    /*=============================================
         INITIAL STATE
 =============================================*/
 
-gsap.set(cards,{
-    opacity:0,
-    y:80,
-    scale:.95
-});
+    gsap.set(cards, {
+      opacity: 0,
+      y: 80,
+      scale: 0.95,
+    });
 
-gsap.set(".showcase-heading .heading-tag",{
-    opacity:0,
-    y:25
-});
+    gsap.set(".showcase-heading .heading-tag", {
+      opacity: 0,
+      y: 25,
+    });
 
-gsap.set(".showcase-heading h2",{
-    opacity:0,
-    y:40
-});
+    gsap.set(".showcase-heading h2", {
+      opacity: 0,
+      y: 40,
+    });
 
-gsap.set(".showcase-heading p",{
-    opacity:0,
-    y:30
-});
+    gsap.set(".showcase-heading p", {
+      opacity: 0,
+      y: 30,
+    });
 
-/*=============================================
+    /*=============================================
         HEADING
 =============================================*/
 
-const headingTL = gsap.timeline({
-    scrollTrigger:{
-        trigger:section,
-        start:"top 75%"
-    }
-});
+    const headingTL = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 75%",
+      },
+    });
 
-headingTL
-.to(".showcase-heading .heading-tag",{
-    opacity:1,
-    y:0,
-    duration:.6
-})
-.to(".showcase-heading h2",{
-    opacity:1,
-    y:0,
-    duration:.9,
-    ease:"power3.out"
-},"-=.3")
-.to(".showcase-heading p",{
-    opacity:1,
-    y:0,
-    duration:.8
-},"-=.5");
+    headingTL
+      .to(".showcase-heading .heading-tag", {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+      })
+      .to(
+        ".showcase-heading h2",
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+        },
+        "-=.3",
+      )
+      .to(
+        ".showcase-heading p",
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+        },
+        "-=.5",
+      );
 
-/*=============================================
+    /*=============================================
         CARDS STAGGER
 =============================================*/
 
-gsap.to(cards,{
+    gsap.to(cards, {
+      opacity: 1,
 
-    opacity:1,
+      y: 0,
 
-    y:0,
+      scale: 1,
 
-    scale:1,
+      stagger: 0.18,
 
-    stagger:.18,
+      duration: 1,
 
-    duration:1,
+      ease: "power3.out",
 
-    ease:"power3.out",
+      scrollTrigger: {
+        trigger: ".editorial-layout",
+        start: "top 72%",
+      },
+    });
 
-    scrollTrigger:{
-        trigger:".editorial-layout",
-        start:"top 72%"
-    }
-
-});
-
-/*=============================================
+    /*=============================================
         FLOATING IMAGES
 =============================================*/
 
-images.forEach((img,index)=>{
+    images.forEach((img, index) => {
+      gsap.to(img, {
+        y: -10,
 
-gsap.to(img,{
+        duration: 3 + index * 0.25,
 
-    y:-10,
+        repeat: -1,
 
-    duration:3+(index*.25),
+        yoyo: true,
 
-    repeat:-1,
+        ease: "sine.inOut",
+      });
+    });
 
-    yoyo:true,
-
-    ease:"sine.inOut"
-
-});
-
-});
-
-/*=============================================
+    /*=============================================
         CARD HOVER
 =============================================*/
 
-cards.forEach(card=>{
+    cards.forEach((card) => {
+      const img = card.querySelector("img");
+      const info = card.querySelector(".card-info");
 
-const img=card.querySelector("img");
-const info=card.querySelector(".card-info");
+      card.addEventListener("mouseenter", () => {
+        gsap.to(img, {
+          scale: 1.08,
+          y: -12,
+          duration: 0.6,
+          ease: "power2.out",
+        });
 
-card.addEventListener("mouseenter",()=>{
+        gsap.to(info, {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+        });
+      });
 
-gsap.to(img,{
-    scale:1.08,
-    y:-12,
-    duration:.6,
-    ease:"power2.out"
-});
+      card.addEventListener("mouseleave", () => {
+        gsap.to(img, {
+          scale: 1,
+          y: 0,
+          rotationX: 0,
+          rotationY: 0,
+          duration: 0.6,
+        });
 
-gsap.to(info,{
-    opacity:1,
-    y:0,
-    duration:.45
-});
+        gsap.to(info, {
+          opacity: 0,
+          y: 25,
+          duration: 0.3,
+        });
+      });
+    });
 
-});
-
-card.addEventListener("mouseleave",()=>{
-
-gsap.to(img,{
-    scale:1,
-    y:0,
-    rotationX:0,
-    rotationY:0,
-    duration:.6
-});
-
-gsap.to(info,{
-    opacity:0,
-    y:25,
-    duration:.3
-});
-
-});
-
-});
-
-/*=============================================
+    /*=============================================
         3D PARALLAX
 =============================================*/
 
-cards.forEach(card=>{
+    cards.forEach((card) => {
+      const img = card.querySelector("img");
 
-const img = card.querySelector("img");
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
 
-card.addEventListener("mousemove",(e)=>{
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-const rect = card.getBoundingClientRect();
+        const rotateY = (x / rect.width - 0.5) * 18;
+        const rotateX = (0.5 - y / rect.height) * 18;
 
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
+        gsap.to(img, {
+          rotationY: rotateY,
+          rotationX: rotateX,
+          transformPerspective: 1000,
+          transformOrigin: "center center",
+          duration: 0.35,
+          ease: "power2.out",
+        });
+      });
 
-const rotateY = ((x / rect.width) - 0.5) * 18;
-const rotateX = ((0.5 - y / rect.height)) * 18;
+      card.addEventListener("mouseleave", () => {
+        gsap.to(img, {
+          rotationX: 0,
+          rotationY: 0,
+          duration: 0.7,
+          ease: "power3.out",
+        });
+      });
+    });
 
-gsap.to(img,{
-    rotationY:rotateY,
-    rotationX:rotateX,
-    transformPerspective:1000,
-    transformOrigin:"center center",
-    duration:.35,
-    ease:"power2.out"
-});
-
-});
-
-card.addEventListener("mouseleave",()=>{
-
-gsap.to(img,{
-    rotationX:0,
-    rotationY:0,
-    duration:.7,
-    ease:"power3.out"
-});
-
-});
-
-});
-
-/*=============================================
+    /*=============================================
         SPOTLIGHT FOLLOW
 =============================================*/
 
-const light=document.createElement("div");
+    const light = document.createElement("div");
 
-light.className="mouse-light";
+    light.className = "mouse-light";
 
-document.body.appendChild(light);
+    document.body.appendChild(light);
 
-document.addEventListener("mousemove",(e)=>{
+    document.addEventListener("mousemove", (e) => {
+      gsap.to(light, {
+        x: e.clientX - 175,
+        y: e.clientY - 175,
+        duration: 0.35,
+        ease: "power2.out",
+      });
+    });
 
-gsap.to(light,{
-    x:e.clientX-175,
-    y:e.clientY-175,
-    duration:.35,
-    ease:"power2.out"
-});
-
-});
-
-/*=============================================
+    /*=============================================
         SUBTLE CARD FLOAT
 =============================================*/
 
-cards.forEach((card,index)=>{
+    cards.forEach((card, index) => {
+      gsap.to(card, {
+        y: -6,
 
-gsap.to(card,{
+        repeat: -1,
 
-    y:-6,
+        yoyo: true,
 
-    repeat:-1,
+        ease: "sine.inOut",
 
-    yoyo:true,
+        duration: 4 + index * 0.3,
+      });
+    });
 
-    ease:"sine.inOut",
-
-    duration:4+(index*.3)
-
-});
-
-});
-
-/*=============================================
+    /*=============================================
         PARALLAX ON SCROLL
 =============================================*/
 
-images.forEach((img,index)=>{
+    images.forEach((img, index) => {
+      gsap.to(img, {
+        yPercent: -12,
 
-gsap.to(img,{
+        ease: "none",
 
-    yPercent:-12,
+        scrollTrigger: {
+          trigger: img,
 
-    ease:"none",
+          start: "top bottom",
 
-    scrollTrigger:{
+          end: "bottom top",
 
-        trigger:img,
-
-        start:"top bottom",
-
-        end:"bottom top",
-
-        scrub:true
-
-    }
-
-});
-
-});
-
-});
+          scrub: true,
+        },
+      });
+    });
+  });
 
   /* =================================================
        FOOTER ELEMENTS

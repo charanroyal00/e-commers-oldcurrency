@@ -1,3 +1,5 @@
+const API_BASE = "http://127.0.0.1:8000/api";
+
 document.addEventListener("DOMContentLoaded", () => {
   /* =====================================================
        ELEMENTS
@@ -304,4 +306,118 @@ document.addEventListener("DOMContentLoaded", () => {
     x: 0,
     width: registerTab.offsetWidth,
   });
+});
+
+const registerForm = document.getElementById("registerFormElement");
+
+registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("registerName").value.trim();
+    const email = document.getElementById("registerEmail").value.trim();
+    const password = document.getElementById("registerPassword").value;
+    const phone = document.getElementById("registerContact").value.trim();
+
+    try {
+
+        const response = await fetch(`${API_BASE}/register/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password,
+                phone,
+                role: "customer"
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+            alert("Registration Successful!");
+
+            registerForm.reset();
+
+            document.getElementById("loginTab").click();
+
+        } else {
+
+            console.log(data);
+
+            alert(
+                data.username?.[0] ||
+                data.email?.[0] ||
+                data.password?.[0] ||
+                "Registration Failed"
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to connect to server.");
+
+    }
+
+});
+
+const loginForm = document.getElementById("loginFormElement");
+
+loginForm.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    try {
+
+        const response = await fetch(`${API_BASE}/login/`, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                username: email,
+                password: password
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+            localStorage.setItem("access", data.access);
+            localStorage.setItem("refresh", data.refresh);
+
+            alert("Login Successful!");
+
+            window.location.href = "../index.html";
+
+        } else {
+
+            console.log(data);
+
+            alert("Invalid Credentials");
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to connect to server.");
+
+    }
+
 });

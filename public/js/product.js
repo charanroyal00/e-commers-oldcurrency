@@ -1,3 +1,6 @@
+const API_URL = "http://127.0.0.1:8000/api";
+let visibleProducts = [];
+
 /*========================================================
 
                 NUMIS PRODUCTS
@@ -31,6 +34,8 @@ const loadButton = document.querySelector(".load-btn");
 const params = new URLSearchParams(window.location.search);
 
 const currentCategory = params.get("category") || "coins";
+
+const categoryId = params.get("category");
 
 /*========================================================
 
@@ -111,163 +116,135 @@ function updateHero() {
 
 updateHero();
 
-/*========================================================
+async function loadProducts() {
+  try {
+    const response = await fetch(`${API_URL}/products/?category=${categoryId}`);
 
-            DEMO PRODUCTS
+    if (!response.ok) {
+      throw new Error("Unable to fetch products");
+    }
 
-========================================================*/
+    const products = await response.json();
 
-const demoProducts = [
-  {
-    id: 888976,
+    console.log(products);
 
-    name: "Victoria Silver Rupee",
+    productsGrid.innerHTML = "";
 
-    category: "coins",
+    if (products.length === 0) {
+      productsGrid.innerHTML = `
+        <h2>No products available.</h2>
+      `;
+      return;
+    }
 
-    price: 18500,
+    heroTitle.textContent =
+      products[0].category_name ||
+      products[0].category?.name ||
+      heroTitle.textContent;
 
-    image: "images/demo-coin.png",
+    heroDescription.textContent =
+      products[0].category_description ||
+      products[0].category?.description ||
+      "Browse available products.";
 
-    label: "BRITISH INDIA",
+    breadcrumbCategory.textContent =
+      products[0].category_name ||
+      products[0].category?.name ||
+      "Products";
 
-    description: "Museum authenticated silver rupee from 1886.",
-  },
+    productCount.textContent = products.length;
 
-  {
-    id: 2,
+    products.forEach((product, index) => {
 
-    name: "Akbar Gold Mohur",
+      const sizeClasses = ["large", "wide", "tall", "", ""];
+      const size = sizeClasses[index % sizeClasses.length];
 
-    category: "coins",
+      productsGrid.innerHTML += `
+      <article class="product-card ${size}" data-id="${product.id}">
 
-    price: 74000,
+          <div class="spotlight"></div>
 
-    image: "images/demo-coin2.png",
+          <div class="product-image">
 
-    label: "MUGHAL",
+              <img
+                  src="${
+                    product.image ||
+                    product.image_url ||
+                    product.thumbnail ||
+                    "https://placehold.co/500x500?text=No+Image"
+                  }"
+                  alt="${product.title || product.name || "Product"}"
+              >
 
-    description: "Imperial gold issue with exceptional preservation.",
-  },
+          </div>
 
-  {
-    id: 3,
+          <div class="product-content">
 
-    name: "Bombay Mint Coin",
+              <span class="product-category">
 
-    category: "coins",
+                  ${
+                    product.category_name ||
+                    product.category?.name ||
+                    "Category"
+                  }
 
-    price: 11600,
+              </span>
 
-    image: "images/demo-coin3.png",
+              <h2>
 
-    label: "REPUBLIC",
+                  ${product.title || product.name || "Unnamed Product"}
 
-    description: "Historic silver collectible.",
-  },
+              </h2>
 
-  {
-    id: 4,
+              <p>
 
-    name: "₹10 Error Note",
+                  ${
+                    product.description ||
+                    product.short_description ||
+                    "No description available."
+                  }
 
-    category: "notes",
+              </p>
 
-    price: 32000,
+              <div class="product-bottom">
 
-    image: "images/demo-note.png",
+                  <strong>
 
-    label: "ERROR NOTE",
+                      ₹${product.price || product.selling_price || 0}
 
-    description: "Exceptional printing error.",
-  },
+                  </strong>
 
-  {
-    id: 5,
+                  <a href="product-information.html?id=${product.id}">
 
-    name: "₹100 Star Note",
+                      View Details →
 
-    category: "notes",
+                  </a>
 
-    price: 8200,
+              </div>
 
-    image: "images/demo-note2.png",
+          </div>
 
-    label: "STAR NOTE",
+      </article>
+      `;
+    });
 
-    description: "Highly collectible preserved banknote.",
-  },
 
-  {
-    id: 6,
+    updateCounter();
 
-    name: "US Dollar 1934",
+    applyCardAnimations();
 
-    category: "international",
+  } catch (error) {
 
-    price: 12800,
+    console.error(error);
 
-    image: "images/usd.png",
+    productsGrid.innerHTML = `
+      <h2>Unable to load products.</h2>
+    `;
+  }
+}
 
-    label: "USA",
+loadProducts();
 
-    description: "Historic international collectible.",
-  },
-
-  {
-    id: 7,
-
-    name: "Premium Heritage Set",
-
-    category: "collections",
-
-    price: 49500,
-
-    image: "images/collection.png",
-
-    label: "LIMITED",
-
-    description: "Luxury curated collection.",
-  },
-
-  {
-    id: 8,
-
-    name: "Live Auction Lot #102",
-
-    category: "auction",
-
-    price: 25000,
-
-    image: "images/auction.png",
-
-    label: "LIVE",
-
-    description: "Ending in a few hours.",
-  },
-];
-
-/*========================================================
-
-        FILTER PRODUCTS
-
-========================================================*/
-
-let visibleProducts = demoProducts.filter((product) => {
-  if (currentCategory === "coins") return product.category === "coins";
-
-  if (currentCategory === "notes") return product.category === "notes";
-
-  if (currentCategory === "international")
-    return product.category === "international";
-
-  if (currentCategory === "collections")
-    return product.category === "collections";
-
-  if (currentCategory === "auction") return product.category === "auction";
-
-  return true;
-});
 
 /*========================================================
 
@@ -334,22 +311,6 @@ View Details →
 
 `;
 }
-
-/*========================================================
-
-            RENDER PRODUCTS
-
-========================================================*/
-
-function renderProducts(products) {
-  productsGrid.innerHTML = "";
-
-  products.forEach((product, index) => {
-    productsGrid.innerHTML += createCard(product, index);
-  });
-}
-
-renderProducts(visibleProducts);
 
 /*========================================================
 
@@ -433,33 +394,6 @@ if (sortSelect) {
 
 ========================================================*/
 
-let productsShown = 6;
-
-function renderLimitedProducts() {
-  const display = filteredProducts.slice(0, productsShown);
-
-  renderProducts(display);
-
-  applyCardAnimations();
-}
-
-productsShown = 6;
-
-renderLimitedProducts();
-
-if (loadButton) {
-  loadButton.addEventListener("click", () => {
-    productsShown += 6;
-
-    renderLimitedProducts();
-
-    if (productsShown >= filteredProducts.length) {
-      loadButton.innerHTML = "All Products Loaded";
-
-      loadButton.disabled = true;
-    }
-  });
-}
 
 /*========================================================
 
@@ -997,4 +931,3 @@ if (logo) {
     });
   });
 }
-
