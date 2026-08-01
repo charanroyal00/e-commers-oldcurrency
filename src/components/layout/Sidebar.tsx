@@ -1,13 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
-  LayoutDashboard,
-  Package,
-  ShoppingCart,
-  Store,
-  Users,
-  BarChart3,
-  Settings,
-  X,
+  LayoutDashboard, Package, ShoppingCart, Store,
+  Users, BarChart3, Settings, X, Tag, Warehouse, ClipboardList,
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -22,13 +16,16 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { name: 'Dashboard',  path: '/dashboard',  icon: LayoutDashboard },
-  { name: 'Products',   path: '/products',   icon: Package         },
-  { name: 'Orders',     path: '/orders',     icon: ShoppingCart    },
-  { name: 'Sellers',    path: '/sellers',    icon: Store           },
-  { name: 'Customers',  path: '/customers',  icon: Users           },
-  { name: 'Analytics',  path: '/analytics',  icon: BarChart3       },
-  { name: 'Settings',   path: '/settings',   icon: Settings        },
+  { name: 'Dashboard',          path: '/dashboard',    icon: LayoutDashboard },
+  { name: 'Products',           path: '/products',     icon: Package         },
+  { name: 'Categories',         path: '/categories',   icon: Tag             },
+  { name: 'Inventory',          path: '/inventory',    icon: Warehouse       },
+  { name: 'Seller Inventory',   path: '/seller-inventory', icon: ClipboardList },
+  { name: 'Orders',             path: '/orders',       icon: ShoppingCart    },
+  { name: 'Sellers',            path: '/sellers',      icon: Store           },
+  { name: 'Customers',          path: '/customers',    icon: Users           },
+  { name: 'Analytics',          path: '/analytics',    icon: BarChart3       },
+  { name: 'Settings',           path: '/settings',     icon: Settings        },
 ]
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {

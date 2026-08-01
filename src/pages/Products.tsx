@@ -1,26 +1,73 @@
-import { Package } from 'lucide-react'
+import { Plus, Pencil, Package } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import PageHeader from '../components/ui/PageHeader'
+import StatusBadge from '../components/ui/StatusBadge'
 
-const Products = () => (
-  <div>
-    <div className="mb-8">
-      <p className="font-sans text-xs font-medium uppercase tracking-[0.2em] text-gold-600">
-        Catalogue
-      </p>
-      <h1 className="mt-1 font-serif text-3xl font-bold text-ink-900">Products</h1>
-      <p className="mt-2 font-sans text-sm text-ink-500">
-        Manage all old currency listings in the marketplace.
-      </p>
-    </div>
-    <div className="rounded-xl border-2 border-cream-300 bg-white p-6 shadow-md">
-      <div className="flex flex-col items-center justify-center py-12">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-cream-300 bg-cream-200">
-          <Package className="h-7 w-7 text-ink-400" />
-        </div>
-        <p className="font-serif text-base text-ink-600">No products listed yet</p>
-        <p className="mt-1 font-sans text-sm text-ink-400">Products will appear here once added.</p>
+// TODO: replace with API data from GET /api/products/
+const products: {
+  id: number; name: string; category: string;
+  price: string; stock: number; condition: string;
+  status: 'active' | 'inactive'
+}[] = []
+
+const Products = () => {
+  const navigate = useNavigate()
+
+  return (
+    <div>
+      <PageHeader category="Catalogue" title="Products"
+        description="Manage all old currency listings in the marketplace."
+        action={
+          <button onClick={() => navigate('/products/add')}
+            className="flex items-center gap-2 rounded-lg bg-gold-600 px-4 py-2.5 font-sans text-sm font-semibold text-ink-900 transition-colors hover:bg-gold-500">
+            <Plus className="h-4 w-4" /> Add Product
+          </button>
+        }
+      />
+
+      <div className="rounded-xl border-2 border-cream-300 bg-white shadow-md">
+        {products.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-cream-300 bg-cream-100">
+              <Package className="h-7 w-7 text-ink-400" />
+            </div>
+            <p className="font-serif text-base text-ink-600">No products listed yet</p>
+            <p className="mt-1 font-sans text-sm text-ink-400">Click "Add Product" to list your first item.</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b-2 border-cream-300 bg-cream-50">
+                  {['Product', 'Category', 'Condition', 'Price', 'Stock', 'Status', 'Actions'].map((h) => (
+                    <th key={h} className="px-4 py-3 text-left font-sans text-xs font-semibold uppercase tracking-widest text-ink-500">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-cream-200">
+                {products.map((p) => (
+                  <tr key={p.id} className="hover:bg-cream-50">
+                    <td className="px-4 py-3 font-sans text-sm font-medium text-ink-900">{p.name}</td>
+                    <td className="px-4 py-3 font-sans text-sm text-ink-600">{p.category}</td>
+                    <td className="px-4 py-3 font-sans text-sm text-ink-600">{p.condition}</td>
+                    <td className="px-4 py-3 font-sans text-sm text-ink-900">₹{p.price}</td>
+                    <td className="px-4 py-3 font-sans text-sm text-ink-600">{p.stock}</td>
+                    <td className="px-4 py-3"><StatusBadge status={p.status} /></td>
+                    <td className="px-4 py-3">
+                      <button onClick={() => navigate(`/products/edit/${p.id}`)}
+                        className="flex items-center gap-1 rounded-lg border border-cream-300 px-3 py-1.5 font-sans text-xs font-medium text-ink-700 hover:bg-cream-100">
+                        <Pencil className="h-3 w-3" /> Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Products
