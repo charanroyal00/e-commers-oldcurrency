@@ -115,27 +115,25 @@
 
           <form id="registerFormElement">
             <div class="input-group">
-              <label for="registerName"> FULL NAME </label>
+              <label for="registerUsername"> USERNAME </label>
 
-              <input
-                type="text"
-                id="registerName"
-                name="Name"
-                placeholder="Enter your name"
-                required
-              />
+<input
+    type="text"
+    id="registerUsername"
+    placeholder="Choose a username"
+    required
+/>
             </div>
 
             <div class="input-group">
               <label for="registerEmail"> EMAIL ADDRESS </label>
 
-              <input
-                type="email"
-                id="registerEmail"
-                name="Email"
-                placeholder="Enter your email"
-                required
-              />
+<input
+    type="email"
+    id="registerEmail"
+    placeholder="Enter your email"
+    required
+/>
             </div>
 
             <div class="input-row">
@@ -200,15 +198,14 @@
 
           <form id="loginFormElement">
             <div class="input-group">
-              <label for="loginEmail"> EMAIL ADDRESS </label>
+              <label for="loginUsername"> USERNAME </label>
 
-              <input
-                type="email"
-                id="loginEmail"
-                name="Email"
-                placeholder="Enter your email"
-                required
-              />
+<input
+    type="text"
+    id="loginUsername"
+    placeholder="Enter your username"
+    required
+/>
             </div>
 
             <div class="input-group">
@@ -299,20 +296,59 @@
           </div>
 
           <form id="otpVerifyForm">
-            <div class="input-row">
-              <input maxlength="1" class="otp-box" />
-              <input maxlength="1" class="otp-box" />
-              <input maxlength="1" class="otp-box" />
-              <input maxlength="1" class="otp-box" />
-              <input maxlength="1" class="otp-box" />
-              <input maxlength="1" class="otp-box" />
-            </div>
 
-            <button class="submit-button">
-              <span>VERIFY OTP</span>
-              <span>↗</span>
-            </button>
-          </form>
+    <div class="input-row">
+        <input maxlength="1" class="otp-box" id="otp1">
+        <input maxlength="1" class="otp-box" id="otp2">
+        <input maxlength="1" class="otp-box" id="otp3">
+        <input maxlength="1" class="otp-box" id="otp4">
+        <input maxlength="1" class="otp-box" id="otp5">
+        <input maxlength="1" class="otp-box" id="otp6">
+    </div>
+
+    <button type="submit" class="submit-button">
+        <span>VERIFY OTP</span>
+        <span>↗</span>
+    </button>
+
+</form>
+<!-- RESET PASSWORD -->
+
+<div class="auth-form-container" id="resetForm">
+
+    <div class="form-heading">
+
+        <span>WELCOME BACK TO THE ARCHIVE</span>
+
+        <h2>Create a <em>new password.</em></h2>
+
+        <p>Please enter your new password.</p>
+
+    </div>
+
+    <form id="resetPasswordForm">
+
+        <div class="input-group">
+
+            <label>NEW PASSWORD</label>
+
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="Enter new password"
+                required
+            />
+
+        </div>
+
+        <button type="submit" class="submit-button">
+            <span>RESET PASSWORD</span>
+            <span>↗</span>
+        </button>
+
+    </form>
+
+</div>
 
           <p class="form-footer">
             <button class="inline-switch" id="backToLogin2">

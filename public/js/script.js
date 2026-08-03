@@ -118,36 +118,40 @@ async function loadCategories() {
         categories.forEach(category => {
 
             categoryContainer.innerHTML += `
-                <div class="category-card">
+<a href="category.html?id=${category.id}" class="category-link">
+    <div class="editorial-card category-card">
+        <div class="card-inner">
 
-                    <h3>${category.name}</h3>
-
-                    <p>${category.description ?? ""}</p>
-
-                    <button
-                        class="explore-btn"
-                        data-id="${category.id}">
-                        Explore Collection
-                    </button>
-
+            <div>
+                <div class="card-number">
+                    ${String(category.id).padStart(2, "0")}
                 </div>
-            `;
+
+                <div class="card-category">
+                    NUMIS COLLECTION
+                </div>
+
+                <h2 class="card-title">
+                    ${category.name}
+                </h2>
+            </div>
+
+            <div class="card-info">
+                <p>
+                    ${category.description || "Explore authenticated historical collections from the Numis archive."}
+                </p>
+
+                <span class="explore-link">
+                    Explore Collection →
+                </span>
+            </div>
+
+        </div>
+    </div>
+</a>
+`;
 
         });
-
-        // Attach event only to buttons
-        categoryContainer.addEventListener("click", (e) => {
-    const button = e.target.closest(".explore-btn");
-
-    if (!button) return;
-
-    const id = button.dataset.id;
-
-    console.log(id);
-
-    window.location.href = `product.html?category=${id}`;
-});
-
     }
 
     catch(error){

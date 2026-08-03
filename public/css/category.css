@@ -1,0 +1,662 @@
+/* ==========================================================
+                    GOOGLE FONTS
+========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap");
+
+/* ==========================================================
+                    RESET
+========================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f7f3eb;
+
+  color: #2d2a26;
+
+  font-family: "Inter", sans-serif;
+
+  overflow-x: hidden;
+
+  position: relative;
+}
+
+/* ==========================================================
+                BACKGROUND AMBIENT
+========================================================== */
+
+.ambient {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(90px);
+
+  opacity: 0.28;
+
+  z-index: -1;
+}
+
+.ambient-one {
+  width: 420px;
+
+  height: 420px;
+
+  background: #d4b483;
+
+  top: -120px;
+
+  left: -120px;
+}
+
+.ambient-two {
+  width: 340px;
+
+  height: 340px;
+
+  background: #cdb99d;
+
+  right: -120px;
+
+  top: 250px;
+}
+
+.ambient-three {
+  width: 300px;
+
+  height: 300px;
+
+  background: #e3d7c2;
+
+  bottom: -120px;
+
+  left: 45%;
+}
+
+/* ==========================================================
+                    NAVBAR
+========================================================== */
+
+.navbar {
+  width: 100%;
+
+  padding: 28px 8%;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  position: sticky;
+
+  top: 0;
+
+  background: rgba(247, 243, 235, 0.82);
+
+  backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  z-index: 999;
+}
+
+.logo {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 34px;
+
+  letter-spacing: 6px;
+
+  font-weight: 700;
+
+  color: #33291f;
+}
+
+.logo span {
+  font-size: 14px;
+
+  vertical-align: top;
+}
+
+nav {
+  display: flex;
+
+  gap: 45px;
+}
+
+nav a {
+  text-decoration: none;
+
+  color: #555;
+
+  font-size: 15px;
+
+  letter-spacing: 1px;
+
+  transition: 0.3s;
+
+  position: relative;
+}
+
+nav a:hover {
+  color: #000;
+}
+
+nav a.active {
+  color: #000;
+}
+
+nav a.active::after {
+  content: "";
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 2px;
+
+  left: 0;
+
+  bottom: -8px;
+
+  background: #b08a4b;
+}
+
+/* ==========================================================
+                    HERO
+========================================================== */
+
+.hero {
+  width: 100%;
+
+  padding: 110px 8% 70px;
+
+  text-align: center;
+}
+
+.hero-label {
+  display: inline-block;
+
+  letter-spacing: 5px;
+
+  color: #8b7754;
+
+  font-size: 13px;
+
+  margin-bottom: 25px;
+}
+
+.hero h1 {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 72px;
+
+  font-weight: 700;
+
+  line-height: 1.05;
+
+  color: #2e2418;
+}
+
+.hero h1 span {
+  color: #a67b39;
+}
+
+.hero p {
+  width: 720px;
+
+  max-width: 90%;
+
+  margin: 30px auto 0;
+
+  color: #6d665e;
+
+  line-height: 1.9;
+
+  font-size: 17px;
+}
+
+/* ==========================================================
+                    SEARCH
+========================================================== */
+
+.search-section {
+  width: 100%;
+
+  padding: 10px 8% 70px;
+}
+
+.search-box {
+  width: 650px;
+
+  max-width: 100%;
+
+  margin: auto;
+}
+
+.search-box input {
+  width: 100%;
+
+  padding: 20px 28px;
+
+  border: none;
+
+  outline: none;
+
+  background: white;
+
+  border-radius: 60px;
+
+  font-size: 16px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+
+  transition: 0.35s;
+}
+
+.search-box input:focus {
+  transform: translateY(-2px);
+
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+}
+
+.search-box input::placeholder {
+  color: #8d8d8d;
+}
+
+/* ==========================================================
+                COLLECTION SECTION
+========================================================== */
+
+.collections {
+  width: 100%;
+
+  padding: 20px 8% 120px;
+}
+
+.section-heading {
+  text-align: center;
+
+  margin-bottom: 70px;
+}
+
+.section-heading span {
+  letter-spacing: 4px;
+
+  color: #987845;
+
+  font-size: 13px;
+}
+
+.section-heading h2 {
+  margin-top: 18px;
+
+  font-size: 48px;
+
+  font-family: "Cormorant Garamond", serif;
+
+  color: #2f2418;
+}
+/* ==========================================================
+                CATEGORY GRID
+========================================================== */
+
+.category-grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 38px;
+}
+
+/* ==========================================================
+                CATEGORY CARD
+========================================================== */
+
+.category-card {
+  background: #ffffff;
+
+  border-radius: 28px;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  transition: 0.45s;
+
+  position: relative;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.category-card:hover {
+  transform: translateY(-12px);
+
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================
+                CARD IMAGE
+========================================================== */
+
+.card-image {
+  height: 260px;
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.card-image img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: 1s;
+}
+
+.category-card:hover img {
+  transform: scale(1.12);
+}
+
+/* ==========================================================
+                IMAGE OVERLAY
+========================================================== */
+
+.card-image::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    to top,
+
+    rgba(0, 0, 0, 0.45),
+    transparent
+  );
+
+  z-index: 2;
+}
+
+/* ==========================================================
+                COLLECTION COUNT
+========================================================== */
+
+.collection-count {
+  position: absolute;
+
+  top: 18px;
+
+  right: 18px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  backdrop-filter: blur(8px);
+
+  color: #7d5d2d;
+
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+
+  z-index: 4;
+
+  font-weight: 600;
+}
+
+/* ==========================================================
+                CARD CONTENT
+========================================================== */
+
+.card-content {
+  padding: 34px;
+}
+
+.card-content h3 {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 36px;
+
+  color: #2f2418;
+
+  margin-bottom: 15px;
+}
+
+.card-content p {
+  color: #6f6a63;
+
+  line-height: 1.8;
+
+  font-size: 15px;
+
+  margin-bottom: 28px;
+}
+
+/* ==========================================================
+                EXPLORE BUTTON
+========================================================== */
+
+.explore-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background: #2f2418;
+
+  color: #fff;
+
+  border: none;
+
+  border-radius: 40px;
+
+  padding: 14px 26px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  letter-spacing: 1px;
+
+  transition: 0.35s;
+}
+
+.explore-btn:hover {
+  background: #b48b49;
+
+  transform: translateX(8px);
+}
+
+.explore-btn span {
+  transition: 0.35s;
+}
+
+.explore-btn:hover span {
+  transform: translateX(5px);
+}
+
+/* ==========================================================
+                GOLD LINE
+========================================================== */
+
+.category-card::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: 0;
+
+  width: 0;
+
+  height: 4px;
+
+  background: #b48b49;
+
+  transition: 0.55s;
+}
+
+.category-card:hover::after {
+  width: 100%;
+}
+
+/* ==========================================================
+                QUOTE SECTION
+========================================================== */
+
+.archive-quote {
+  padding: 130px 8%;
+
+  text-align: center;
+}
+
+.archive-quote p {
+  max-width: 850px;
+
+  margin: auto;
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 44px;
+
+  line-height: 1.5;
+
+  color: #3a3025;
+}
+
+/* ==========================================================
+                FOOTER
+========================================================== */
+
+footer {
+  padding: 70px 8%;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  text-align: center;
+
+  background: #efe8dd;
+}
+
+footer div {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 38px;
+
+  letter-spacing: 8px;
+
+  margin-bottom: 18px;
+}
+
+footer p {
+  color: #7b756d;
+
+  font-size: 15px;
+}
+
+/* ==========================================================
+                LOADING CARD
+========================================================== */
+
+.loading-card {
+  height: 430px;
+
+  border-radius: 28px;
+
+  background: linear-gradient(
+    90deg,
+    #ece8df 25%,
+
+    #f7f3eb 50%,
+
+    #ece8df 75%
+  );
+
+  background-size: 300% 100%;
+
+  animation: loading 1.4s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+/* ==========================================================
+                RESPONSIVE
+========================================================== */
+
+@media (max-width: 1100px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 52px;
+  }
+
+  .section-heading h2 {
+    font-size: 38px;
+  }
+
+  .archive-quote p {
+    font-size: 30px;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  nav {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 550px) {
+  .navbar {
+    padding: 20px;
+  }
+
+  .hero {
+    padding: 70px 20px 50px;
+  }
+
+  .collections {
+    padding: 0 20px 90px;
+  }
+
+  .archive-quote {
+    padding: 90px 20px;
+  }
+
+  footer {
+    padding: 55px 20px;
+  }
+}

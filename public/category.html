@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Numis | Collections</title>
+
+    <link rel="stylesheet" href="./css/category.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  </head>
+
+  <body>
+    <!-- ===========================================
+                Background
+    ============================================ -->
+
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <!-- ===========================================
+                Navbar
+    ============================================ -->
+
+    <header class="navbar">
+      <div class="logo">
+        NUMIS
+
+        <span> ® </span>
+      </div>
+
+      <nav>
+        <a href="../index.html"> Home </a>
+
+        <a href="./category.html" class="active"> Collections </a>
+
+        <a href="./product.html"> Marketplace </a>
+      </nav>
+    </header>
+
+    <!-- ===========================================
+                Hero
+    ============================================ -->
+
+    <section class="hero">
+      <span class="hero-label"> THE NUMIS ARCHIVE </span>
+
+      <h1>
+        Explore
+
+        <span> Collections </span>
+      </h1>
+
+      <p>
+        Journey through civilizations, empires and centuries. Every collection
+        tells the story of an era preserved in metal.
+      </p>
+    </section>
+
+    <!-- ===========================================
+                Search
+    ============================================ -->
+
+    <section class="search-section">
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search Collections..."
+        />
+      </div>
+    </section>
+
+    <!-- ===========================================
+                Categories
+    ============================================ -->
+
+    <section class="collections">
+      <div class="section-heading">
+        <span> CURATED COLLECTIONS </span>
+
+        <h2>Discover by Category</h2>
+      </div>
+
+      <div id="productContainer" class="category-grid">
+        <!-- Product cards will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <!-- ===========================================
+                Quote
+    ============================================ -->
+
+    <section class="archive-quote">
+      <p>
+        "A civilization may disappear, but its currency continues telling its
+        story."
+      </p>
+    </section>
+
+    <!-- ===========================================
+                Footer
+    ============================================ -->
+
+    <footer>
+      <div>NUMIS</div>
+
+      <p>Preserving History. Curating Legacy.</p>
+    </footer>
+
+    <script src="./js/category.js"></script>
+  </body>
+</html>

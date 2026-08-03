@@ -1589,6 +1589,176 @@ body {
     font-size: 2rem;
   }
 }
+
+.category-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 35px;
+  margin-top: 70px;
+}
+.category-card {
+  position: relative;
+  overflow: hidden;
+
+  background: #fbf7f1;
+  border: 1px solid rgba(184, 137, 61, 0.18);
+
+  border-radius: 28px;
+
+  min-height: 360px;
+
+  transition: 0.45s ease;
+
+  cursor: pointer;
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+.category-card:hover {
+  transform: translateY(-8px);
+
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.08);
+
+  border-color: #b8893d;
+}
+.category-card::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 0;
+
+  height: 3px;
+
+  background: linear-gradient(90deg, #b8893d, #e5c98d, #b8893d);
+
+  transition: 0.6s;
+}
+
+.category-card:hover::after {
+  width: 100%;
+}
+.category-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.45),
+    transparent,
+    rgba(255, 255, 255, 0.08)
+  );
+
+  pointer-events: none;
+}
+.card-inner {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  height: 100%;
+
+  padding: 40px;
+}
+.card-number {
+  color: #b8893d;
+
+  font-size: 0.85rem;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+}
+.card-category {
+  margin-top: 12px;
+
+  color: #998c72;
+
+  text-transform: uppercase;
+
+  letter-spacing: 3px;
+
+  font-size: 0.75rem;
+}
+.card-title {
+  margin-top: 30px;
+
+  font-size: 2.6rem;
+
+  line-height: 1.1;
+
+  color: #1f1f1f;
+
+  font-family: "Cormorant Garamond", serif;
+}
+.card-info {
+  margin-top: 50px;
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
+  transition: 0.45s;
+}
+
+.category-card:hover .card-info {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+.card-info p {
+  color: #666;
+
+  line-height: 1.8;
+
+  margin-bottom: 20px;
+}
+.explore-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #b8893d;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.category-card:hover .explore-link {
+  transform: translateX(6px);
+}
+@media (max-width: 768px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-title {
+    font-size: 2rem;
+  }
+
+  .category-card {
+    min-height: 300px;
+  }
+}
 /* =====================================================
    FOOTER
 ===================================================== */
@@ -2192,18 +2362,18 @@ body {
 }
 
 .category-card {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 }
 
 .explore-btn {
-    position: relative;
-    z-index: 10;
-    pointer-events: auto;
-    cursor: pointer;
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .category-container {
-    position: relative;
-    z-index: 5;
+  position: relative;
+  z-index: 5;
 }

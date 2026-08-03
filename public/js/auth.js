@@ -1,4 +1,5 @@
 const API_BASE = "http://127.0.0.1:8000/api";
+let forgotEmail = "";
 
 document.addEventListener("DOMContentLoaded", () => {
   /* =====================================================
@@ -28,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const orbitOne = document.querySelector(".orbit-one");
   const orbitTwo = document.querySelector(".orbit-two");
   const ambient = document.querySelectorAll(".ambient");
+
+  const resetForm = document.getElementById("resetForm");
 
   /* =====================================================
        INTRO ANIMATION
@@ -139,16 +142,38 @@ document.addEventListener("DOMContentLoaded", () => {
        HELPER
     ===================================================== */
 
-  function hideAllForms() {
+ function hideAllForms() {
     registerForm.classList.remove("active");
     loginForm.classList.remove("active");
     forgotForm.classList.remove("active");
     otpForm.classList.remove("active");
-  }
+    resetForm.classList.remove("active");
+}
 
   /* =====================================================
        REGISTER
     ===================================================== */
+
+    function showReset() {
+
+    hideAllForms();
+
+    resetForm.classList.add("active");
+
+    gsap.fromTo(
+        resetForm,
+        {
+            opacity: 0,
+            x: 30,
+        },
+        {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+        }
+    );
+
+}
 
   function showRegister() {
     hideAllForms();
@@ -290,13 +315,35 @@ document.addEventListener("DOMContentLoaded", () => {
     showLogin();
   });
 
-  forgotPasswordForm.addEventListener("submit", function (e) {
-    e.preventDefault();
+ forgotPasswordForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    // Call backend here to send OTP
+  forgotEmail = document.getElementById("forgotEmail").value.trim();
 
-    showOTP();
-  });
+  try {
+    const response = await fetch(`${API_BASE}/forgot-password/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: forgotEmail,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("OTP Sent Successfully");
+      showOTP();
+    } else {
+      alert(data.email?.[0] || data.message || "Unable to send OTP");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Server Error");
+  }
+});
 
   /* =====================================================
        INITIAL TAB INDICATOR
@@ -311,113 +358,167 @@ document.addEventListener("DOMContentLoaded", () => {
 const registerForm = document.getElementById("registerFormElement");
 
 registerForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const username = document.getElementById("registerName").value.trim();
-    const email = document.getElementById("registerEmail").value.trim();
-    const password = document.getElementById("registerPassword").value;
-    const phone = document.getElementById("registerContact").value.trim();
+  const email = document.getElementById("registerEmail").value.trim();
+  const username = document.getElementById("registerUsername").value.trim();
+  const password = document.getElementById("registerPassword").value;
+  const phone = document.getElementById("registerContact").value.trim();
 
-    try {
+  try {
+    const response = await fetch(`${API_BASE}/register/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        phone,
+        role: "customer",
+      }),
+    });
 
-        const response = await fetch(`${API_BASE}/register/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                password,
-                phone,
-                role: "customer"
-            })
-        });
+    const data = await response.json();
 
-        const data = await response.json();
+    if (response.ok) {
+      alert("Registration Successful!");
 
-        if (response.ok) {
+      registerForm.reset();
 
-            alert("Registration Successful!");
+      document.getElementById("loginTab").click();
+    } else {
+      console.log(data);
 
-            registerForm.reset();
-
-            document.getElementById("loginTab").click();
-
-        } else {
-
-            console.log(data);
-
-            alert(
-                data.username?.[0] ||
-                data.email?.[0] ||
-                data.password?.[0] ||
-                "Registration Failed"
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert("Unable to connect to server.");
-
+      alert(
+        data.username?.[0] ||
+          data.email?.[0] ||
+          data.password?.[0] ||
+          "Registration Failed",
+      );
     }
+  } catch (error) {
+    console.error(error);
 
+    alert("Unable to connect to server.");
+  }
 });
 
 const loginForm = document.getElementById("loginFormElement");
 
 loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  const username_login = document.getElementById("loginUsername").value.trim();
+  const password = document.getElementById("loginPassword").value;
 
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
+  try {
+    const response = await fetch(`${API_BASE}/login/`, {
+      method: "POST",
 
-    try {
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-        const response = await fetch(`${API_BASE}/login/`, {
+      body: JSON.stringify({
+    username: username_login,
+    password: password,
+}),
+    });
 
-            method: "POST",
+    const data = await response.json();
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+    if (response.ok) {
+      localStorage.setItem("access", data.access);
+      localStorage.setItem("refresh", data.refresh);
 
-            body: JSON.stringify({
-                username: email,
-                password: password
-            })
+      alert("Login Successful!");
 
-        });
+      window.location.href = "../index.html";
+    } else {
+      console.log(data);
 
-        const data = await response.json();
-
-        if (response.ok) {
-
-            localStorage.setItem("access", data.access);
-            localStorage.setItem("refresh", data.refresh);
-
-            alert("Login Successful!");
-
-            window.location.href = "../index.html";
-
-        } else {
-
-            console.log(data);
-
-            alert("Invalid Credentials");
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert("Unable to connect to server.");
-
+      alert("Invalid Credentials");
     }
+  } catch (error) {
+    console.error(error);
 
+    alert("Unable to connect to server.");
+  }
+});
+
+const otpVerifyForm = document.getElementById("otpVerifyForm");
+
+otpVerifyForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const otp =
+    document.getElementById("otp1").value +
+    document.getElementById("otp2").value +
+    document.getElementById("otp3").value +
+    document.getElementById("otp4").value +
+    document.getElementById("otp5").value +
+    document.getElementById("otp6").value;
+
+  try {
+    const response = await fetch(`${API_BASE}/verify-otp/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: forgotEmail,
+        otp: otp,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("OTP Verified");
+
+      document.getElementById("otpForm").classList.remove("active");
+      document.getElementById("resetForm").classList.add("active");
+    } else {
+      alert(data.detail || data.non_field_errors?.[0] || "Invalid OTP");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Server Error");
+  }
+});
+
+const resetPasswordForm = document.getElementById("resetPasswordForm");
+
+resetPasswordForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const newPassword = document.getElementById("newPassword").value;
+
+  try {
+    const response = await fetch(`${API_BASE}/reset-password/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: forgotEmail,
+        new_password: newPassword,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Password Reset Successful");
+
+      document.getElementById("loginTab").click();
+    } else {
+      alert(data.detail || data.message || "Unable to reset password");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Server Error");
+  }
 });

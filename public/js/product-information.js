@@ -3,248 +3,24 @@
                 NUMIS PRODUCT PAGE
 
 ==========================================================*/
+gsap.registerPlugin(ScrollTrigger);
+
+const API_URL = "http://127.0.0.1:8000/api";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
-
 const wishlistButton = document.querySelector(".wishlist-btn");
 
-/*==========================================================
-
-                URL PARAMETERS
-
-==========================================================*/
+let product = null;
 
 const params = new URLSearchParams(window.location.search);
 
+console.log(window.location.search);
+
 const productId = params.get("id");
 
-/*==========================================================
-
-                DEMO DATABASE
-
-        Replace with Backend Later
-
-==========================================================*/
-
-const products = [
-  {
-    id: "888976",
-
-    category: "coins",
-
-    label: "AUTHENTICATED",
-
-    name: "Victoria Silver Rupee",
-
-    price: "₹18,500",
-
-    country: "India",
-
-    year: "1886",
-
-    denomination: "1 Rupee",
-
-    material: "Silver",
-
-    weight: "11.66 g",
-
-    diameter: "30.5 mm",
-
-    mint: "Bombay Mint",
-
-    grade: "UNC",
-
-    certificate: "Verified",
-
-    rarity: "Extremely Rare",
-
-    seller: "NUMIS Official",
-
-    stock: "Only 4 Available",
-
-    description:
-      "An exceptional British India Victoria Silver Rupee preserved in remarkable museum-grade condition. A highly sought-after collectible admired for its historical significance and rarity.",
-
-    historyOne:
-      "Minted during the reign of Queen Victoria, this silver rupee circulated across British India and remains one of the most iconic numismatic pieces in Indian history.",
-
-    historyTwo:
-      "Every specimen listed on NUMIS undergoes careful authentication, grading, and historical verification before becoming part of our premium archive.",
-
-    historyThree:
-      "Because of its excellent preservation, limited availability, and strong collector demand, this coin represents both historical heritage and long-term collectible value.",
-
-    images: [
-      "assests/auction.png",
-
-      "assests/auction.png",
-
-      "assests/auction.png",
-
-      "assests/auction.png",
-    ],
-  },
-
-  {
-    id: "coin002",
-
-    category: "coins",
-
-    label: "RARE",
-
-    name: "Mughal Gold Mohur",
-
-    price: "₹65,000",
-
-    country: "India",
-
-    year: "1712",
-
-    denomination: "Mohur",
-
-    material: "Gold",
-
-    weight: "10.95 g",
-
-    diameter: "26 mm",
-
-    mint: "Delhi",
-
-    grade: "XF",
-
-    certificate: "Verified",
-
-    rarity: "Very Rare",
-
-    seller: "NUMIS Auctions",
-
-    stock: "Only 1 Available",
-
-    description:
-      "Original Mughal Empire gold coin featuring exquisite Persian inscriptions.",
-
-    historyOne: "Collected from an old royal estate.",
-
-    historyTwo: "Professionally graded by international experts.",
-
-    historyThree: "An important collectible for advanced numismatists.",
-
-    images: [
-      "images/products/mughal-1.png",
-
-      "images/products/mughal-2.png",
-
-      "images/products/mughal-3.png",
-    ],
-  },
-
-  {
-    id: "note001",
-
-    category: "notes",
-
-    label: "COLLECTIBLE",
-
-    name: "1943 One Rupee Note",
-
-    price: "₹12,800",
-
-    country: "India",
-
-    year: "1943",
-
-    denomination: "1 Rupee",
-
-    material: "Paper",
-
-    weight: "-",
-
-    diameter: "-",
-
-    mint: "British India",
-
-    grade: "UNC",
-
-    certificate: "Verified",
-
-    rarity: "Rare",
-
-    seller: "NUMIS",
-
-    stock: "12 Available",
-
-    description:
-      "Historic British India paper currency in exceptional condition.",
-
-    historyOne: "One of the earliest collectible paper notes.",
-
-    historyTwo: "Highly demanded among collectors.",
-
-    historyThree: "Museum quality preservation.",
-
-    images: [
-      "images/products/note1.png",
-
-      "images/products/note2.png",
-
-      "images/products/note3.png",
-    ],
-  },
-];
-
-/*==========================================================
-
-                FIND PRODUCT
-
-==========================================================*/
-
-const product = products.find((item) => item.id === productId);
-
-/*==========================================================
-
-            PRODUCT NOT FOUND
-
-==========================================================*/
-
-if (!product) {
-  document.body.innerHTML = `
-
-<div style="
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-font-family:Inter,sans-serif;
-background:#f8f5ef;
-flex-direction:column;
-">
-
-<h1 style="font-size:60px;">404</h1>
-
-<p>Product not found.</p>
-
-<a href="products.html"
-style="
-margin-top:30px;
-padding:14px 30px;
-background:#b8893d;
-color:white;
-text-decoration:none;
-border-radius:999px;
-">
-
-Back to Products
-
-</a>
-
-</div>
-
-`;
-
-  throw new Error("Invalid Product ID");
-}
+console.log(productId);
+console.log(typeof productId);
 
 /*==========================================================
 
@@ -323,66 +99,95 @@ const historyThree = document.querySelector("#historyThree");
 ==========================================================*/
 
 function populateProduct() {
-  productName.textContent = product.name;
 
-  productPrice.textContent = product.price;
+    productName.textContent = product.name;
 
-  stickyPrice.textContent = product.price;
+    productPrice.textContent = `₹${product.price}`;
 
-  productStock.textContent = product.stock;
+    stickyPrice.textContent = `₹${product.price}`;
 
-  productLabel.textContent = product.label;
+    productStock.textContent =
+        product.stock || "Available";
 
-  shortDescription.textContent = product.description;
+    productLabel.textContent =
+        product.category_name || "";
 
-  breadcrumbName.textContent = product.name;
+    shortDescription.textContent =
+        product.description || "";
 
-  breadcrumbCategory.textContent = product.category;
+    breadcrumbName.textContent =
+        product.name;
 
-  country.textContent = product.country;
+    breadcrumbCategory.textContent =
+        product.category_name || "Products";
 
-  year.textContent = product.year;
+    country.textContent =
+        product.country || "-";
 
-  grade.textContent = product.grade;
+    year.textContent =
+        product.year || "-";
 
-  rarity.textContent = product.rarity;
+    grade.textContent =
+        product.grade || "-";
 
-  specCountry.textContent = product.country;
+    rarity.textContent =
+        product.rarity || "-";
 
-  specYear.textContent = product.year;
+    specCountry.textContent =
+        product.country || "-";
 
-  specDenomination.textContent = product.denomination;
+    specYear.textContent =
+        product.year || "-";
 
-  specMaterial.textContent = product.material;
+    specDenomination.textContent =
+        product.denomination || "-";
 
-  specWeight.textContent = product.weight;
+    specMaterial.textContent =
+        product.material || "-";
 
-  specDiameter.textContent = product.diameter;
+    specWeight.textContent =
+        product.weight || "-";
 
-  specMint.textContent = product.mint;
+    specDiameter.textContent =
+        product.diameter || "-";
 
-  specGrade.textContent = product.grade;
+    specMint.textContent =
+        product.mint || "-";
 
-  specCertificate.textContent = product.certificate;
+    specGrade.textContent =
+        product.grade || "-";
 
-  specRarity.textContent = product.rarity;
+    specCertificate.textContent =
+        product.certificate || "-";
 
-  specSeller.textContent = product.seller;
+    specRarity.textContent =
+        product.rarity || "-";
 
-  specStock.textContent = product.stock;
+    specSeller.textContent =
+        product.seller || "-";
 
-  historyOne.textContent = product.historyOne;
+    specStock.textContent =
+        product.stock || "Available";
 
-  historyTwo.textContent = product.historyTwo;
+    historyOne.textContent =
+        product.history_one || "";
 
-  historyThree.textContent = product.historyThree;
+    historyTwo.textContent =
+        product.history_two || "";
 
-  mainImage.src = product.images[0];
+    historyThree.textContent =
+        product.history_three || "";
 
-  document.querySelector("#viewerImage").src = product.images[0];
+    const image =
+        product.image ||
+        product.image_url ||
+        "https://placehold.co/600x600";
+
+    mainImage.src = image;
+
+    viewerImage.src = image;
+
 }
-
-populateProduct();
 
 /*==========================================================
 
@@ -391,52 +196,26 @@ populateProduct();
 ==========================================================*/
 
 function createGallery() {
-  thumbnailContainer.innerHTML = "";
 
-  product.images.forEach((image, index) => {
+    thumbnailContainer.innerHTML = "";
+
+    const image =
+        product.image ||
+        product.image_url ||
+        "https://placehold.co/600x600";
+
     const thumb = document.createElement("div");
 
-    thumb.className = "thumbnail";
-
-    if (index === 0) {
-      thumb.classList.add("active");
-    }
+    thumb.className = "thumbnail active";
 
     thumb.innerHTML = `
-
-            <img src="${image}" alt="${product.name}">
-
-        `;
-
-    thumb.addEventListener("click", () => {
-      document.querySelectorAll(".thumbnail").forEach((item) => {
-        item.classList.remove("active");
-      });
-
-      thumb.classList.add("active");
-
-      mainImage.classList.add("loading");
-
-      gsap.to(mainImage, {
-        opacity: 0,
-
-        scale: 0.92,
-
-        duration: 0.25,
-
-        onComplete: () => {
-          mainImage.src = image;
-
-          document.querySelector("#viewerImage").src = image;
-        },
-      });
-    });
+        <img src="${image}">
+    `;
 
     thumbnailContainer.appendChild(thumb);
-  });
+
 }
 
-createGallery();
 
 /*==========================================================
 
@@ -474,100 +253,36 @@ mainImage.addEventListener("load", () => {
 
 /*==========================================================
 
-                RELATED PRODUCTS
-
-==========================================================*/
-
-const relatedGrid = document.querySelector("#relatedGrid");
-
-function renderRelatedProducts() {
-  if (!relatedGrid) return;
-
-  relatedGrid.innerHTML = "";
-
-  const related = products.filter((item) => item.id !== product.id).slice(0, 4);
-
-  related.forEach((item) => {
-    const card = document.createElement("div");
-
-    card.className = "related-card";
-
-    card.innerHTML = `
-
-            <img src="${item.images[0]}" alt="${item.name}">
-
-            <div class="related-content">
-
-                <span>${item.category.toUpperCase()}</span>
-
-                <h3>${item.name}</h3>
-
-                <strong>${item.price}</strong>
-
-                <button>
-
-                    View Product
-
-                </button>
-
-            </div>
-
-        `;
-
-    card.addEventListener("click", () => {
-      window.location.href = `product-information.html?id=${item.id}`;
-    });
-
-    relatedGrid.appendChild(card);
-  });
-}
-
-renderRelatedProducts();
-
-/*==========================================================
-
                 ADD TO CART
 
 ==========================================================*/
 
-function addToCart(product){
+function addToCart(product) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existingProduct = cart.find((item) => item.id === product.id);
 
-    const existingProduct = cart.find(item => item.id === product.id);
+  if (existingProduct) {
+    existingProduct.quantity += 1;
+  } else {
+    cart.push({
 
-    if(existingProduct){
+    id: product.id,
 
-        existingProduct.quantity += 1;
+    name: product.name,
 
-    }
+    price: Number(product.price),
 
-    else{
+    image:
+        product.image ||
+        product.image_url,
 
-        cart.push({
+    quantity: 1
 
-            id:product.id,
+});
+  }
 
-            name:product.name,
-
-            category:product.category,
-
-            year:product.year,
-
-            grade:product.grade,
-
-            price:Number(product.price.replace(/[₹,]/g,"")),
-
-            image:product.images[0],
-
-            quantity:1
-
-        });
-
-    }
-
-    localStorage.setItem("cart",JSON.stringify(cart));
-
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 /*==========================================================
@@ -576,36 +291,33 @@ function addToCart(product){
 
 ==========================================================*/
 
-function addToWishlist(product){
+function addToWishlist(product) {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  const exists = wishlist.some((item) => item.id === product.id);
 
-    const exists = wishlist.some(item => item.id === product.id);
+  if (exists) {
+    return;
+  }
 
-    if(exists){
-        return;
-    }
+  wishlist.push({
 
-    wishlist.push({
+    id: product.id,
 
-        id: product.id,
-        name: product.name,
-        category: product.category,
-        year: product.year,
-        grade: product.grade,
-        price: Number(product.price.replace(/[₹,]/g,"")),
-        image: product.images[0]
+    name: product.name,
 
-    });
+    price: Number(product.price),
 
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    image:
+        product.image ||
+        product.image_url
 
-    console.log("Wishlist Updated:", wishlist);
+});
 
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+  console.log("Wishlist Updated:", wishlist);
 }
-
-
-
 
 /*==========================================================
 
@@ -613,63 +325,51 @@ function addToWishlist(product){
 
 ==========================================================*/
 
-const buyButton=document.querySelector(".buy-btn");
+const buyButton = document.querySelector(".buy-btn");
 
-if(buyButton){
-
-buyButton.addEventListener("click",()=>{
-
+if (buyButton) {
+  buyButton.addEventListener("click", () => {
     addToCart(product);
 
     gsap.fromTo(
+      buyButton,
 
-        buyButton,
+      {
+        scale: 1,
+      },
 
-        {
-            scale:1
-        },
-
-        {
-            scale:1.08,
-            duration:.25,
-            repeat:1,
-            yoyo:true
-        }
-
+      {
+        scale: 1.08,
+        duration: 0.25,
+        repeat: 1,
+        yoyo: true,
+      },
     );
 
-    window.location.href="cart.html";
-
-});
-
+    window.location.href = "cart.html";
+  });
 }
 
-
-
 if (wishlistButton) {
+  wishlistButton.addEventListener("click", () => {
+    addToWishlist(product);
 
-    wishlistButton.addEventListener("click", () => {
+    wishlistButton.innerHTML = "❤ Added";
 
-        addToWishlist(product);
+    wishlistButton.style.borderColor = "#b8893d";
 
-        wishlistButton.innerHTML = "❤ Added";
+    wishlistButton.style.color = "#b8893d";
 
-        wishlistButton.style.borderColor = "#b8893d";
-
-        wishlistButton.style.color = "#b8893d";
-
-        gsap.fromTo(
-            wishlistButton,
-            { scale: 0.8 },
-            {
-                scale: 1,
-                duration: 0.35,
-                ease: "back.out(2)"
-            }
-        );
-
-    });
-
+    gsap.fromTo(
+      wishlistButton,
+      { scale: 0.8 },
+      {
+        scale: 1,
+        duration: 0.35,
+        ease: "back.out(2)",
+      },
+    );
+  });
 }
 
 /*==========================================================
@@ -678,18 +378,14 @@ if (wishlistButton) {
 
 ==========================================================*/
 
-const stickyBuy=document.querySelector(".floating-purchase button");
+const stickyBuy = document.querySelector(".floating-purchase button");
 
-if(stickyBuy){
-
-stickyBuy.addEventListener("click",()=>{
-
+if (stickyBuy) {
+  stickyBuy.addEventListener("click", () => {
     addToCart(product);
 
-    window.location.href="cart.html";
-
-});
-
+    window.location.href = "cart.html";
+  });
 }
 
 /*==========================================================
@@ -717,6 +413,63 @@ if (viewerButton && viewerImage) {
     );
   });
 }
+
+async function loadProduct() {
+
+    try {
+
+        const response = await fetch(`${API_URL}/products/${productId}/`);
+
+        if (!response.ok) {
+            throw new Error("Product not found");
+        }
+
+        product = await response.json();
+
+        populateProduct();
+
+        createGallery();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        document.body.innerHTML = `
+            <div style="
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                height:100vh;
+                flex-direction:column;
+                font-family:Inter,sans-serif;
+                background:#f8f5ef;
+            ">
+
+                <h1>404</h1>
+
+                <p>Product not found.</p>
+
+                <a href="product.html"
+                style="
+                    padding:12px 30px;
+                    background:#b8893d;
+                    color:#fff;
+                    text-decoration:none;
+                    border-radius:999px;
+                ">
+                    Back
+                </a>
+
+            </div>
+        `;
+
+    }
+
+}
+
+loadProduct();
 
 /*==========================================================
 
@@ -907,14 +660,10 @@ gsap.to(".orb-three", {
 
 const wishlistLink = document.querySelector(".outline");
 
-if(wishlistLink){
-
-    wishlistLink.addEventListener("click",()=>{
-
-        window.location.href="wishlist.html";
-
-    });
-
+if (wishlistLink) {
+  wishlistLink.addEventListener("click", () => {
+    window.location.href = "wishlist.html";
+  });
 }
 
 /*==========================================================

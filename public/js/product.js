@@ -33,88 +33,173 @@ const loadButton = document.querySelector(".load-btn");
 
 const params = new URLSearchParams(window.location.search);
 
-const currentCategory = params.get("category") || "coins";
+// category id passed from category.html
+const categoryId = params.get("id");
 
-const categoryId = params.get("category");
-
-/*========================================================
-
-            CATEGORY CONFIG
-
-========================================================*/
-
-const categoryConfig = {
-  coins: {
-    title: "Rare Coins",
-
-    description:
-      "Discover authenticated historic coins curated from prestigious numismatic collections.",
-
-    count: 188,
-  },
-
-  notes: {
-    title: "Currency Notes",
-
-    description:
-      "Explore preserved banknotes featuring rare serials, error prints and commemorative issues.",
-
-    count: 241,
-  },
-
-  international: {
-    title: "International Currency",
-
-    description: "Museum-grade collectibles from countries around the world.",
-
-    count: 94,
-  },
-
-  collections: {
-    title: "Premium Collections",
-
-    description: "Handpicked collections assembled for passionate collectors.",
-
-    count: 52,
-  },
-
-  auction: {
-    title: "Live Auctions",
-
-    description:
-      "Bid on exclusive authenticated collectibles before they disappear.",
-
-    count: 36,
-  },
-
-  blogs: {
-    title: "Numismatic Journal",
-
-    description: "Articles, history and educational content from experts.",
-
-    count: 76,
-  },
-};
-
-/*========================================================
-
-            UPDATE HERO
-
-========================================================*/
-
-function updateHero() {
-  const config = categoryConfig[currentCategory] || categoryConfig.coins;
-
-  heroTitle.textContent = config.title;
-
-  heroDescription.textContent = config.description;
-
-  breadcrumbCategory.textContent = config.title;
-
-  productCount.textContent = config.count;
+if (!categoryId) {
+    alert("Category not found");
+    window.location.href = "categories.html";
 }
 
-updateHero();
+function renderProducts(products) {
+
+    productsGrid.innerHTML = "";
+
+    if(products.length===0){
+
+        productsGrid.innerHTML=`
+            <h2>No Products Found</h2>
+        `;
+
+        return;
+    }
+
+    heroTitle.textContent =
+        products[0].category_name || "Products";
+
+    heroDescription.textContent =
+        products[0].category_description ||
+        "Browse rare historical collectibles.";
+
+    breadcrumbCategory.textContent =
+        products[0].category_name || "Products";
+
+    productCount.textContent = products.length;
+
+    products.forEach((product,index)=>{
+
+        const sizeClasses=[
+            "large",
+            "wide",
+            "tall",
+            "",
+            ""
+        ];
+
+        const size=sizeClasses[index%sizeClasses.length];
+
+        productsGrid.innerHTML+=`
+
+        <article class="product-card ${size}" data-id="${product.id}">
+
+            <div class="spotlight"></div>
+
+            <div class="product-image">
+
+                <img
+                    src="${
+                        product.image ||
+                        "https://placehold.co/600x600"
+                    }"
+                    alt="${product.name}"
+                >
+
+            </div>
+
+            <div class="product-content">
+
+                <span class="product-category">
+
+                    ${product.category_name}
+
+                </span>
+
+                <h2>
+
+                    ${product.name}
+
+                </h2>
+
+                <p>
+
+                    ${
+                        product.description ??
+                        "No description available."
+                    }
+
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+
+                        ₹${product.price}
+
+                    </strong>
+
+                    <a href="product-information.html?id=${product.id}">
+
+                        View Details →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        `;
+    });
+
+    applyCardAnimations();
+}
+
+function performSearch(){
+
+    const value=searchInput.value.toLowerCase();
+
+    filteredProducts=visibleProducts.filter(product=>{
+
+        return(
+
+            product.name.toLowerCase().includes(value) ||
+
+            product.description.toLowerCase().includes(value)
+
+        );
+
+    });
+
+    renderProducts(filteredProducts);
+
+}
+
+function sortProducts(type){
+
+    switch(type){
+
+        case "Newest":
+
+            filteredProducts.sort((a,b)=>b.id-a.id);
+
+            break;
+
+        case "Oldest":
+
+            filteredProducts.sort((a,b)=>a.id-b.id);
+
+            break;
+
+        case "Price Low → High":
+
+            filteredProducts.sort((a,b)=>a.price-b.price);
+
+            break;
+
+        case "Price High → Low":
+
+            filteredProducts.sort((a,b)=>b.price-a.price);
+
+            break;
+
+    }
+
+    renderProducts(filteredProducts);
+
+}
+
+
 
 async function loadProducts() {
   try {
@@ -125,6 +210,8 @@ async function loadProducts() {
     }
 
     const products = await response.json();
+    visibleProducts = products;
+filteredProducts = [...products];
 
     console.log(products);
 
@@ -154,79 +241,7 @@ async function loadProducts() {
 
     productCount.textContent = products.length;
 
-    products.forEach((product, index) => {
-
-      const sizeClasses = ["large", "wide", "tall", "", ""];
-      const size = sizeClasses[index % sizeClasses.length];
-
-      productsGrid.innerHTML += `
-      <article class="product-card ${size}" data-id="${product.id}">
-
-          <div class="spotlight"></div>
-
-          <div class="product-image">
-
-              <img
-                  src="${
-                    product.image ||
-                    product.image_url ||
-                    product.thumbnail ||
-                    "https://placehold.co/500x500?text=No+Image"
-                  }"
-                  alt="${product.title || product.name || "Product"}"
-              >
-
-          </div>
-
-          <div class="product-content">
-
-              <span class="product-category">
-
-                  ${
-                    product.category_name ||
-                    product.category?.name ||
-                    "Category"
-                  }
-
-              </span>
-
-              <h2>
-
-                  ${product.title || product.name || "Unnamed Product"}
-
-              </h2>
-
-              <p>
-
-                  ${
-                    product.description ||
-                    product.short_description ||
-                    "No description available."
-                  }
-
-              </p>
-
-              <div class="product-bottom">
-
-                  <strong>
-
-                      ₹${product.price || product.selling_price || 0}
-
-                  </strong>
-
-                  <a href="product-information.html?id=${product.id}">
-
-                      View Details →
-
-                  </a>
-
-              </div>
-
-          </div>
-
-      </article>
-      `;
-    });
+    renderProducts(products);
 
 
     updateCounter();
@@ -245,72 +260,6 @@ async function loadProducts() {
 
 loadProducts();
 
-
-/*========================================================
-
-            CREATE CARD
-
-========================================================*/
-
-function createCard(product, index) {
-  const sizeClasses = ["large", "wide", "tall", "", ""];
-
-  const size = sizeClasses[index % sizeClasses.length];
-
-  return `
-
-<article class="product-card ${size}" data-id="${product.id}">
-
-<div class="spotlight"></div>
-
-<div class="product-image">
-
-<img src="${product.image}" alt="${product.name}">
-
-</div>
-
-<div class="product-content">
-
-<span class="product-category">
-
-${product.label}
-
-</span>
-
-<h2>
-
-${product.name}
-
-</h2>
-
-<p>
-
-${product.description}
-
-</p>
-
-<div class="product-bottom">
-
-<strong>
-
-₹${product.price.toLocaleString()}
-
-</strong>
-
-<a href="product-information.html?id=${product.id}">
-
-View Details →
-
-</a>
-
-</div>
-
-</div>
-
-</article>
-
-`;
-}
 
 /*========================================================
 
@@ -388,56 +337,6 @@ if (sortSelect) {
   });
 }
 
-/*========================================================
-
-                LOAD MORE
-
-========================================================*/
-
-
-/*========================================================
-
-            FILTER CHECKBOXES
-
-========================================================*/
-
-const filterCheckboxes = document.querySelectorAll(
-  ".filter-group input[type='checkbox']",
-);
-
-filterCheckboxes.forEach((box) => {
-  box.addEventListener("change", () => {
-    let active = [];
-
-    filterCheckboxes.forEach((cb) => {
-      if (cb.checked) {
-        active.push(cb.parentElement.innerText.toLowerCase());
-      }
-    });
-
-    if (active.length === 0) {
-      filteredProducts = [...visibleProducts];
-
-      renderLimitedProducts();
-
-      return;
-    }
-
-    filteredProducts = visibleProducts.filter((product) => {
-      const text = (
-        product.name +
-        product.label +
-        product.description
-      ).toLowerCase();
-
-      return active.some((item) => text.includes(item));
-    });
-
-    productsShown = 6;
-
-    renderLimitedProducts();
-  });
-});
 
 /*========================================================
 
