@@ -5,6 +5,7 @@ interface Props {
   data: RegistrationData
   onBack: () => void
   onSubmit: () => void
+  isLoading?: boolean
 }
 
 const Row = ({ label, value }: { label: string; value: string }) => (
@@ -23,7 +24,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 )
 
-const StepReview = ({ data, onBack, onSubmit }: Props) => (
+const StepReview = ({ data, onBack, onSubmit, isLoading = false }: Props) => (
   <div>
     <h2 className="mb-1 font-serif text-xl font-bold text-ink-900">Review & Submit</h2>
     <p className="mb-6 font-sans text-sm text-ink-500">Please review your information before submitting.</p>
@@ -70,13 +71,13 @@ const StepReview = ({ data, onBack, onSubmit }: Props) => (
     </div>
 
     <div className="flex justify-between">
-      <button type="button" onClick={onBack}
-        className="rounded-lg border-2 border-cream-300 px-6 py-3 font-sans text-sm font-semibold text-ink-700 transition-colors hover:bg-cream-200">
+      <button type="button" onClick={onBack} disabled={isLoading}
+        className="rounded-lg border-2 border-cream-300 px-6 py-3 font-sans text-sm font-semibold text-ink-700 transition-colors hover:bg-cream-200 disabled:cursor-not-allowed disabled:opacity-50">
         ← Back
       </button>
-      <button type="button" onClick={onSubmit}
-        className="rounded-lg bg-gold-600 px-8 py-3 font-sans text-sm font-semibold text-ink-900 transition-colors hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500">
-        Submit Application ✓
+      <button type="button" onClick={onSubmit} disabled={isLoading}
+        className="rounded-lg bg-gold-600 px-8 py-3 font-sans text-sm font-semibold text-ink-900 transition-colors hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500 disabled:cursor-not-allowed disabled:opacity-50">
+        {isLoading ? 'Submitting...' : 'Submit Application ✓'}
       </button>
     </div>
   </div>

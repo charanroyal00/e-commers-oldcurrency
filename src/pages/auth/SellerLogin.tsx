@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import { Eye, EyeOff, Lock, Mail, Store } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 
 const SellerLogin = () => {
   const navigate = useNavigate()
+  const { login } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({ email: '', password: '' })
-  const [errors, setErrors] = useState({ email: '', password: '' })
+  const [errors, setErrors] = useState({ email: '', password: '', general: '' })
+  const [isLoading, setIsLoading] = useState(false)
 
   const validate = () => {
-    const newErrors = { email: '', password: '' }
+    const newErrors = { email: '', password: '', general: '' }
     let valid = true
 
     if (!formData.email) {
@@ -35,14 +38,27 @@ const SellerLogin = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-    setErrors((prev) => ({ ...prev, [name]: '' }))
+    setErrors((prev) => ({ ...prev, [name]: '', general: '' }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (validate()) {
-      // TODO: connect to Django API POST /api/login/
+    if (!validate()) return
+
+    setIsLoading(true)
+    setErrors({ email: '', password: '', general: '' })
+
+    try {
+      await login(formData.email, formData.password)
       navigate('/dashboard')
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrors(prev => ({ ...prev, general: error.message }))
+      } else {
+        setErrors(prev => ({ ...prev, general: 'Network error. Please try again.' }))
+      }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -67,6 +83,14 @@ const SellerLogin = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} noValidate>
+            {/* General Error */}
+            {errors.general && (
+              <div className="mb-5 rounded-lg border border-red-400/20 bg-red-400/10 p-3">
+                <p className="font-sans text-sm text-red-600" role="alert">
+                  {errors.general}
+                </p>
+              </div>
+            )}
             {/* Email */}
             <div className="mb-5">
               <label
@@ -142,9 +166,10 @@ const SellerLogin = () => {
             {/* Submit */}
             <button
               type="submit"
-              className="mt-6 w-full rounded-lg bg-gold-600 py-3 font-sans text-sm font-semibold text-ink-900 transition-colors hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2"
+              disabled={isLoading}
+              className="mt-6 w-full rounded-lg bg-gold-600 py-3 font-sans text-sm font-semibold text-ink-900 transition-colors hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Sign In as Seller
+              {isLoading ? 'Signing In...' : 'Sign In as Seller'}
             </button>
           </form>
 

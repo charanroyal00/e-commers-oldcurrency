@@ -1,10 +1,19 @@
-import { Bell, Menu, Search, User } from 'lucide-react'
+import { Bell, Menu, Search, User, LogOut } from 'lucide-react'
+import { useAuth } from '../../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 interface HeaderProps {
   onMenuClick: () => void
 }
 
 const Header = ({ onMenuClick }: HeaderProps) => {
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/admin/login')
+  }
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b-2 border-cream-300 bg-cream-100 px-4 md:px-6">
       {/* Left */}
@@ -48,17 +57,28 @@ const Header = ({ onMenuClick }: HeaderProps) => {
         <div className="hidden h-6 w-px bg-cream-300 md:block" aria-hidden="true" />
 
         {/* User */}
-        <button
-          className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-ink-700 hover:bg-cream-200 focus:outline-none focus:ring-2 focus:ring-gold-500"
-          aria-label="User menu"
-        >
-          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gold-500 bg-gold-600 text-ink-900">
-            <User className="h-4 w-4" />
-          </div>
-          <span className="hidden font-sans text-sm font-medium text-ink-800 md:block">
-            Admin
-          </span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-ink-700 hover:bg-cream-200 focus:outline-none focus:ring-2 focus:ring-gold-500"
+            aria-label="User menu"
+          >
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gold-500 bg-gold-600 text-ink-900">
+              <User className="h-4 w-4" />
+            </div>
+            <span className="hidden font-sans text-sm font-medium text-ink-800 md:block">
+              {user?.username || 'User'}
+            </span>
+          </button>
+          
+          <button
+            onClick={handleLogout}
+            className="rounded-lg p-2 text-ink-600 hover:bg-cream-200 focus:outline-none focus:ring-2 focus:ring-gold-500"
+            aria-label="Logout"
+            title="Logout"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
+        </div>
       </div>
     </header>
   )

@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Package, User, MapPin, CreditCard } from 'lucide-react'
+import { Package, User, MapPin, CreditCard, Loader2 } from 'lucide-react'
+import { ordersService, ApiError, type Order } from '../services'
 import PageHeader from '../components/ui/PageHeader'
 import StatusBadge from '../components/ui/StatusBadge'
 
@@ -13,26 +15,82 @@ const ic =
 const OrderDetail = () => {
   const navigate = useNavigate()
   const { id } = useParams()
+  const [order, setOrder] = useState<Order | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [updating, setUpdating] = useState(false)
+  const [error, setError] = useState('')
 
-  // TODO: fetch from GET /api/orders/:id/
-  const order = {
-    id: id ?? 'N/A',
-    status: 'processing' as OrderStatus,
-    date: '—',
-    customer: { name: '—', email: '—', phone: '—' },
-    address: { line1: '—', city: '—', state: '—', pincode: '—' },
-    product: { name: '—', category: '—', price: '—', quantity: 1 },
-    payment: { method: '—', transactionId: '—', status: '—' },
+  useEffect(() => {
+    if (id) {
+      loadOrder(parseInt(id))
+    }
+  }, [id])
+
+  const loadOrder = async (orderId: number) => {
+    try {
+      setLoading(true)
+      const orderData = await ordersService.getOrder(orderId)
+      setOrder(orderData)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setError(error.message)
+      } else {
+        setError('Failed to load order')
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleStatusChange = (newStatus: string) => {
-    // TODO: PATCH /api/orders/:id/ { status: newStatus }
-    console.log('Update status to:', newStatus)
+  const handleStatusChange = async (newStatus: string) => {
+    if (!order) return
+    
+    try {
+      setUpdating(true)
+      const updatedOrder = await ordersService.updateOrderStatus(
+        order.id, 
+        newStatus as Order['status']
+      )
+      setOrder(updatedOrder)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setError(error.message)
+      } else {
+        setError('Failed to update order status')
+      }
+    } finally {
+      setUpdating(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16">
+        <Loader2 className="h-8 w-8 animate-spin text-gold-600 mb-4" />
+        <p className="font-sans text-sm text-ink-500">Loading order details...</p>
+      </div>
+    )
+  }
+
+  if (error || !order) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16">
+        <div className="mb-4 rounded-lg border border-red-400/20 bg-red-400/10 p-4">
+          <p className="font-sans text-sm text-red-600" role="alert">
+            {error || 'Order not found'}
+          </p>
+        </div>
+        <button onClick={() => navigate('/orders')}
+          className="rounded-lg border-2 border-cream-300 px-4 py-2 font-sans text-sm font-semibold text-ink-700 hover:bg-cream-200">
+          ← Back to Orders
+        </button>
+      </div>
+    )
   }
 
   return (
     <div>
-      <PageHeader category="Transactions" title={`Order ${order.id}`}
+      <PageHeader category="Transactions" title={`Order #${order.order_number}`}
         description="View order details and update the delivery status."
         action={
           <button onClick={() => navigate('/orders')}
@@ -72,15 +130,23 @@ const OrderDetail = () => {
           <div className="mt-4 border-t border-cream-200 pt-4">
             <label className="mb-1.5 block font-sans text-sm font-medium text-ink-700">Update Status</label>
             <div className="flex gap-3">
-              <select defaultValue={order.status} onChange={(e) => handleStatusChange(e.target.value)} className={ic}>
+              <select 
+                defaultValue={order.status} 
+                onChange={(e) => handleStatusChange(e.target.value)} 
+                disabled={updating}
+                className={ic}
+              >
                 <option value="placed">Placed</option>
                 <option value="processing">Processing</option>
                 <option value="shipped">Shipped</option>
                 <option value="delivered">Delivered</option>
                 <option value="cancelled">Cancelled</option>
               </select>
-              <button className="rounded-lg bg-gold-600 px-5 py-2.5 font-sans text-sm font-semibold text-ink-900 hover:bg-gold-500 whitespace-nowrap">
-                Update
+              <button 
+                disabled={updating}
+                className="rounded-lg bg-gold-600 px-5 py-2.5 font-sans text-sm font-semibold text-ink-900 hover:bg-gold-500 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {updating ? 'Updating...' : 'Update'}
               </button>
             </div>
           </div>
@@ -95,9 +161,9 @@ const OrderDetail = () => {
             <h2 className="font-serif text-lg font-bold text-ink-900">Customer</h2>
           </div>
           <div className="space-y-2">
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Name</span><span className="font-sans text-sm font-medium text-ink-900">{order.customer.name}</span></div>
+            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Name</span><span className="font-sans text-sm font-medium text-ink-900">{order.customer.username}</span></div>
             <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Email</span><span className="font-sans text-sm font-medium text-ink-900">{order.customer.email}</span></div>
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Phone</span><span className="font-sans text-sm font-medium text-ink-900">{order.customer.phone}</span></div>
+            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Order Date</span><span className="font-sans text-sm font-medium text-ink-900">{new Date(order.created_at).toLocaleDateString()}</span></div>
           </div>
         </div>
 
@@ -108,25 +174,29 @@ const OrderDetail = () => {
             <h2 className="font-serif text-lg font-bold text-ink-900">Shipping Address</h2>
           </div>
           <div className="space-y-2">
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Address</span><span className="font-sans text-sm font-medium text-ink-900">{order.address.line1}</span></div>
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">City</span><span className="font-sans text-sm font-medium text-ink-900">{order.address.city}</span></div>
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">State</span><span className="font-sans text-sm font-medium text-ink-900">{order.address.state}</span></div>
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Pincode</span><span className="font-sans text-sm font-medium text-ink-900">{order.address.pincode}</span></div>
+            <div className="font-sans text-sm text-ink-900">
+              {order.shipping_address || 'Address not provided'}
+            </div>
           </div>
         </div>
 
-        {/* Product */}
+        {/* Items */}
         <div className="rounded-xl border-2 border-cream-300 bg-white p-6 shadow-md">
           <div className="mb-4 flex items-center gap-2">
             <Package className="h-5 w-5 text-gold-600" />
-            <h2 className="font-serif text-lg font-bold text-ink-900">Product</h2>
+            <h2 className="font-serif text-lg font-bold text-ink-900">Order Items</h2>
           </div>
-          <div className="space-y-2">
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Name</span><span className="font-sans text-sm font-medium text-ink-900">{order.product.name}</span></div>
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Category</span><span className="font-sans text-sm font-medium text-ink-900">{order.product.category}</span></div>
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Quantity</span><span className="font-sans text-sm font-medium text-ink-900">{order.product.quantity}</span></div>
+          <div className="space-y-3">
+            {order.items.map((item, index) => (
+              <div key={index} className="border-b border-cream-200 pb-3 last:border-0 last:pb-0">
+                <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Product</span><span className="font-sans text-sm font-medium text-ink-900">{item.product.name}</span></div>
+                <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Price</span><span className="font-sans text-sm font-medium text-ink-900">₹{item.product.price.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Quantity</span><span className="font-sans text-sm font-medium text-ink-900">{item.quantity}</span></div>
+                <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Subtotal</span><span className="font-sans text-sm font-medium text-ink-900">₹{item.subtotal.toLocaleString()}</span></div>
+              </div>
+            ))}
             <div className="h-px bg-cream-200" />
-            <div className="flex justify-between"><span className="font-sans text-sm font-semibold text-ink-700">Total</span><span className="font-sans text-sm font-bold text-ink-900">₹{order.product.price}</span></div>
+            <div className="flex justify-between"><span className="font-sans text-sm font-semibold text-ink-700">Total Amount</span><span className="font-sans text-sm font-bold text-ink-900">₹{order.total_amount.toLocaleString()}</span></div>
           </div>
         </div>
 
@@ -134,12 +204,13 @@ const OrderDetail = () => {
         <div className="rounded-xl border-2 border-cream-300 bg-white p-6 shadow-md">
           <div className="mb-4 flex items-center gap-2">
             <CreditCard className="h-5 w-5 text-gold-600" />
-            <h2 className="font-serif text-lg font-bold text-ink-900">Payment</h2>
+            <h2 className="font-serif text-lg font-bold text-ink-900">Payment & Order Info</h2>
           </div>
           <div className="space-y-2">
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Method</span><span className="font-sans text-sm font-medium text-ink-900">{order.payment.method}</span></div>
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Transaction ID</span><span className="font-sans text-sm font-medium text-ink-900">{order.payment.transactionId}</span></div>
-            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Status</span><span className="font-sans text-sm font-medium text-ink-900">{order.payment.status}</span></div>
+            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Order Number</span><span className="font-sans text-sm font-medium text-ink-900">#{order.order_number}</span></div>
+            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Status</span><StatusBadge status={order.status} /></div>
+            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Created</span><span className="font-sans text-sm font-medium text-ink-900">{new Date(order.created_at).toLocaleString()}</span></div>
+            <div className="flex justify-between"><span className="font-sans text-sm text-ink-500">Last Updated</span><span className="font-sans text-sm font-medium text-ink-900">{new Date(order.updated_at).toLocaleString()}</span></div>
           </div>
         </div>
       </div>

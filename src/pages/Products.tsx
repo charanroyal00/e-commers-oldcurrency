@@ -1,17 +1,35 @@
-import { Plus, Pencil, Package } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Plus, Pencil, Package, Loader2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { productsService, ApiError, type Product } from '../services'
 import PageHeader from '../components/ui/PageHeader'
 import StatusBadge from '../components/ui/StatusBadge'
 
-// TODO: replace with API data from GET /api/products/
-const products: {
-  id: number; name: string; category: string;
-  price: string; stock: number; condition: string;
-  status: 'active' | 'inactive'
-}[] = []
-
 const Products = () => {
   const navigate = useNavigate()
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    loadProducts()
+  }, [])
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true)
+      const response = await productsService.getProducts()
+      setProducts(response.results)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setError(error.message)
+      } else {
+        setError('Failed to load products')
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div>
@@ -26,7 +44,20 @@ const Products = () => {
       />
 
       <div className="rounded-xl border-2 border-cream-300 bg-white shadow-md">
-        {products.length === 0 ? (
+        {error && (
+          <div className="border-b border-red-400/20 bg-red-400/10 p-4">
+            <p className="font-sans text-sm text-red-600" role="alert">
+              {error}
+            </p>
+          </div>
+        )}
+
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <Loader2 className="h-8 w-8 animate-spin text-gold-600 mb-4" />
+            <p className="font-sans text-sm text-ink-500">Loading products...</p>
+          </div>
+        ) : products.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16">
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-cream-300 bg-cream-100">
               <Package className="h-7 w-7 text-ink-400" />
@@ -49,8 +80,8 @@ const Products = () => {
                   <tr key={p.id} className="hover:bg-cream-50">
                     <td className="px-4 py-3 font-sans text-sm font-medium text-ink-900">{p.name}</td>
                     <td className="px-4 py-3 font-sans text-sm text-ink-600">{p.category}</td>
-                    <td className="px-4 py-3 font-sans text-sm text-ink-600">{p.condition}</td>
-                    <td className="px-4 py-3 font-sans text-sm text-ink-900">₹{p.price}</td>
+                    <td className="px-4 py-3 font-sans text-sm text-ink-600">-</td>
+                    <td className="px-4 py-3 font-sans text-sm text-ink-900">₹{p.price.toLocaleString()}</td>
                     <td className="px-4 py-3 font-sans text-sm text-ink-600">{p.stock}</td>
                     <td className="px-4 py-3"><StatusBadge status={p.status} /></td>
                     <td className="px-4 py-3">

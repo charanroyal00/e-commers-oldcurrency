@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UploadCloud, FileCheck } from 'lucide-react'
+import { productsService, ApiError } from '../../services'
 import PageHeader from '../../components/ui/PageHeader'
 import FormField from '../../components/register/FormField'
 
@@ -20,6 +21,7 @@ const AddProduct = () => {
   const navigate = useNavigate()
   const [images, setImages] = useState<File[]>([])
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [isLoading, setIsLoading] = useState(false)
   const [form, setForm] = useState({
     name: '', category: '', condition: '', year: '',
     price: '', stock: '', description: '', weight: '', material: '',
@@ -44,11 +46,46 @@ const AddProduct = () => {
     return Object.keys(e).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (validate()) {
-      // TODO: POST /api/products/
+    if (!validate()) return
+
+    setIsLoading(true)
+    setErrors({})
+
+    try {
+      await productsService.createProduct({
+        name: form.name,
+        description: form.description,
+        price: Number(form.price),
+        category: form.category,
+        stock: Number(form.stock),
+        images: images
+      })
+
+      // Navigate back to products page on success
       navigate('/products')
+    } catch (error) {
+      if (error instanceof ApiError) {
+        if (error.status === 400 && error.response) {
+          // Handle validation errors from backend
+          const backendErrors: Record<string, string> = {}
+          Object.entries(error.response).forEach(([key, value]: [string, any]) => {
+            if (Array.isArray(value)) {
+              backendErrors[key] = value[0]
+            } else {
+              backendErrors[key] = value
+            }
+          })
+          setErrors(backendErrors)
+        } else {
+          setErrors({ general: error.message || 'Failed to create product' })
+        }
+      } else {
+        setErrors({ general: 'Network error. Please try again.' })
+      }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -65,6 +102,15 @@ const AddProduct = () => {
       />
 
       <form onSubmit={handleSubmit} noValidate>
+        {/* General Error Display */}
+        {errors.general && (
+          <div className="mb-6 rounded-lg border border-red-400/20 bg-red-400/10 p-3">
+            <p className="font-sans text-sm text-red-600" role="alert">
+              {errors.general}
+            </p>
+          </div>
+        )}
+
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Main */}
           <div className="space-y-6 lg:col-span-2">
@@ -148,12 +194,12 @@ const AddProduct = () => {
             </div>
 
             <div className="rounded-xl border-2 border-cream-300 bg-white p-6 shadow-md">
-              <button type="submit"
-                className="w-full rounded-lg bg-gold-600 py-3 font-sans text-sm font-semibold text-ink-900 transition-colors hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500">
-                Publish Product
+              <button type="submit" disabled={isLoading}
+                className="w-full rounded-lg bg-gold-600 py-3 font-sans text-sm font-semibold text-ink-900 transition-colors hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500 disabled:cursor-not-allowed disabled:opacity-50">
+                {isLoading ? 'Publishing...' : 'Publish Product'}
               </button>
-              <button type="button" onClick={() => navigate('/products')}
-                className="mt-3 w-full rounded-lg border-2 border-cream-300 py-3 font-sans text-sm font-semibold text-ink-700 transition-colors hover:bg-cream-200">
+              <button type="button" onClick={() => navigate('/products')} disabled={isLoading}
+                className="mt-3 w-full rounded-lg border-2 border-cream-300 py-3 font-sans text-sm font-semibold text-ink-700 transition-colors hover:bg-cream-200 disabled:cursor-not-allowed disabled:opacity-50">
                 Cancel
               </button>
             </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { CheckCircle, Store } from 'lucide-react'
+import { authService, ApiError } from '../../services'
 import StepBasicInfo from '../../components/register/StepBasicInfo'
 import StepShopDetails from '../../components/register/StepShopDetails'
 import StepKYC from '../../components/register/StepKYC'
@@ -39,6 +40,8 @@ const SellerRegister = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState<RegistrationData>(initialData)
   const [submitted, setSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const updateData = (fields: Partial<RegistrationData>) => {
     setFormData((prev) => ({ ...prev, ...fields }))
@@ -47,9 +50,44 @@ const SellerRegister = () => {
   const nextStep = () => setCurrentStep((s) => Math.min(s + 1, STEPS.length - 1))
   const prevStep = () => setCurrentStep((s) => Math.max(s - 1, 0))
 
-  const handleSubmit = () => {
-    // TODO: connect to Django API POST /api/register/
-    setSubmitted(true)
+  const handleSubmit = async () => {
+    setIsLoading(true)
+    setError('')
+
+    try {
+      // Register the user with basic information
+      await authService.register({
+        username: formData.email, // Use email as username
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+        role: 'seller'
+      })
+
+      // TODO: After registration, you may want to:
+      // 1. Create seller profile with shop details
+      // 2. Upload KYC documents
+      // 3. Handle these via additional API calls
+
+      setSubmitted(true)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        if (error.status === 400 && error.response) {
+          // Handle validation errors
+          const errorMessage = error.response.email?.[0] || 
+                              error.response.username?.[0] || 
+                              error.response.password?.[0] ||
+                              error.message
+          setError(errorMessage)
+        } else {
+          setError(error.message || 'Registration failed')
+        }
+      } else {
+        setError('Network error. Please try again.')
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   if (submitted) {
@@ -116,10 +154,19 @@ const SellerRegister = () => {
 
         {/* Step Card */}
         <div className="rounded-2xl border-2 border-cream-300 bg-white p-6 shadow-md md:p-8">
+          {/* Error Display */}
+          {error && (
+            <div className="mb-6 rounded-lg border border-red-400/20 bg-red-400/10 p-3">
+              <p className="font-sans text-sm text-red-600" role="alert">
+                {error}
+              </p>
+            </div>
+          )}
+          
           {currentStep === 0 && <StepBasicInfo data={formData} onChange={updateData} onNext={nextStep} />}
           {currentStep === 1 && <StepShopDetails data={formData} onChange={updateData} onNext={nextStep} onBack={prevStep} />}
           {currentStep === 2 && <StepKYC data={formData} onChange={updateData} onNext={nextStep} onBack={prevStep} />}
-          {currentStep === 3 && <StepReview data={formData} onBack={prevStep} onSubmit={handleSubmit} />}
+          {currentStep === 3 && <StepReview data={formData} onBack={prevStep} onSubmit={handleSubmit} isLoading={isLoading} />}
         </div>
 
         <p className="mt-4 text-center font-sans text-xs text-ink-500">

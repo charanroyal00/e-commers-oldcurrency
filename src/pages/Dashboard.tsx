@@ -1,19 +1,28 @@
-import { DollarSign, Package, ShoppingCart, Store } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { DollarSign, Package, ShoppingCart, Store, Loader2 } from 'lucide-react'
+import { ordersService, productsService, inventoryService, ApiError } from '../services'
 
 interface StatCardProps {
   title: string
   value: string
   icon: React.ElementType
+  isLoading?: boolean
 }
 
-const StatCard = ({ title, value, icon: Icon }: StatCardProps) => (
+const StatCard = ({ title, value, icon: Icon, isLoading = false }: StatCardProps) => (
   <div className="rounded-xl border-2 border-cream-300 bg-white p-6 shadow-md">
     <div className="flex items-start justify-between">
       <div>
         <p className="font-sans text-xs font-medium uppercase tracking-widest text-ink-500">
           {title}
         </p>
-        <p className="mt-3 font-serif text-4xl font-bold text-ink-900">{value}</p>
+        {isLoading ? (
+          <div className="mt-3 flex items-center">
+            <Loader2 className="h-6 w-6 animate-spin text-gold-600" />
+          </div>
+        ) : (
+          <p className="mt-3 font-serif text-4xl font-bold text-ink-900">{value}</p>
+        )}
       </div>
       <div className="rounded-full border-2 border-gold-400 bg-gold-500/10 p-3">
         <Icon className="h-6 w-6 text-gold-600" aria-hidden="true" />
@@ -22,12 +31,62 @@ const StatCard = ({ title, value, icon: Icon }: StatCardProps) => (
     {/* Decorative bottom bar */}
     <div className="mt-6 h-px bg-cream-300" />
     <p className="mt-3 font-sans text-xs text-ink-400">
-      Data will update once marketplace is live
+      {isLoading ? 'Loading...' : 'Live marketplace data'}
     </p>
   </div>
 )
 
 const Dashboard = () => {
+  const [stats, setStats] = useState({
+    totalProducts: 0,
+    totalOrders: 0,
+    totalRevenue: 0,
+    lowStock: 0
+  })
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    loadDashboardData()
+  }, [])
+
+  const loadDashboardData = async () => {
+    try {
+      setLoading(true)
+      
+      const [ordersStats, productsResponse, inventoryStats] = await Promise.all([
+        ordersService.getOrderStats().catch(() => ({ 
+          total_orders: 0, 
+          total_revenue: 0,
+          pending_orders: 0,
+          completed_orders: 0,
+          monthly_revenue: 0
+        })),
+        productsService.getProducts({ limit: 1 }).catch(() => ({ results: [], count: 0 })),
+        inventoryService.getInventoryStats().catch(() => ({ 
+          total_products: 0, 
+          low_stock_count: 0,
+          out_of_stock_count: 0,
+          total_inventory_value: 0
+        }))
+      ])
+
+      setStats({
+        totalProducts: productsResponse.count || inventoryStats.total_products,
+        totalOrders: ordersStats.total_orders,
+        totalRevenue: ordersStats.total_revenue,
+        lowStock: inventoryStats.low_stock_count
+      })
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setError(error.message)
+      } else {
+        setError('Failed to load dashboard data')
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
     <div>
       {/* Page heading */}
@@ -48,12 +107,41 @@ const Dashboard = () => {
         <div className="h-px flex-1 bg-cream-300" />
       </div>
 
+      {/* Error Display */}
+      {error && (
+        <div className="mb-6 rounded-lg border border-red-400/20 bg-red-400/10 p-4">
+          <p className="font-sans text-sm text-red-600" role="alert">
+            {error}
+          </p>
+        </div>
+      )}
+
       {/* Stats Grid */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Total Revenue"   value="₹0" icon={DollarSign}  />
-        <StatCard title="Total Products"  value="0"  icon={Package}     />
-        <StatCard title="Total Orders"    value="0"  icon={ShoppingCart} />
-        <StatCard title="Active Sellers"  value="0"  icon={Store}       />
+        <StatCard 
+          title="Total Revenue" 
+          value={`₹${stats.totalRevenue.toLocaleString()}`} 
+          icon={DollarSign} 
+          isLoading={loading} 
+        />
+        <StatCard 
+          title="Total Products" 
+          value={stats.totalProducts.toString()} 
+          icon={Package} 
+          isLoading={loading} 
+        />
+        <StatCard 
+          title="Total Orders" 
+          value={stats.totalOrders.toString()} 
+          icon={ShoppingCart} 
+          isLoading={loading} 
+        />
+        <StatCard 
+          title="Low Stock Items" 
+          value={stats.lowStock.toString()} 
+          icon={Store} 
+          isLoading={loading} 
+        />
       </div>
 
       {/* Recent Activity */}
