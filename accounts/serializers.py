@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Category, Product, Cart, Wishlist, Checkout, Order
+from .models import User, Category, Product, Cart, Wishlist, Checkout, Order, Payment
 import random
 from django.utils import timezone
 
@@ -126,4 +126,9 @@ class CheckoutSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
+        fields = "__all__"
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
         fields = "__all__"
