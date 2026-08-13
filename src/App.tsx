@@ -14,6 +14,8 @@ import Sellers from './pages/Sellers'
 import Customers from './pages/Customers'
 import Analytics from './pages/Analytics'
 import Settings from './pages/Settings'
+import ReviewModeration from './pages/ReviewModeration'
+import Reports from './pages/Reports'
 import CategoryManagement from './pages/CategoryManagement'
 import InventoryManagement from './pages/InventoryManagement'
 import SellerInventory from './pages/SellerInventory'
@@ -39,6 +41,8 @@ function App() {
             <Route path="orders/:id"       element={<OrderDetail />} />
             <Route path="sellers"          element={<Sellers />} />
             <Route path="customers"        element={<Customers />} />
+            <Route path="reviews"          element={<ReviewModeration />} />
+            <Route path="reports"          element={<Reports />} />
             <Route path="analytics"        element={<Analytics />} />
             <Route path="settings"         element={<Settings />} />
             <Route path="categories"       element={<CategoryManagement />} />

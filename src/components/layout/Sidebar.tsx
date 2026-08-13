@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Package, ShoppingCart, Store,
-  Users, BarChart3, Settings, X, Tag, Warehouse, ClipboardList,
+  Users, BarChart3, Settings, X, Tag, Warehouse, ClipboardList, MessageSquare, FileText,
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -22,8 +22,10 @@ const navItems: NavItem[] = [
   { name: 'Inventory',          path: '/inventory',    icon: Warehouse       },
   { name: 'Seller Inventory',   path: '/seller-inventory', icon: ClipboardList },
   { name: 'Orders',             path: '/orders',       icon: ShoppingCart    },
+  { name: 'Reviews',            path: '/reviews',      icon: MessageSquare   },
   { name: 'Sellers',            path: '/sellers',      icon: Store           },
   { name: 'Customers',          path: '/customers',    icon: Users           },
+  { name: 'Reports',            path: '/reports',      icon: FileText        },
   { name: 'Analytics',          path: '/analytics',    icon: BarChart3       },
   { name: 'Settings',           path: '/settings',     icon: Settings        },
 ]
