@@ -21,7 +21,7 @@ class AuthService {
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
     try {
       const response = await apiService.post<LoginResponse>('/login/', {
-        username: credentials.email, // Backend expects username field
+        email: credentials.email,
         password: credentials.password,
       })
 
