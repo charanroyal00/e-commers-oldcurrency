@@ -34,9 +34,17 @@ class AuthService {
       return response
     } catch (error) {
       if (error instanceof ApiError) {
-        throw error
+        // Extract detailed error message from backend
+        const errorMessage = error.response?.detail 
+          || error.response?.email?.[0]
+          || error.response?.password?.[0]
+          || error.response?.non_field_errors?.[0]
+          || error.message 
+          || 'Login failed'
+        
+        throw new ApiError(errorMessage, error.status, error.response)
       }
-      throw new ApiError('Login failed', 500, error)
+      throw new ApiError('Network error. Please check your connection.', 500, error)
     }
   }
 
