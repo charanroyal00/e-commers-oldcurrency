@@ -3,7 +3,6 @@ export { apiService, ApiError } from './api'
 export { authService } from './auth'
 export { productsService } from './products'
 export { ordersService } from './orders'
-export { inventoryService } from './inventory'
 
 // Export types
 export type { 
@@ -27,12 +26,5 @@ export type {
 
 export type {
   Order,
-  OrderItem,
-  OrderStats
+  OrderItem
 } from './orders'
-
-export type {
-  InventoryItem,
-  InventoryStats,
-  StockMovement
-} from './inventory'

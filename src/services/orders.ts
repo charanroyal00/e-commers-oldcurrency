@@ -29,14 +29,6 @@ export interface OrderItem {
   subtotal: number
 }
 
-export interface OrderStats {
-  total_orders: number
-  pending_orders: number
-  completed_orders: number
-  total_revenue: number
-  monthly_revenue: number
-}
-
 // Orders Service
 class OrdersService {
   
@@ -82,15 +74,6 @@ class OrdersService {
       return await apiService.patch<Order>(`/orders/${id}/`, { status })
     } catch (error) {
       throw new ApiError('Failed to update order status', 500, error)
-    }
-  }
-
-  // Get order statistics
-  async getOrderStats(): Promise<OrderStats> {
-    try {
-      return await apiService.get<OrderStats>('/orders/stats/')
-    } catch (error) {
-      throw new ApiError('Failed to fetch order statistics', 500, error)
     }
   }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { DollarSign, Package, ShoppingCart, Store, Loader2 } from 'lucide-react'
-import { ordersService, productsService, inventoryService, ApiError } from '../services'
+import { ordersService, productsService, ApiError } from '../services'
 
 interface StatCardProps {
   title: string
@@ -55,21 +55,27 @@ const Dashboard = () => {
       setLoading(true)
       setError('')
       
-      // Fetch data with silent error handling for endpoints that don't exist yet
-      const [ordersStats, productsResponse, inventoryStats] = await Promise.all([
-        ordersService.getOrderStats().catch(() => null),
-        productsService.getProducts({ limit: 1 }).catch(() => null),
-        inventoryService.getInventoryStats().catch(() => null)
+      // Fetch data - no stats endpoints, calculate from actual data
+      const [ordersResponse, productsResponse] = await Promise.all([
+        ordersService.getOrders({ limit: 100 }).catch(() => null),
+        productsService.getProducts({ limit: 100 }).catch(() => null)
       ])
+
+      // Calculate stats from fetched data
+      const orders = ordersResponse?.results || []
+      const products = productsResponse?.results || []
+
+      const totalRevenue = orders.reduce((sum, order) => sum + (order.total_amount || 0), 0)
+      const lowStock = products.filter(p => p.stock < 10).length
 
       setStats({
         totalProducts: productsResponse?.count || 0,
-        totalOrders: ordersStats?.total_orders || 0,
-        totalRevenue: ordersStats?.total_revenue || 0,
-        lowStock: inventoryStats?.low_stock_count || 0
+        totalOrders: ordersResponse?.count || 0,
+        totalRevenue: totalRevenue,
+        lowStock: lowStock
       })
     } catch (error) {
-      // Only show error if it's not a 404 (expected for unimplemented endpoints)
+      // Silent error handling - show zeros if APIs not ready
       if (error instanceof ApiError && error.status !== 404) {
         setError(error.message)
       }

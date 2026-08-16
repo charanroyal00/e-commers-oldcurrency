@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { ShoppingCart, Loader2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { ordersService, ApiError, type Order, type OrderStats } from '../services'
+import { ordersService, ApiError, type Order } from '../services'
 import PageHeader from '../components/ui/PageHeader'
 import StatusBadge from '../components/ui/StatusBadge'
 
 const Orders = () => {
   const navigate = useNavigate()
   const [orders, setOrders] = useState<Order[]>([])
-  const [stats, setStats] = useState<OrderStats>({
+  const [stats, setStats] = useState({
     total_orders: 0,
     pending_orders: 0,
     completed_orders: 0,
