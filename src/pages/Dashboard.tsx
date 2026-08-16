@@ -53,35 +53,25 @@ const Dashboard = () => {
   const loadDashboardData = async () => {
     try {
       setLoading(true)
+      setError('')
       
+      // Fetch data with silent error handling for endpoints that don't exist yet
       const [ordersStats, productsResponse, inventoryStats] = await Promise.all([
-        ordersService.getOrderStats().catch(() => ({ 
-          total_orders: 0, 
-          total_revenue: 0,
-          pending_orders: 0,
-          completed_orders: 0,
-          monthly_revenue: 0
-        })),
-        productsService.getProducts({ limit: 1 }).catch(() => ({ results: [], count: 0 })),
-        inventoryService.getInventoryStats().catch(() => ({ 
-          total_products: 0, 
-          low_stock_count: 0,
-          out_of_stock_count: 0,
-          total_inventory_value: 0
-        }))
+        ordersService.getOrderStats().catch(() => null),
+        productsService.getProducts({ limit: 1 }).catch(() => null),
+        inventoryService.getInventoryStats().catch(() => null)
       ])
 
       setStats({
-        totalProducts: productsResponse.count || inventoryStats.total_products,
-        totalOrders: ordersStats.total_orders,
-        totalRevenue: ordersStats.total_revenue,
-        lowStock: inventoryStats.low_stock_count
+        totalProducts: productsResponse?.count || 0,
+        totalOrders: ordersStats?.total_orders || 0,
+        totalRevenue: ordersStats?.total_revenue || 0,
+        lowStock: inventoryStats?.low_stock_count || 0
       })
     } catch (error) {
-      if (error instanceof ApiError) {
+      // Only show error if it's not a 404 (expected for unimplemented endpoints)
+      if (error instanceof ApiError && error.status !== 404) {
         setError(error.message)
-      } else {
-        setError('Failed to load dashboard data')
       }
     } finally {
       setLoading(false)
@@ -112,6 +102,17 @@ const Dashboard = () => {
         <div className="mb-6 rounded-lg border border-red-400/20 bg-red-400/10 p-4">
           <p className="font-sans text-sm text-red-600" role="alert">
             {error}
+          </p>
+        </div>
+      )}
+
+      {/* Info Banner - Backend APIs not yet implemented */}
+      {!loading && stats.totalProducts === 0 && stats.totalOrders === 0 && (
+        <div className="mb-6 rounded-lg border border-blue-400/20 bg-blue-400/10 p-4">
+          <p className="font-sans text-sm font-semibold text-blue-800">ℹ️ Backend APIs In Development</p>
+          <p className="mt-1 font-sans text-xs text-blue-700">
+            The dashboard is displaying placeholder data. Backend endpoints for products, orders, and inventory are not yet implemented.
+            Once the backend developer creates these APIs, live data will appear here.
           </p>
         </div>
       )}
