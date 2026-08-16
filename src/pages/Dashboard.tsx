@@ -99,17 +99,6 @@ const Dashboard = () => {
         <div className="h-px flex-1 bg-cream-300" />
       </div>
 
-      {/* Info Banner - Backend APIs not yet implemented */}
-      {!loading && stats.totalProducts === 0 && stats.totalOrders === 0 && (
-        <div className="mb-6 rounded-lg border border-blue-400/20 bg-blue-400/10 p-4">
-          <p className="font-sans text-sm font-semibold text-blue-800">ℹ️ Backend APIs In Development</p>
-          <p className="mt-1 font-sans text-xs text-blue-700">
-            The dashboard is displaying placeholder data. Backend endpoints for products, orders, and inventory are not yet implemented.
-            Once the backend developer creates these APIs, live data will appear here.
-          </p>
-        </div>
-      )}
-
       {/* Stats Grid */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard 
