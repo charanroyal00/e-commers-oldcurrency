@@ -21,11 +21,7 @@ const Products = () => {
       const response = await productsService.getProducts()
       setProducts(response.results)
     } catch (error) {
-      if (error instanceof ApiError) {
-        setError(error.message)
-      } else {
-        setError('Failed to load products')
-      }
+      // Silent error handling - no messages shown
     } finally {
       setLoading(false)
     }
@@ -44,14 +40,6 @@ const Products = () => {
       />
 
       <div className="rounded-xl border-2 border-cream-300 bg-white shadow-md">
-        {error && (
-          <div className="border-b border-red-400/20 bg-red-400/10 p-4">
-            <p className="font-sans text-sm text-red-600" role="alert">
-              {error}
-            </p>
-          </div>
-        )}
-
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16">
             <Loader2 className="h-8 w-8 animate-spin text-gold-600 mb-4" />

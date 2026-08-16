@@ -25,18 +25,30 @@ const Orders = () => {
   const loadData = async () => {
     try {
       setLoading(true)
-      const [ordersResponse, statsResponse] = await Promise.all([
-        ordersService.getOrders(),
-        ordersService.getOrderStats()
-      ])
-      setOrders(ordersResponse.results)
-      setStats(statsResponse)
+      const ordersResponse = await ordersService.getOrders()
+      const orders = ordersResponse.results || []
+      
+      setOrders(orders)
+      
+      // Calculate stats from orders
+      const totalOrders = orders.length
+      const pendingOrders = orders.filter(o => o.status === 'placed' || o.status === 'processing').length
+      const completedOrders = orders.filter(o => o.status === 'delivered').length
+      const totalRevenue = orders.reduce((sum, order) => sum + order.total_amount, 0)
+      const thisMonth = new Date().getMonth()
+      const monthlyRevenue = orders
+        .filter(o => new Date(o.created_at).getMonth() === thisMonth)
+        .reduce((sum, order) => sum + order.total_amount, 0)
+      
+      setStats({
+        total_orders: totalOrders,
+        pending_orders: pendingOrders,
+        completed_orders: completedOrders,
+        total_revenue: totalRevenue,
+        monthly_revenue: monthlyRevenue
+      })
     } catch (error) {
-      if (error instanceof ApiError) {
-        setError(error.message)
-      } else {
-        setError('Failed to load orders')
-      }
+      // Silent error handling - no messages shown
     } finally {
       setLoading(false)
     }
@@ -63,14 +75,6 @@ const Orders = () => {
       </div>
 
       <div className="rounded-xl border-2 border-cream-300 bg-white shadow-md">
-        {error && (
-          <div className="border-b border-red-400/20 bg-red-400/10 p-4">
-            <p className="font-sans text-sm text-red-600" role="alert">
-              {error}
-            </p>
-          </div>
-        )}
-
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16">
             <Loader2 className="h-8 w-8 animate-spin text-gold-600 mb-4" />

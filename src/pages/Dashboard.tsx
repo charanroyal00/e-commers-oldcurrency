@@ -53,9 +53,8 @@ const Dashboard = () => {
   const loadDashboardData = async () => {
     try {
       setLoading(true)
-      setError('')
       
-      // Fetch data - no stats endpoints, calculate from actual data
+      // Fetch data - silent error handling
       const [ordersResponse, productsResponse] = await Promise.all([
         ordersService.getOrders({ limit: 100 }).catch(() => null),
         productsService.getProducts({ limit: 100 }).catch(() => null)
@@ -75,10 +74,7 @@ const Dashboard = () => {
         lowStock: lowStock
       })
     } catch (error) {
-      // Silent error handling - show zeros if APIs not ready
-      if (error instanceof ApiError && error.status !== 404) {
-        setError(error.message)
-      }
+      // Complete silence - no error messages at all
     } finally {
       setLoading(false)
     }
@@ -102,15 +98,6 @@ const Dashboard = () => {
         <span className="font-serif text-xs italic text-ink-400">The Archive Awaits</span>
         <div className="h-px flex-1 bg-cream-300" />
       </div>
-
-      {/* Error Display */}
-      {error && (
-        <div className="mb-6 rounded-lg border border-red-400/20 bg-red-400/10 p-4">
-          <p className="font-sans text-sm text-red-600" role="alert">
-            {error}
-          </p>
-        </div>
-      )}
 
       {/* Info Banner - Backend APIs not yet implemented */}
       {!loading && stats.totalProducts === 0 && stats.totalOrders === 0 && (
