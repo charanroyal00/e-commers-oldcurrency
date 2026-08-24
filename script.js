@@ -1210,8 +1210,12 @@ gsap.to(img,{
     if (!catalogGrid) return;
     
     try {
-      const res = await fetch("/api/products/");
-      if (!res.ok) throw new Error("API failed");
+      const apiBase = (typeof API_URL !== 'undefined') ? API_URL : (window.__API_BASE_URL__ || '/api');
+      let res = await fetch(`${apiBase}/products/`).catch(() => null);
+      if (!res || !res.ok) {
+        res = await fetch("http://127.0.0.1:8000/api/products/").catch(() => null);
+      }
+      if (!res || !res.ok) throw new Error("API failed");
       const data = await res.json();
       
       const activeProducts = data.filter(p => p.status === "Active");
