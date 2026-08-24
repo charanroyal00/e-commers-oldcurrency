@@ -1,6 +1,7 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, serializers
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -29,7 +30,21 @@ class RegisterView(generics.CreateAPIView):
 
 # Login Serializer
 class LoginSerializer(TokenObtainPairSerializer):
-    pass
+    username = serializers.CharField(required=False)
+    email = serializers.EmailField(required=False)
+
+    def validate(self, attrs):
+        username = attrs.get('username')
+        email = attrs.get('email')
+
+        if email and not username:
+            try:
+                user = User.objects.get(email=email)
+                attrs['username'] = user.username
+            except User.DoesNotExist:
+                raise serializers.ValidationError("No user found with this email.")
+
+        return super().validate(attrs)
 
 
 # Login API
@@ -101,6 +116,10 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class ProductListCreateView(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
+    parser_classes = [
+        MultiPartParser,
+        FormParser
+    ]
 
     def get_queryset(self):
         queryset = Product.objects.all()
@@ -111,12 +130,15 @@ class ProductListCreateView(generics.ListCreateAPIView):
 
         if search:
             queryset = queryset.filter(
-                Q(title__icontains=search) |
+                Q(name__icontains=search) |
                 Q(description__icontains=search)
             )
 
         if category:
-            queryset = queryset.filter(category_id=category)
+            if category.isdigit():
+                queryset = queryset.filter(category_id=category)
+            else:
+                queryset = queryset.filter(category__name__iexact=category)
 
         if seller:
             queryset = queryset.filter(seller_id=seller)
@@ -194,3 +216,13 @@ class PaymentListCreateView(generics.ListCreateAPIView):
 class PaymentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
+
+
+# -------------------------------
+# Health Check API
+# -------------------------------
+
+class HealthCheckView(APIView):
+    """Simple health check endpoint for monitoring."""
+    def get(self, request):
+        return Response({"status": "ok"})

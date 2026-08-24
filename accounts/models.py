@@ -53,6 +53,41 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         related_name="products"
     )
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    original_price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    selling_price = models.DecimalField(max_digits=10, decimal_places=2)
+    year = models.CharField(max_length=100, blank=True)
+    ruler = models.CharField(max_length=255, blank=True)
+    obverse = models.CharField(max_length=255, blank=True)
+    reverse = models.CharField(max_length=255, blank=True)
+    denomination = models.CharField(max_length=255, blank=True)
+    script = models.CharField(max_length=255, blank=True)
+    condition = models.CharField(max_length=100, blank=True)
+    authenticity = models.CharField(max_length=255, blank=True)
+    provenance = models.TextField(blank=True)
+    stock = models.PositiveIntegerField(default=1)
+    status = models.CharField(max_length=50, default='Active')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def title(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='products/')
+    is_primary = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.product.name} (Primary: {self.is_primary})"
 
 class Cart(models.Model):
     user = models.ForeignKey(
@@ -60,18 +95,15 @@ class Cart(models.Model):
         on_delete=models.CASCADE,
         related_name="cart_items"
     )
-
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE
     )
-
     quantity = models.PositiveIntegerField(default=1)
-
     added_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.title}"
+        return f"{self.user.username} - {self.product.name}"
 
 class Wishlist(models.Model):
     user = models.ForeignKey(
@@ -79,93 +111,95 @@ class Wishlist(models.Model):
         on_delete=models.CASCADE,
         related_name="wishlist_items"
     )
-
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
         related_name="wishlisted_by"
     )
-
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ("user", "product")
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.title}"
+        return f"{self.user.username} - {self.product.name}"
+
 class Checkout(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="checkouts"
     )
-
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE
     )
-
     quantity = models.PositiveIntegerField(default=1)
-
     total_price = models.DecimalField(
         max_digits=10,
         decimal_places=2
     )
-
     address = models.TextField()
-
     payment_method = models.CharField(
         max_length=50,
         default="COD"
     )
-
     status = models.CharField(
         max_length=50,
         default="Pending"
     )
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.title}"
+        return f"{self.user.username} - {self.product.name}"
 
 class Order(models.Model):
     STATUS_CHOICES = [
         ("Pending", "Pending"),
         ("Confirmed", "Confirmed"),
+        ("Processing", "Processing"),
         ("Shipped", "Shipped"),
         ("Delivered", "Delivered"),
         ("Cancelled", "Cancelled"),
     ]
 
+    order_id = models.CharField(max_length=50, unique=True)
+    customer_name = models.CharField(max_length=255)
+    customer_phone = models.CharField(max_length=20)
+    customer_email = models.EmailField()
+    delivery_address = models.TextField()
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    pin_code = models.CharField(max_length=20)
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="orders"
+        related_name="orders",
+        null=True,
+        blank=True
     )
-
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE
     )
-
     quantity = models.PositiveIntegerField(default=1)
 
-    total_price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2
-    )
+    original_price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    selling_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
         default="Pending"
     )
-
-    ordered_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Order {self.id} - {self.user.username}"
+        return f"Order {self.order_id} - {self.customer_name}"
 
 class Payment(models.Model):
     PAYMENT_METHODS = [

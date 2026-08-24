@@ -19,6 +19,7 @@ from .views import (
     OrderDetailView,
     PaymentListCreateView,
     PaymentDetailView,
+    HealthCheckView,
 )
 
 urlpatterns = [
@@ -55,4 +56,7 @@ urlpatterns = [
     # Payment APIs
     path("payments/", PaymentListCreateView.as_view(), name="payment-list"),
     path("payments/<int:pk>/", PaymentDetailView.as_view(), name="payment-detail"),
+
+    # Health Check
+    path("health/", HealthCheckView.as_view(), name="health-check"),
 ]

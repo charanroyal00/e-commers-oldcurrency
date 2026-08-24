@@ -5,7 +5,7 @@
 ==========================================================*/
 gsap.registerPlugin(ScrollTrigger);
 
-const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = window.__API_BASE_URL__ || "/api";
 
 gsap.registerPlugin(ScrollTrigger);
 

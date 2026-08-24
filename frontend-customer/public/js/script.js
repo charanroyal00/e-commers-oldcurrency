@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "./auth/auth.html";
   });
 
-  const API_URL = "http://127.0.0.1:8000/api";
+  const API_URL = window.__API_BASE_URL__ || "/api";
 
 const categoryContainer = document.querySelector(".category-grid");
 

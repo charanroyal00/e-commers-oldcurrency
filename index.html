@@ -75,7 +75,21 @@
 
           <button class="nav-account">Account</button>
         </div>
+
+        <button class="nav-hamburger" aria-label="Toggle navigation">☰</button>
       </nav>
+
+      <!-- Mobile Dropdown Menu -->
+      <div class="mobile-menu-drawer">
+        <button class="mobile-menu-close">&times;</button>
+        <div class="mobile-menu-links">
+          <a href="#Explore" class="mobile-link">Explore</a>
+          <a href="#Auction" class="mobile-link">Auctions</a>
+          <a href="#" class="mobile-link">Collections</a>
+          <a href="#footer" class="mobile-link">Journal</a>
+          <a href="/registration-form.html" class="mobile-link">Account</a>
+        </div>
+      </div>
 
       <!-- =================================================
              HERO
@@ -243,400 +257,48 @@
         </p>
       </div>
 
-      <!-- ===========================================================
-        NUMIS EDITORIAL SHOWCASE
-=========================================================== -->
+    </section>
 
-<section class="showcase-section" id="explore">
-
-    <div class="showcase-heading">
-
-        <span class="heading-tag">
-            CURATED COLLECTIONS
-        </span>
-
-        <h2>
-            Discover
-            <span>Historical Treasures</span>
-        </h2>
-
-        <p>
-            Explore authenticated coins, historical banknotes,
-            museum-grade collections and exclusive live auctions.
+    <!-- =====================================================
+         NEW CURATED CATALOGUE SECTION
+    ===================================================== -->
+    <section class="catalog-section" id="Catalog" style="padding: 100px 8%; background: #fffdf9; border-top: 1px solid #e5dac8; border-bottom: 1px solid #e5dac8;">
+      <div class="archive-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <span class="section-eyebrow" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #b8893d; display: block; margin-bottom: 10px;">
+            ACQUISITIONS / 02
+          </span>
+          <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: #1d1d1d; line-height: 1.2; margin: 0;">
+            Featured
+            <span style="font-style: italic; color: #b8893d; font-weight: 500; font-family: inherit;">Catalog.</span>
+          </h2>
+        </div>
+        <p style="font-size: 14px; color: #777; max-width: 400px; line-height: 1.6; margin: 0;">
+          Browse recently uploaded historical collectibles and place immediate acquisition requests.
         </p>
-
-    </div>
-
-    <div class="editorial-layout">
-
-        <!-- =========================
-                FEATURED COINS
-        ========================== -->
-
-        <article class="editorial-card rare-card">
-
-            <div class="card-inner">
-
-                <div>
-
-                    <div class="card-number">01</div>
-
-                    <div class="card-category">
-                        FEATURED COINS
-                    </div>
-
-                </div>
-
-                <div class="card-image">
-
-                    <img src="./assests/coin.png" alt="Rare Coin">
-
-                </div>
-
-                <div>
-
-                    <h3 class="card-title">
-
-                        Rare Coins
-
-                        <span>Collection</span>
-
-                    </h3>
-
-                    <div class="card-info">
-
-                        <p>
-
-                            Museum authenticated silver,
-                            gold and commemorative coins
-                            from India's greatest eras.
-
-                        </p>
-
-                        <a href="coins.html">
-
-                            See Collection
-
-                            <span>→</span>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- =========================
-                NOTES
-        ========================== -->
-
-        <article class="editorial-card currency-card">
-
-            <div class="card-inner">
-
-                <div>
-
-                    <div class="card-number">02</div>
-
-                    <div class="card-category">
-                        CURRENCY NOTES
-                    </div>
-
-                </div>
-
-                <div class="card-image">
-
-                    <img src="./assests/notes.png">
-
-                </div>
-
-                <h3 class="card-title">
-
-                    Vintage
-
-                    <span>Notes</span>
-
-                </h3>
-
-                <div class="card-info">
-
-                    <p>
-
-                        Rare serial numbers,
-                        error notes and British India collections.
-
-                    </p>
-
-                    <a href="currency.html">
-
-                        See More
-
-                        <span>→</span>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- =========================
-                AUCTIONS
-        ========================== -->
-
-        <article class="editorial-card auction-card">
-
-            <div class="card-inner">
-
-                <div>
-
-                    <div class="card-number">03</div>
-
-                    <div class="card-category">
-
-                        LIVE AUCTIONS
-
-                    </div>
-
-                </div>
-
-                <div class="card-image">
-
-                    <img src="./assests/auction.png">
-
-                </div>
-
-                <h3 class="card-title">
-
-                    Premium
-
-                    <span>Auctions</span>
-
-                </h3>
-
-                <div class="card-info">
-
-                    <p>
-
-                        Bid on exclusive collectibles
-                        updated every week.
-
-                    </p>
-
-                    <a href="auctions.html">
-
-                        Join Auction
-
-                        <span>→</span>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- =========================
-                COLLECTIONS
-        ========================== -->
-
-        <article class="editorial-card collection-card">
-
-            <div class="card-inner">
-
-                <div>
-
-                    <div class="card-number">
-
-                        04
-
-                    </div>
-
-                    <div class="card-category">
-
-                        PREMIUM COLLECTIONS
-
-                    </div>
-
-                </div>
-
-                <div class="card-image">
-
-                    <img src="./assests/Collectables.png">
-
-                </div>
-
-                <h3 class="card-title">
-
-                    Curated
-
-                    <span>Collections</span>
-
-                </h3>
-
-                <div class="card-info">
-
-                    <p>
-
-                        Handpicked sets curated
-                        by expert numismatists.
-
-                    </p>
-
-                    <a href="collections.html">
-
-                        View Collection
-
-                        <span>→</span>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- =========================
-                BEST SELLERS
-        ========================== -->
-
-        <article class="editorial-card seller-card">
-
-            <div class="card-inner">
-
-                <div>
-
-                    <div class="card-number">
-
-                        05
-
-                    </div>
-
-                    <div class="card-category">
-
-                        BEST SELLERS
-
-                    </div>
-
-                </div>
-
-                <div class="card-image">
-
-                    <img src="./assests/Trendy.png">
-
-                </div>
-
-                <h3 class="card-title">
-
-                    Trending
-
-                    <span>Collectibles</span>
-
-                </h3>
-
-                <div class="card-info">
-
-                    <p>
-
-                        The most purchased
-                        collectibles this month.
-
-                    </p>
-
-                    <a href="products.html">
-
-                        Shop Now
-
-                        <span>→</span>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- =========================
-                BLOGS
-        ========================== -->
-
-        <article class="editorial-card blog-card">
-
-            <div class="card-inner">
-
-                <div>
-
-                    <div class="card-number">
-
-                        06
-
-                    </div>
-
-                    <div class="card-category">
-
-                        EDUCATIONAL BLOGS
-
-                    </div>
-
-                </div>
-
-                <div class="card-image">
-
-                    <img src="./assests/Numestics.png">
-
-                </div>
-
-                <h3 class="card-title">
-
-                    Learn
-
-                    <span>Numismatics</span>
-
-                </h3>
-
-                <div class="card-info">
-
-                    <p>
-
-                        Read detailed articles about
-                        history, grading and authentication.
-
-                    </p>
-
-                    <a href="blogs.html">
-
-                        Read More
-
-                        <span>→</span>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    </div>
-
-</section>
+      </div>
+
+      <!-- Loading State -->
+      <div id="catalogLoading" style="text-align: center; padding: 50px 0; font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: #777;">
+        Curating acquisitions...
+      </div>
+
+      <!-- Error State -->
+      <div id="catalogError" style="display: none; text-align: center; padding: 50px 0; font-size: 14px; color: #b8893d; font-weight: 500;">
+        Unable to load the collection right now. Please try again later.
+      </div>
+
+      <!-- Empty State -->
+      <div id="catalogEmpty" style="display: none; text-align: center; padding: 50px 0;">
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #777; font-style: italic; margin-bottom: 8px;">No collectibles available yet</p>
+        <p style="font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 1px;">Admin catalog is currently empty.</p>
+      </div>
+
+      <!-- Responsive Grid -->
+      <div id="catalogGrid" class="catalog-grid" style="display: grid; gap: 30px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <!-- Dynmically loaded cards will go here -->
+      </div>
+    </section>
 
     <!-- =================================================
          FOOTER
@@ -755,6 +417,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
+    <script src="/js/order-helper.js"></script>
     <script type="module" src="script.js"></script>
 
 </body>

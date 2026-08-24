@@ -36,8 +36,9 @@ export async function apiRequest<T = any>(
   options: RequestInit = {}
 ): Promise<T> {
   const token = getAuthToken()
+  const isFormData = options.body instanceof FormData
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
     ...(options.headers as Record<string, string>),
   }
 
@@ -65,39 +66,58 @@ export async function apiRequest<T = any>(
 
 export const authAPI = {
   login: async (credentials: LoginPayload) => {
-    try {
-      const data = await apiRequest<{ access: string; refresh: string }>('/login/', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-      })
-      setAuthTokens(data.access, data.refresh)
-      return data
-    } catch (err) {
-      // If Django backend server is offline, simulate success for demo
-      console.warn('Backend connection error, falling back to client authentication:', err)
-      setAuthTokens('mock_jwt_token_sample')
-      return { access: 'mock_jwt_token_sample', refresh: 'mock_refresh_token_sample' }
-    }
+    const data = await apiRequest<{ access: string; refresh: string }>('/login/', {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    })
+    setAuthTokens(data.access, data.refresh)
+    return data
   },
 
   register: async (user: RegisterPayload) => {
-    try {
-      return await apiRequest('/register/', {
-        method: 'POST',
-        body: JSON.stringify(user),
-      })
-    } catch (err) {
-      console.warn('Backend connection error, falling back to client registration:', err)
-      return { message: 'Registration successful (local fallback mode)' }
-    }
+    return await apiRequest('/register/', {
+      method: 'POST',
+      body: JSON.stringify(user),
+    })
   },
 }
 
+export const categoriesAPI = {
+  list: async () => apiRequest('/categories/'),
+  get: async (id: number) => apiRequest(`/categories/${id}/`),
+}
+
 export const productsAPI = {
-  list: async () => apiRequest('/products/'),
-  get: async (id: number) => apiRequest(`/products/${id}/`),
+  list: async (params?: { category?: string; search?: string }) => {
+    const query = new URLSearchParams()
+    if (params?.category) query.append('category', params.category)
+    if (params?.search) query.append('search', params.search)
+    const queryString = query.toString()
+    return apiRequest(`/products/${queryString ? `?${queryString}` : ''}`)
+  },
+  get: async (id: number | string) => apiRequest(`/products/${id}/`),
+  create: async (data: FormData) => apiRequest('/products/', {
+    method: 'POST',
+    body: data,
+  }),
+  update: async (id: number | string, data: FormData) => apiRequest(`/products/${id}/`, {
+    method: 'PUT',
+    body: data,
+  }),
+  delete: async (id: number | string) => apiRequest(`/products/${id}/`, {
+    method: 'DELETE',
+  }),
 }
 
 export const ordersAPI = {
   list: async () => apiRequest('/orders/'),
+  get: async (id: number | string) => apiRequest(`/orders/${id}/`),
+  create: async (data: any) => apiRequest('/orders/', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  }),
+  updateStatus: async (id: number | string, status: string) => apiRequest(`/orders/${id}/`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status }),
+  }),
 }

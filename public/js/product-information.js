@@ -196,189 +196,166 @@ const products = [
 
 ==========================================================*/
 
-const product = products.find((item) => item.id === productId);
+let product = null;
 
-/*==========================================================
+async function loadProductDetails() {
+  try {
+    const res = await fetch(`/api/products/${productId}/`);
+    if (!res.ok) throw new Error("Product fetch failed");
+    const p = await res.json();
+    
+    const primaryImage = p.images?.find(img => img.is_primary) || p.images?.[0];
+    const imageList = p.images?.length > 0 ? p.images.map(img => img.image) : ["assests/coin.png"];
+    
+    const hasDiscount = parseFloat(p.discount_percentage) > 0 || parseFloat(p.discount_amount) > 0;
+    const priceText = `₹${parseFloat(p.selling_price).toLocaleString()}`;
+    const displayPriceText = hasDiscount 
+      ? `<span style="text-decoration: line-through; font-size: 16px; color: #888; margin-right: 10px;">₹${parseFloat(p.original_price).toLocaleString()}</span> ${priceText}` 
+      : priceText;
 
-            PRODUCT NOT FOUND
+    product = {
+      id: p.id.toString(),
+      name: p.name,
+      category: p.category_name || "Coins",
+      price: priceText,
+      displayPriceHtml: displayPriceText,
+      sellingPrice: parseFloat(p.selling_price),
+      originalPrice: parseFloat(p.original_price),
+      discountPercentage: parseFloat(p.discount_percentage),
+      stock: p.stock === 0 ? "Sold Out" : `Only ${p.stock} Available`,
+      rawStock: p.stock,
+      label: p.authenticity ? p.authenticity.toUpperCase() : "AUTHENTICATED",
+      description: p.description || "",
+      country: p.provenance || "India",
+      year: p.year || "N/A",
+      grade: p.condition || "Fine",
+      rarity: p.authenticity || "Rare",
+      denomination: p.denomination || "N/A",
+      material: p.script || "Silver",
+      weight: "N/A",
+      diameter: "N/A",
+      mint: p.ruler || "N/A",
+      certificate: p.authenticity || "Authenticated",
+      seller: "Numis Marketplace",
+      historyOne: p.description || "",
+      historyTwo: p.provenance ? `Provenance: ${p.provenance}` : "This item has been carefully preserved in a museum-grade archival environment.",
+      historyThree: p.obverse ? `Obverse description: ${p.obverse}. Reverse description: ${p.reverse || ''}.` : "",
+      images: imageList,
+      primaryImage: primaryImage ? primaryImage.image : "assests/coin.png"
+    };
 
-==========================================================*/
+    // Populate Page Elements
+    productName.textContent = product.name;
+    productPrice.innerHTML = product.displayPriceHtml;
+    stickyPrice.textContent = product.price;
+    productStock.innerHTML = product.stock;
+    productLabel.textContent = product.label;
+    shortDescription.textContent = product.description;
+    breadcrumbName.textContent = product.name;
+    breadcrumbCategory.textContent = product.category;
+    
+    country.textContent = product.country;
+    year.textContent = product.year;
+    grade.textContent = product.grade;
+    rarity.textContent = product.rarity;
+    
+    specCountry.textContent = product.country;
+    specYear.textContent = product.year;
+    specDenomination.textContent = product.denomination;
+    specMaterial.textContent = product.material;
+    specWeight.textContent = product.weight;
+    specDiameter.textContent = product.diameter;
+    specMint.textContent = product.mint;
+    specGrade.textContent = product.grade;
+    specCertificate.textContent = product.certificate;
+    specRarity.textContent = product.rarity;
+    specSeller.textContent = product.seller;
+    specStock.textContent = product.rawStock;
+    
+    historyOne.textContent = product.historyOne;
+    historyTwo.textContent = product.historyTwo;
+    historyThree.textContent = product.historyThree;
+    
+    mainImage.src = product.primaryImage;
+    const viewerImg = document.querySelector("#viewerImage");
+    if (viewerImg) viewerImg.src = product.primaryImage;
+    
+    createGallery();
+    
+    const buyBtn = document.querySelector(".buy-btn");
+    if (buyBtn) {
+      if (product.rawStock === 0) {
+        buyBtn.textContent = "Sold Out";
+        buyBtn.disabled = true;
+        buyBtn.style.opacity = 0.5;
+        buyBtn.style.cursor = "not-allowed";
+      } else {
+        buyBtn.textContent = "Buy Now / Place Order";
+        buyBtn.addEventListener("click", () => {
+          window.openOrderModal(
+            product.id,
+            product.name,
+            product.sellingPrice,
+            product.primaryImage,
+            product.originalPrice,
+            product.discountPercentage,
+            product.rawStock
+          );
+        });
+      }
+    }
 
-if (!product) {
-  document.body.innerHTML = `
-
-<div style="
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-font-family:Inter,sans-serif;
-background:#f8f5ef;
-flex-direction:column;
-">
-
-<h1 style="font-size:60px;">404</h1>
-
-<p>Product not found.</p>
-
-<a href="products.html"
-style="
-margin-top:30px;
-padding:14px 30px;
-background:#b8893d;
-color:white;
-text-decoration:none;
-border-radius:999px;
-">
-
-Back to Products
-
-</a>
-
-</div>
-
-`;
-
-  throw new Error("Invalid Product ID");
+  } catch (err) {
+    console.error("Failed to load product from API, using demo fallback:", err);
+    // Fallback to static product mapping if API fails
+    const item = products.find((item) => item.id === productId);
+    if (!item) {
+      document.body.innerHTML = `
+        <div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:Inter,sans-serif;background:#f8f5ef;flex-direction:column;">
+          <h1 style="font-size:60px;">404</h1>
+          <p>Product not found.</p>
+          <a href="products.html" style="margin-top:30px;padding:14px 30px;background:#b8893d;color:white;text-decoration:none;border-radius:999px;">Back to Products</a>
+        </div>
+      `;
+      throw new Error("Invalid Product ID");
+    }
+    product = item;
+    // Populate with fallback static data
+    productName.textContent = product.name;
+    productPrice.textContent = product.price;
+    stickyPrice.textContent = product.price;
+    productStock.textContent = product.stock;
+    productLabel.textContent = product.label;
+    shortDescription.textContent = product.description;
+    breadcrumbName.textContent = product.name;
+    breadcrumbCategory.textContent = product.category;
+    country.textContent = product.country;
+    year.textContent = product.year;
+    grade.textContent = product.grade;
+    rarity.textContent = product.rarity;
+    specCountry.textContent = product.country;
+    specYear.textContent = product.year;
+    specDenomination.textContent = product.denomination;
+    specMaterial.textContent = product.material;
+    specWeight.textContent = product.weight;
+    specDiameter.textContent = product.diameter;
+    specMint.textContent = product.mint;
+    specGrade.textContent = product.grade;
+    specCertificate.textContent = product.certificate;
+    specRarity.textContent = product.rarity;
+    specSeller.textContent = product.seller;
+    specStock.textContent = product.stock;
+    historyOne.textContent = product.historyOne;
+    historyTwo.textContent = product.historyTwo;
+    historyThree.textContent = product.historyThree;
+    mainImage.src = product.images[0];
+    const viewerImg = document.querySelector("#viewerImage");
+    if (viewerImg) viewerImg.src = product.images[0];
+    createGallery();
+  }
 }
 
-/*==========================================================
-
-                ELEMENTS
-
-==========================================================*/
-
-const mainImage = document.querySelector("#mainImage");
-
-const productName = document.querySelector("#productName");
-
-const productPrice = document.querySelector("#productPrice");
-
-const stickyPrice = document.querySelector("#stickyPrice");
-
-const productStock = document.querySelector("#productStock");
-
-const productLabel = document.querySelector("#productLabel");
-
-const shortDescription = document.querySelector("#shortDescription");
-
-const thumbnailContainer = document.querySelector("#thumbnailContainer");
-
-const breadcrumbName = document.querySelector("#breadcrumbName");
-
-const breadcrumbCategory = document.querySelector("#breadcrumbCategory");
-
-/* Quick Specs */
-
-const country = document.querySelector("#country");
-
-const year = document.querySelector("#year");
-
-const grade = document.querySelector("#grade");
-
-const rarity = document.querySelector("#rarity");
-
-/* Specifications */
-
-const specCountry = document.querySelector("#specCountry");
-
-const specYear = document.querySelector("#specYear");
-
-const specDenomination = document.querySelector("#specDenomination");
-
-const specMaterial = document.querySelector("#specMaterial");
-
-const specWeight = document.querySelector("#specWeight");
-
-const specDiameter = document.querySelector("#specDiameter");
-
-const specMint = document.querySelector("#specMint");
-
-const specGrade = document.querySelector("#specGrade");
-
-const specCertificate = document.querySelector("#specCertificate");
-
-const specRarity = document.querySelector("#specRarity");
-
-const specSeller = document.querySelector("#specSeller");
-
-const specStock = document.querySelector("#specStock");
-
-/* History */
-
-const historyOne = document.querySelector("#historyOne");
-
-const historyTwo = document.querySelector("#historyTwo");
-
-const historyThree = document.querySelector("#historyThree");
-
-/*==========================================================
-
-                POPULATE PAGE
-
-==========================================================*/
-
-function populateProduct() {
-  productName.textContent = product.name;
-
-  productPrice.textContent = product.price;
-
-  stickyPrice.textContent = product.price;
-
-  productStock.textContent = product.stock;
-
-  productLabel.textContent = product.label;
-
-  shortDescription.textContent = product.description;
-
-  breadcrumbName.textContent = product.name;
-
-  breadcrumbCategory.textContent = product.category;
-
-  country.textContent = product.country;
-
-  year.textContent = product.year;
-
-  grade.textContent = product.grade;
-
-  rarity.textContent = product.rarity;
-
-  specCountry.textContent = product.country;
-
-  specYear.textContent = product.year;
-
-  specDenomination.textContent = product.denomination;
-
-  specMaterial.textContent = product.material;
-
-  specWeight.textContent = product.weight;
-
-  specDiameter.textContent = product.diameter;
-
-  specMint.textContent = product.mint;
-
-  specGrade.textContent = product.grade;
-
-  specCertificate.textContent = product.certificate;
-
-  specRarity.textContent = product.rarity;
-
-  specSeller.textContent = product.seller;
-
-  specStock.textContent = product.stock;
-
-  historyOne.textContent = product.historyOne;
-
-  historyTwo.textContent = product.historyTwo;
-
-  historyThree.textContent = product.historyThree;
-
-  mainImage.src = product.images[0];
-
-  document.querySelector("#viewerImage").src = product.images[0];
-}
-
-populateProduct();
+loadProductDetails();
 
 /*==========================================================
 

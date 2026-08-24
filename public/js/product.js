@@ -253,21 +253,74 @@ const demoProducts = [
 
 ========================================================*/
 
-let visibleProducts = demoProducts.filter((product) => {
-  if (currentCategory === "coins") return product.category === "coins";
+let visibleProducts = [];
+let filteredProducts = [];
 
-  if (currentCategory === "notes") return product.category === "notes";
+function mapProduct(p) {
+  const primaryImage = p.images?.find(img => img.is_primary) || p.images?.[0];
+  const imageUrl = primaryImage ? primaryImage.image : "assests/coin.png";
+  
+  return {
+    id: p.id.toString(),
+    name: p.name,
+    category: p.category_name ? p.category_name.toLowerCase().replace(/ /g, "") : "coins",
+    price: parseFloat(p.selling_price),
+    originalPrice: parseFloat(p.original_price),
+    discountPercentage: parseFloat(p.discount_percentage),
+    discountAmount: parseFloat(p.discount_amount),
+    rarity: p.authenticity || "Rare",
+    grade: p.condition || "UNC",
+    country: p.provenance || "India",
+    year: p.year || "N/A",
+    material: p.script || "Silver",
+    weight: "N/A",
+    diameter: "N/A",
+    mint: p.ruler || "N/A",
+    certificate: p.authenticity || "Authenticated",
+    seller: "Numis Marketplace",
+    stock: p.stock,
+    label: p.status === "Active" ? "Active" : "Disabled",
+    image: imageUrl,
+    description: p.description || ""
+  };
+}
 
-  if (currentCategory === "international")
-    return product.category === "international";
+async function loadProducts() {
+  try {
+    const res = await fetch("/api/products/");
+    if (!res.ok) throw new Error("API failed");
+    const data = await res.json();
+    const activeProducts = data.filter(p => p.status === "Active");
+    const realProducts = activeProducts.map(mapProduct);
+    
+    visibleProducts = realProducts.filter((product) => {
+      const cat = product.category;
+      if (currentCategory === "coins") return cat.includes("coin");
+      if (currentCategory === "notes") return cat.includes("note") || cat.includes("currency");
+      if (currentCategory === "collections") return cat.includes("collect") || cat.includes("other") || cat.includes("collection");
+      if (currentCategory === "international") return cat.includes("medal") || cat.includes("token") || cat.includes("international");
+      return true;
+    });
 
-  if (currentCategory === "collections")
-    return product.category === "collections";
-
-  if (currentCategory === "auction") return product.category === "auction";
-
-  return true;
-});
+    filteredProducts = [...visibleProducts];
+    if (productCount) productCount.textContent = filteredProducts.length;
+    renderLimitedProducts();
+  } catch (err) {
+    console.error("Error loading products via API:", err);
+    // Fallback to static demoProducts
+    visibleProducts = demoProducts.filter((product) => {
+      if (currentCategory === "coins") return product.category === "coins";
+      if (currentCategory === "notes") return product.category === "notes";
+      if (currentCategory === "international") return product.category === "international";
+      if (currentCategory === "collections") return product.category === "collections";
+      if (currentCategory === "auction") return product.category === "auction";
+      return true;
+    });
+    filteredProducts = [...visibleProducts];
+    if (productCount) productCount.textContent = filteredProducts.length;
+    renderLimitedProducts();
+  }
+}
 
 /*========================================================
 
@@ -277,62 +330,47 @@ let visibleProducts = demoProducts.filter((product) => {
 
 function createCard(product, index) {
   const sizeClasses = ["large", "wide", "tall", "", ""];
-
   const size = sizeClasses[index % sizeClasses.length];
 
+  const hasDiscount = product.discountPercentage > 0 || product.discountAmount > 0;
+  const originalPriceStr = hasDiscount ? `<span style="text-decoration: line-through; font-size: 13px; color: #888; margin-right: 8px;">₹${product.originalPrice.toLocaleString()}</span>` : '';
+  const discountBadge = product.discountPercentage > 0 
+    ? `<span style="font-size: 11px; background: #e5dac8; color: #b8893d; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-left: 8px;">${product.discountPercentage.toFixed(0)}% OFF</span>` 
+    : '';
+
+  const shortInfo = `${product.year ? `${product.year}` : ''} ${product.grade ? `• ${product.grade}` : ''}`.trim() || 'Collectible';
+
+  const orderBtn = product.stock === 0
+    ? `<button class="action-btn-primary" disabled style="flex: 1; background: #888; color: white; border: none; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; cursor: not-allowed;">Sold Out</button>`
+    : `<button onclick="window.openOrderModal('${product.id}', '${product.name.replace(/'/g, "\\'")}', '${product.price}', '${product.image}', '${product.originalPrice || product.price}', '${product.discountPercentage || 0}', '${product.stock || 1}')" class="action-btn-primary" style="flex: 1; background: #b8893d; color: #fffdf9; border: none; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; cursor: pointer; transition: background 0.2s;">Place Order</button>`;
+
   return `
-
-<article class="product-card ${size}" data-id="${product.id}">
-
-<div class="spotlight"></div>
-
-<div class="product-image">
-
-<img src="${product.image}" alt="${product.name}">
-
-</div>
-
-<div class="product-content">
-
-<span class="product-category">
-
-${product.label}
-
-</span>
-
-<h2>
-
-${product.name}
-
-</h2>
-
-<p>
-
-${product.description}
-
-</p>
-
-<div class="product-bottom">
-
-<strong>
-
-₹${product.price.toLocaleString()}
-
-</strong>
-
-<a href="product-information.html?id=${product.id}">
-
-View Details →
-
-</a>
-
-</div>
-
-</div>
-
-</article>
-
-`;
+    <article class="product-card ${size}" data-id="${product.id}">
+      <div class="spotlight"></div>
+      <div class="product-image">
+        <img src="${product.image}" alt="${product.name}">
+      </div>
+      <div class="product-content">
+        <span class="product-category" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>${product.label}</span>
+          <span style="font-size: 11px; color: #888;">${shortInfo}</span>
+        </span>
+        <h2>${product.name}</h2>
+        <p>${product.description}</p>
+        <div class="product-pricing" style="margin-top: 15px; display: flex; align-items: center; flex-wrap: wrap;">
+          ${originalPriceStr}
+          <strong style="font-size: 18px; color: #1d1d1d;">₹${product.price.toLocaleString()}</strong>
+          ${discountBadge}
+        </div>
+        <div class="product-bottom" style="display: flex; gap: 10px; margin-top: 15px; border-top: 1px solid #e5dac8; padding-top: 15px;">
+          <a href="product-information.html?id=${product.id}" class="action-btn-secondary" style="flex: 1; text-align: center; border: 1px solid #b8893d; color: #b8893d; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; background: transparent; transition: all 0.2s;">
+            View Details
+          </a>
+          ${orderBtn}
+        </div>
+      </div>
+    </article>
+  `;
 }
 
 /*========================================================
@@ -445,7 +483,7 @@ function renderLimitedProducts() {
 
 productsShown = 6;
 
-renderLimitedProducts();
+loadProducts();
 
 if (loadButton) {
   loadButton.addEventListener("click", () => {
