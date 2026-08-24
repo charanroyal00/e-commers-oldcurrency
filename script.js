@@ -1210,143 +1210,172 @@ gsap.to(img,{
     if (!catalogGrid) return;
     
     try {
-      const res = await fetch("/api/products/");
+      const res = await fetch(`${API_URL}/products/`);
       if (!res.ok) throw new Error("API failed");
       const data = await res.json();
       
       const activeProducts = data.filter(p => p.status === "Active");
+      if (activeProducts.length === 0) throw new Error("No active products");
       
-      if (catalogLoading) catalogLoading.style.display = "none";
-      
-      // Update top editorial cards dynamically if products are available
-      const coinProduct = activeProducts.find(p => p.category_name?.toLowerCase().includes("coin"));
-      if (coinProduct) {
-        const primaryImageObj = coinProduct.images?.find(img => img.is_primary) || coinProduct.images?.[0];
-        const imageUrl = primaryImageObj ? primaryImageObj.image : "images/demo-coin.png";
-        const rareCardImg = document.querySelector(".rare-card .card-image img");
-        if (rareCardImg) rareCardImg.src = imageUrl;
-        const rareCardTitle = document.querySelector(".rare-card .card-title");
-        if (rareCardTitle) {
-          const parts = coinProduct.name.split(' ');
-          rareCardTitle.innerHTML = `${parts.slice(0, 2).join(' ')} <span>${parts.slice(2).join(' ')}</span>`;
-        }
-        const rareCardDesc = document.querySelector(".rare-card .card-info p");
-        if (rareCardDesc) rareCardDesc.textContent = coinProduct.description || "Museum authenticated rare coin.";
-        const rareCardLink = document.querySelector(".rare-card .card-info a");
-        if (rareCardLink) rareCardLink.href = `product-information.html?id=${coinProduct.id}`;
-      }
-
-      const noteProduct = activeProducts.find(p => p.category_name?.toLowerCase().includes("note") || p.category_name?.toLowerCase().includes("currency"));
-      if (noteProduct) {
-        const primaryImageObj = noteProduct.images?.find(img => img.is_primary) || noteProduct.images?.[0];
-        const imageUrl = primaryImageObj ? primaryImageObj.image : "images/demo-coin.png";
-        const noteCardImg = document.querySelector(".currency-card .card-image img");
-        if (noteCardImg) noteCardImg.src = imageUrl;
-        const noteCardTitle = document.querySelector(".currency-card .card-title");
-        if (noteCardTitle) {
-          const parts = noteProduct.name.split(' ');
-          noteCardTitle.innerHTML = `${parts.slice(0, 2).join(' ')} <span>${parts.slice(2).join(' ')}</span>`;
-        }
-        const noteCardDesc = document.querySelector(".currency-card .card-info p");
-        if (noteCardDesc) noteCardDesc.textContent = noteProduct.description || "Historic vintage banknote.";
-        const noteCardLink = document.querySelector(".currency-card .card-info a");
-        if (noteCardLink) noteCardLink.href = `product-information.html?id=${noteProduct.id}`;
-      }
-
-      if (activeProducts.length === 0) {
-        if (catalogEmpty) catalogEmpty.style.display = "block";
-        return;
-      }
-      
-      catalogGrid.innerHTML = "";
-      activeProducts.forEach((product) => {
-        const primaryImageObj = product.images?.find(img => img.is_primary) || product.images?.[0];
-        const imageUrl = primaryImageObj ? primaryImageObj.image : "images/demo-coin.png";
-        
-        const hasDiscount = parseFloat(product.discount_percentage) > 0 || parseFloat(product.discount_amount) > 0;
-        const originalPriceStr = hasDiscount 
-          ? `<span style="text-decoration: line-through; font-size: 13px; color: #888; margin-right: 8px;">₹${parseFloat(product.original_price).toLocaleString()}</span>` 
-          : '';
-        const discountBadge = parseFloat(product.discount_percentage) > 0 
-          ? `<span style="font-size: 10px; background: #e5dac8; color: #b8893d; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-left: 8px;">${parseFloat(product.discount_percentage).toFixed(0)}% OFF</span>` 
-          : '';
-        
-        const shortInfo = `${product.year ? `${product.year}` : ''} ${product.condition ? `• ${product.condition}` : ''}`.trim() || 'Collectible';
-        const isSoldOut = product.stock === 0;
-
-        const orderButtonHtml = isSoldOut
-          ? `<button disabled style="flex: 1; background: #888; color: white; border: none; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; cursor: not-allowed;">Sold Out</button>`
-          : `<button onclick="window.openOrderModal('${product.id}', '${product.name.replace(/'/g, "\\'")}', '${product.selling_price}', '${imageUrl}', '${product.original_price}', '${product.discount_percentage}', '${product.stock}')" style="flex: 1; background: #b8893d; color: #fffdf9; border: none; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; cursor: pointer; transition: background 0.2s;">Place Order</button>`;
-
-        const card = document.createElement("article");
-        card.className = "product-card";
-        card.style.cssText = `
-          background: #fffdf9;
-          border: 1px solid #e5dac8;
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-          transition: all 0.3s ease;
-          display: flex;
-          flex-direction: column;
-        `;
-        
-        card.innerHTML = `
-          <div class="product-image" style="height: 220px; overflow: hidden; background: #f8f5ef; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e5dac8; position: relative;">
-            <img src="${imageUrl}" alt="${product.name}" style="max-width: 90%; max-height: 90%; object-fit: contain; transition: transform 0.5s ease;">
-            <span style="position: absolute; top: 12px; left: 12px; background: rgba(31, 31, 31, 0.85); color: #fffdf9; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 8px; border-radius: 4px;">
-              ${product.category_name || 'Collectible'}
-            </span>
-          </div>
-          <div class="product-content" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <span style="font-size: 10px; font-weight: 600; color: #b8893d; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 8px;">
-                ${shortInfo}
-              </span>
-              <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: #1d1d1d; margin: 0 0 10px 0; line-height: 1.3;">
-                ${product.name}
-              </h3>
-              <p style="font-size: 13px; color: #777; line-height: 1.5; margin: 0 0 20px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                ${product.description || 'Museum quality preservation.'}
-              </p>
-            </div>
-            <div>
-              <div class="product-pricing" style="display: flex; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
-                ${originalPriceStr}
-                <strong style="font-size: 18px; color: #1d1d1d;">₹${parseFloat(product.selling_price).toLocaleString()}</strong>
-                ${discountBadge}
-              </div>
-              <div class="product-bottom" style="display: flex; gap: 10px; border-top: 1px solid #e5dac8; padding-top: 15px;">
-                <a href="product-information.html?id=${product.id}" style="flex: 1; text-align: center; border: 1px solid #b8893d; color: #b8893d; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; text-decoration: none; transition: all 0.2s;">
-                  View Details
-                </a>
-                ${orderButtonHtml}
-              </div>
-            </div>
-          </div>
-        `;
-        
-        card.addEventListener("mouseenter", () => {
-          card.style.transform = "translateY(-6px)";
-          card.style.boxShadow = "0 15px 35px rgba(184, 137, 61, 0.08)";
-          const img = card.querySelector("img");
-          if (img) img.style.transform = "scale(1.05)";
-        });
-        card.addEventListener("mouseleave", () => {
-          card.style.transform = "translateY(0)";
-          card.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.03)";
-          const img = card.querySelector("img");
-          if (img) img.style.transform = "scale(1)";
-        });
-
-        catalogGrid.appendChild(card);
-      });
+      renderProductCards(activeProducts);
       
     } catch (err) {
-      console.error("NUMIS Landing Page Catalog Error:", err);
-      if (catalogLoading) catalogLoading.style.display = "none";
-      if (catalogError) catalogError.style.display = "block";
+      console.warn("NUMIS Landing Page: Backend API unreachable, using fallback coin dataset:", err);
+      // Fallback historical coins dataset for static hosting (e.g. Vercel)
+      const fallbackProducts = [
+        {
+          id: 1,
+          name: "Mysore Wodeyar Copper Cash",
+          category_name: "Old Coins",
+          original_price: 6500,
+          discount_percentage: 20,
+          selling_price: 5200,
+          status: "Active",
+          description: "Mysore Immadi Krishnaraja Wodeyar II XX Cash, Elephant Obverse, Kannada Shree.",
+          images: [{ image: "/media/products/WhatsApp_Image_2026-08-01_at_10.16.54_AM_1.jpeg", is_primary: true }]
+        },
+        {
+          id: 2,
+          name: "East India Company Calcutta Silver Rupee",
+          category_name: "Silver Coins",
+          original_price: 3200,
+          discount_percentage: 0,
+          selling_price: 3200,
+          status: "Active",
+          description: "East India Company Calcutta Presidency AD 1807-1808 AH 1222 Fish Type Silver Rupee.",
+          images: [{ image: "/media/products/WhatsApp_Image_2026-08-01_at_10.16.55_AM.jpeg", is_primary: true }]
+        },
+        {
+          id: 3,
+          name: "EIC Banaras Silver Rupee AH 1229",
+          category_name: "Rare Collectibles",
+          original_price: 6500,
+          discount_percentage: 15,
+          selling_price: 5525,
+          status: "Active",
+          description: "East India Company Banaras Mint AH 1229 Fish Type Silver Rupee.",
+          images: [{ image: "/media/products/WhatsApp_Image_2026-08-01_at_10.16.56_AM.jpeg", is_primary: true }]
+        },
+        {
+          id: 4,
+          name: "East India Company Shah Alam II Rupee",
+          category_name: "Ancient Coins",
+          original_price: 1800,
+          discount_percentage: 12,
+          selling_price: 1584,
+          status: "Active",
+          description: "Bombay Presidency Shah Alam II Silver Rupee, Museum Verified.",
+          images: [{ image: "/media/products/WhatsApp_Image_2026-08-01_at_10.16.54_AM_3.jpeg", is_primary: true }]
+        }
+      ];
+      renderProductCards(fallbackProducts);
     }
+  }
+
+  function renderProductCards(products) {
+    if (catalogLoading) catalogLoading.style.display = "none";
+    if (catalogError) catalogError.style.display = "none";
+    if (catalogEmpty) catalogEmpty.style.display = "none";
+
+    catalogGrid.innerHTML = "";
+    
+    // Update top editorial cards dynamically if products are available
+    const coinProduct = products.find(p => p.category_name?.toLowerCase().includes("coin")) || products[0];
+    if (coinProduct) {
+      const primaryImageObj = coinProduct.images?.find(img => img.is_primary) || coinProduct.images?.[0];
+      const imageUrl = primaryImageObj ? primaryImageObj.image : "images/demo-coin.png";
+      const rareCardImg = document.querySelector(".rare-card .card-image img");
+      if (rareCardImg) rareCardImg.src = imageUrl;
+      const rareCardTitle = document.querySelector(".rare-card .card-title");
+      if (rareCardTitle) {
+        const parts = coinProduct.name.split(' ');
+        rareCardTitle.innerHTML = `${parts.slice(0, 2).join(' ')} <span>${parts.slice(2).join(' ')}</span>`;
+      }
+      const rareCardDesc = document.querySelector(".rare-card .card-info p");
+      if (rareCardDesc) rareCardDesc.textContent = coinProduct.description || "Museum authenticated rare coin.";
+    }
+
+    products.forEach((product) => {
+      const primaryImageObj = product.images?.find(img => img.is_primary) || product.images?.[0];
+      let imageUrl = primaryImageObj ? primaryImageObj.image : "images/demo-coin.png";
+      
+      const shortInfo = "MUSEUM AUTHENTICATED";
+      
+      let originalPriceStr = "";
+      let discountBadge = "";
+      if (parseFloat(product.discount_percentage) > 0) {
+        originalPriceStr = `<span style="text-decoration: line-through; color: #999; margin-right: 10px; font-size: 14px;">₹${parseFloat(product.original_price).toLocaleString()}</span>`;
+        discountBadge = `<span style="background: #e6f4ea; color: #137333; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 8px;">${parseFloat(product.discount_percentage).toFixed(0)}% OFF</span>`;
+      }
+
+      let orderButtonHtml = `<button class="quick-order-btn" data-id="${product.id}" data-name="${product.name}" data-price="${product.selling_price}" data-img="${imageUrl}" style="flex: 1; background: #b8893d; color: #ffffff; border: none; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; cursor: pointer; transition: all 0.2s;">Place Order</button>`;
+      if (product.stock === 0) {
+        orderButtonHtml = `<button disabled style="flex: 1; background: #e0e0e0; color: #888; border: none; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; cursor: not-allowed;">Sold Out</button>`;
+      }
+
+      const card = document.createElement("article");
+      card.className = "product-card";
+      card.style.cssText = `
+        background: #fffdf9;
+        border: 1px solid #e5dac8;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+      `;
+      
+      card.innerHTML = `
+        <div class="product-image" style="height: 220px; overflow: hidden; background: #f8f5ef; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e5dac8; position: relative;">
+          <img src="${imageUrl}" alt="${product.name}" style="max-width: 90%; max-height: 90%; object-fit: contain; transition: transform 0.5s ease;">
+          <span style="position: absolute; top: 12px; left: 12px; background: rgba(31, 31, 31, 0.85); color: #fffdf9; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 8px; border-radius: 4px;">
+            ${product.category_name || 'Collectible'}
+          </span>
+        </div>
+        <div class="product-content" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <span style="font-size: 10px; font-weight: 600; color: #b8893d; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 8px;">
+              ${shortInfo}
+            </span>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: #1d1d1d; margin: 0 0 10px 0; line-height: 1.3;">
+              ${product.name}
+            </h3>
+            <p style="font-size: 13px; color: #777; line-height: 1.5; margin: 0 0 20px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+              ${product.description || 'Museum quality preservation.'}
+            </p>
+          </div>
+          <div>
+            <div class="product-pricing" style="display: flex; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
+              ${originalPriceStr}
+              <strong style="font-size: 18px; color: #1d1d1d;">₹${parseFloat(product.selling_price).toLocaleString()}</strong>
+              ${discountBadge}
+            </div>
+            <div class="product-bottom" style="display: flex; gap: 10px; border-top: 1px solid #e5dac8; padding-top: 15px;">
+              <a href="product-information.html?id=${product.id}" style="flex: 1; text-align: center; border: 1px solid #b8893d; color: #b8893d; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; text-decoration: none; transition: all 0.2s;">
+                View Details
+              </a>
+              ${orderButtonHtml}
+            </div>
+          </div>
+        </div>
+      `;
+      
+      card.addEventListener("mouseenter", () => {
+        card.style.transform = "translateY(-6px)";
+        card.style.boxShadow = "0 15px 35px rgba(184, 137, 61, 0.08)";
+        const img = card.querySelector("img");
+        if (img) img.style.transform = "scale(1.05)";
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "translateY(0)";
+        card.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.03)";
+        const img = card.querySelector("img");
+        if (img) img.style.transform = "scale(1)";
+      });
+
+      catalogGrid.appendChild(card);
+    });
   }
 
   fetchLandingProducts();
