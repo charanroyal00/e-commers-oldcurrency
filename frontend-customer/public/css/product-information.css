@@ -1,0 +1,1890 @@
+/*========================================================
+
+                NUMIS PRODUCT PAGE
+
+========================================================*/
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+
+/*========================================================
+
+                ROOT
+
+========================================================*/
+
+:root {
+  --bg: #f8f5ef;
+
+  --surface: #ffffff;
+
+  --surface-2: #f3eee5;
+
+  --gold: #b8893d;
+
+  --gold-light: #d5b173;
+
+  --text: #191919;
+
+  --muted: #6d6d6d;
+
+  --border: rgba(184, 137, 61, 0.15);
+
+  --shadow: 0 30px 70px rgba(0, 0, 0, 0.08);
+
+  --radius: 30px;
+}
+
+/*========================================================
+
+                RESET
+
+========================================================*/
+
+* {
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+
+  background: var(--bg);
+
+  color: var(--text);
+
+  overflow-x: hidden;
+
+  position: relative;
+}
+
+img {
+  display: block;
+
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+
+  font-family: inherit;
+}
+
+section {
+  position: relative;
+}
+
+/*========================================================
+
+            BACKGROUND
+
+========================================================*/
+
+.background-orb {
+  position: fixed;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: -3;
+
+  filter: blur(80px);
+
+  opacity: 0.55;
+}
+
+.orb-one {
+  width: 380px;
+
+  height: 380px;
+
+  left: -80px;
+
+  top: 120px;
+
+  background: rgba(184, 137, 61, 0.14);
+}
+
+.orb-two {
+  width: 260px;
+
+  height: 260px;
+
+  right: -60px;
+
+  top: 45%;
+
+  background: rgba(184, 137, 61, 0.1);
+}
+
+.orb-three {
+  width: 500px;
+
+  height: 500px;
+
+  left: 40%;
+
+  bottom: -220px;
+
+  background: rgba(184, 137, 61, 0.08);
+}
+
+/*========================================================
+
+                NAVBAR
+
+========================================================*/
+
+.navbar {
+  position: fixed;
+
+  top: 25px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: min(1450px, 94%);
+
+  height: 82px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255, 255, 255, 0.55);
+
+  border-radius: 999px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 0 34px;
+
+  z-index: 999;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+}
+
+.logo {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 2rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: var(--gold);
+}
+
+.nav-links {
+  display: flex;
+
+  gap: 45px;
+}
+
+.nav-links a {
+  font-size: 0.95rem;
+
+  color: #4d4d4d;
+
+  position: relative;
+
+  transition: 0.35s;
+}
+
+.nav-links a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -8px;
+
+  width: 0;
+
+  height: 2px;
+
+  background: var(--gold);
+
+  transition: 0.35s;
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-buttons {
+  display: flex;
+
+  gap: 15px;
+
+  align-items: center;
+}
+
+.icon-btn {
+  width: 48px;
+
+  height: 48px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  border: 1px solid var(--border);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  transition: 0.35s;
+}
+
+.icon-btn:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow);
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #c79b48, #b8893d);
+
+  color: #fff;
+
+  padding: 14px 28px;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+
+  transition: 0.35s;
+}
+
+.primary-btn:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 18px 35px rgba(184, 137, 61, 0.28);
+}
+
+/*========================================================
+
+                BREADCRUMB
+
+========================================================*/
+
+.breadcrumb {
+  width: min(1400px, 90%);
+
+  margin: 150px auto 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: #777;
+
+  font-size: 0.95rem;
+}
+
+.breadcrumb strong {
+  color: var(--gold);
+
+  font-weight: 600;
+}
+
+/*========================================================
+
+                HERO
+
+========================================================*/
+
+.product-hero {
+  width: min(1450px, 92%);
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns: 1.15fr 0.85fr;
+
+  gap: 70px;
+
+  align-items: start;
+
+  min-height: 760px;
+}
+
+/*========================================================
+
+            GALLERY
+
+========================================================*/
+
+.gallery-wrapper {
+  display: grid;
+
+  grid-template-columns: 110px 1fr;
+
+  gap: 25px;
+}
+
+.thumbnail-column {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.thumbnail {
+  width: 100px;
+
+  height: 100px;
+
+  background: #fff;
+
+  border-radius: 24px;
+
+  border: 1px solid var(--border);
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  transition: 0.4s;
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+}
+
+.thumbnail img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.thumbnail:hover {
+  transform: translateY(-6px);
+
+  border-color: var(--gold);
+}
+
+.thumbnail.active {
+  border: 2px solid var(--gold);
+
+  box-shadow: 0 18px 40px rgba(184, 137, 61, 0.18);
+}
+
+/*========================================================
+
+            MAIN IMAGE
+
+========================================================*/
+
+.main-image-card {
+  position: relative;
+
+  min-height: 720px;
+
+  background: linear-gradient(145deg, #ffffff, #f3eee5);
+
+  border-radius: 36px;
+
+  border: 1px solid var(--border);
+
+  overflow: hidden;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  box-shadow: var(--shadow);
+}
+
+.main-image-card img {
+  width: 78%;
+
+  object-fit: contain;
+
+  position: relative;
+
+  z-index: 2;
+
+  transition: 0.5s;
+}
+
+.main-image-card:hover img {
+  transform: scale(1.06);
+}
+
+/*========================================================
+
+            COIN GLOW
+
+========================================================*/
+
+.coin-glow {
+  position: absolute;
+
+  width: 520px;
+
+  height: 520px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(184, 137, 61, 0.24),
+    rgba(184, 137, 61, 0.1),
+    transparent 70%
+  );
+
+  animation: glowFloat 6s ease-in-out infinite;
+
+  z-index: 1;
+}
+
+@keyframes glowFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-18px) scale(1.05);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/*========================================================
+
+                PRODUCT INFORMATION
+
+========================================================*/
+
+.product-information {
+  position: relative;
+
+  padding-top: 20px;
+}
+
+.product-label {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 20px;
+
+  border-radius: 999px;
+
+  background: rgba(184, 137, 61, 0.1);
+
+  color: var(--gold);
+
+  letter-spacing: 2px;
+
+  font-size: 0.78rem;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+.product-information h1 {
+  margin-top: 28px;
+
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 4.2rem;
+
+  line-height: 1;
+
+  color: var(--text);
+}
+
+.rating-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 24px;
+}
+
+.stars {
+  color: var(--gold);
+
+  font-size: 1.15rem;
+
+  letter-spacing: 3px;
+}
+
+.rating-row span {
+  color: #7b7b7b;
+}
+
+.certificate {
+  margin-top: 24px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 14px 22px;
+
+  border-radius: 18px;
+
+  background: #fff;
+
+  border: 1px solid var(--border);
+
+  color: #5d5d5d;
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+.price-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  margin: 42px 0 22px;
+}
+
+.price-row h2 {
+  font-size: 3rem;
+
+  color: var(--gold);
+
+  font-family: "Cormorant Garamond", serif;
+}
+
+.price-row span {
+  color: #888;
+
+  font-weight: 500;
+}
+
+#shortDescription {
+  color: #666;
+
+  line-height: 1.9;
+
+  font-size: 1rem;
+
+  margin-bottom: 36px;
+
+  max-width: 560px;
+}
+
+/*========================================================
+
+                BUTTONS
+
+========================================================*/
+
+.purchase-actions {
+  display: flex;
+
+  gap: 18px;
+
+  margin-bottom: 45px;
+}
+
+.buy-btn {
+  flex: 1;
+
+  height: 62px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  background: linear-gradient(135deg, #c79b48, #b8893d);
+
+  color: #fff;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  transition: 0.4s;
+
+  box-shadow: 0 18px 45px rgba(184, 137, 61, 0.25);
+}
+
+.buy-btn:hover {
+  transform: translateY(-6px);
+
+  box-shadow: 0 30px 60px rgba(184, 137, 61, 0.35);
+}
+
+.wishlist-btn {
+  width: 180px;
+
+  height: 62px;
+
+  border-radius: 18px;
+
+  background: #fff;
+
+  border: 1px solid var(--border);
+
+  color: #444;
+
+  transition: 0.35s;
+}
+
+.wishlist-btn:hover {
+  border-color: var(--gold);
+
+  color: var(--gold);
+
+  transform: translateY(-6px);
+}
+
+/*========================================================
+
+                QUICK SPECS
+
+========================================================*/
+
+.quick-specs {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 18px;
+
+  margin-top: 20px;
+}
+
+.quick-specs div {
+  background: #fff;
+
+  padding: 26px;
+
+  border-radius: 22px;
+
+  border: 1px solid var(--border);
+
+  transition: 0.35s;
+
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+}
+
+.quick-specs div:hover {
+  transform: translateY(-8px);
+
+  border-color: var(--gold);
+}
+
+.quick-specs span {
+  display: block;
+
+  font-size: 0.8rem;
+
+  color: #8d8d8d;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 12px;
+}
+
+.quick-specs strong {
+  font-size: 1.2rem;
+
+  font-weight: 600;
+}
+
+/*========================================================
+
+            FLOATING PURCHASE CARD
+
+========================================================*/
+
+.floating-purchase {
+  position: fixed;
+
+  right: 40px;
+
+  top: 170px;
+
+  width: 300px;
+
+  padding: 30px;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  backdrop-filter: blur(20px);
+
+  border-radius: 30px;
+
+  border: 1px solid rgba(184, 137, 61, 0.12);
+
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.08);
+
+  z-index: 100;
+}
+
+.floating-purchase span {
+  color: var(--gold);
+
+  font-size: 0.78rem;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+.floating-purchase h2 {
+  margin: 18px 0 30px;
+
+  font-size: 2.8rem;
+
+  font-family: "Cormorant Garamond", serif;
+
+  color: var(--gold);
+}
+
+.floating-purchase button {
+  width: 100%;
+
+  height: 56px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  margin-bottom: 16px;
+
+  background: linear-gradient(135deg, #c79b48, #b8893d);
+
+  color: #fff;
+
+  font-weight: 600;
+
+  transition: 0.35s;
+}
+
+.floating-purchase button:hover {
+  transform: translateY(-5px);
+}
+
+.floating-purchase .outline {
+  background: #fff;
+
+  color: #444;
+
+  border: 1px solid var(--border);
+}
+
+.floating-purchase .outline:hover {
+  border-color: var(--gold);
+
+  color: var(--gold);
+}
+
+.secure-note {
+  margin-top: 18px;
+
+  color: #777;
+
+  font-size: 0.9rem;
+
+  line-height: 1.8;
+}
+
+/*========================================================
+
+                SECTION
+
+========================================================*/
+
+.product-section {
+  width: min(1450px, 92%);
+
+  margin: 140px auto;
+}
+
+.section-heading {
+  margin-bottom: 60px;
+}
+
+.section-heading span {
+  display: block;
+
+  color: var(--gold);
+
+  font-size: 0.82rem;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 15px;
+}
+
+.section-heading h2 {
+  font-size: 3.3rem;
+
+  font-family: "Cormorant Garamond", serif;
+}
+
+/*========================================================
+
+            SPECIFICATION GRID
+
+========================================================*/
+
+.specifications-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 24px;
+}
+
+.spec-card {
+  background: #fff;
+
+  padding: 34px;
+
+  border-radius: 28px;
+
+  border: 1px solid var(--border);
+
+  transition: 0.35s;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.05);
+}
+
+.spec-card:hover {
+  transform: translateY(-10px);
+
+  border-color: var(--gold);
+
+  box-shadow: 0 28px 60px rgba(184, 137, 61, 0.15);
+}
+
+.spec-card span {
+  display: block;
+
+  color: #888;
+
+  font-size: 0.82rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 14px;
+}
+
+.spec-card h3 {
+  font-size: 1.35rem;
+
+  font-weight: 600;
+
+  color: #222;
+}
+
+/*========================================================
+
+                STORY SECTION
+
+========================================================*/
+
+.story-layout {
+  display: grid;
+
+  grid-template-columns: 1.1fr 0.9fr;
+
+  gap: 70px;
+
+  align-items: center;
+}
+
+.story-text p {
+  font-size: 1.05rem;
+
+  line-height: 2;
+
+  color: #666;
+
+  margin-bottom: 28px;
+}
+
+.story-image {
+  position: relative;
+
+  background: linear-gradient(145deg, #ffffff, #f4efe7);
+
+  border-radius: 34px;
+
+  padding: 45px;
+
+  border: 1px solid var(--border);
+
+  box-shadow: var(--shadow);
+
+  overflow: hidden;
+}
+
+.story-image img {
+  width: 100%;
+
+  border-radius: 24px;
+
+  transition: 0.5s;
+}
+
+.story-image:hover img {
+  transform: scale(1.05);
+}
+
+/*========================================================
+
+            CERTIFICATE SECTION
+
+========================================================*/
+
+.certificate-section {
+  width: min(1450px, 92%);
+
+  margin: 140px auto;
+}
+
+.certificate-card {
+  background: linear-gradient(145deg, #ffffff, #f6f2ea);
+
+  border-radius: 38px;
+
+  border: 1px solid var(--border);
+
+  padding: 70px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 60px;
+
+  box-shadow: var(--shadow);
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.certificate-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 380px;
+
+  height: 380px;
+
+  right: -120px;
+
+  top: -120px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(184, 137, 61, 0.15),
+    transparent 70%
+  );
+}
+
+.certificate-left {
+  max-width: 700px;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.certificate-left span {
+  display: block;
+
+  color: var(--gold);
+
+  letter-spacing: 3px;
+
+  font-size: 0.8rem;
+
+  margin-bottom: 18px;
+}
+
+.certificate-left h2 {
+  font-size: 3.4rem;
+
+  font-family: "Cormorant Garamond", serif;
+
+  margin-bottom: 22px;
+}
+
+.certificate-left p {
+  color: #666;
+
+  line-height: 1.9;
+}
+
+.certificate-badge {
+  width: 220px;
+
+  height: 220px;
+
+  border-radius: 50%;
+
+  border: 8px solid rgba(184, 137, 61, 0.18);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: #fff;
+
+  font-size: 1.2rem;
+
+  color: var(--gold);
+
+  font-weight: 700;
+
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+}
+
+/*========================================================
+
+            360 VIEWER
+
+========================================================*/
+
+.viewer-section {
+  width: min(1450px, 92%);
+
+  margin: 140px auto;
+}
+
+.viewer-card {
+  min-height: 620px;
+
+  background: linear-gradient(145deg, #ffffff, #f4efe8);
+
+  border-radius: 36px;
+
+  border: 1px solid var(--border);
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 35px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  box-shadow: var(--shadow);
+}
+
+.viewer-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+
+  height: 420px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(184, 137, 61, 0.14),
+    transparent 72%
+  );
+}
+
+.viewer-card img {
+  width: 340px;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.viewer-btn {
+  position: relative;
+
+  z-index: 2;
+
+  padding: 18px 40px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #c79b48, #b8893d);
+
+  color: #fff;
+
+  font-weight: 600;
+
+  transition: 0.35s;
+}
+
+.viewer-btn:hover {
+  transform: translateY(-6px);
+}
+
+/*========================================================
+
+            RELATED PRODUCTS
+
+========================================================*/
+
+.related-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 28px;
+}
+
+.related-card {
+  background: #fff;
+
+  border-radius: 30px;
+
+  border: 1px solid var(--border);
+
+  overflow: hidden;
+
+  transition: 0.45s;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.05);
+}
+
+.related-card:hover {
+  transform: translateY(-12px);
+
+  box-shadow: 0 30px 70px rgba(184, 137, 61, 0.18);
+}
+
+.related-card img {
+  height: 250px;
+
+  object-fit: contain;
+
+  background: #f8f5ef;
+
+  padding: 30px;
+}
+
+.related-content {
+  padding: 26px;
+}
+
+.related-content span {
+  color: var(--gold);
+
+  font-size: 0.8rem;
+
+  letter-spacing: 2px;
+}
+
+.related-content h3 {
+  margin: 14px 0;
+
+  font-size: 1.45rem;
+
+  font-family: "Cormorant Garamond", serif;
+}
+
+.related-content strong {
+  color: var(--gold);
+
+  font-size: 1.35rem;
+}
+
+/*========================================================
+
+                FOOTER
+
+========================================================*/
+
+.footer {
+  width: min(1450px, 92%);
+
+  margin: 140px auto 70px;
+
+  padding-top: 70px;
+
+  border-top: 1px solid rgba(184, 137, 61, 0.15);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 80px;
+
+  flex-wrap: wrap;
+}
+
+.footer-left h2 {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 3rem;
+
+  margin-bottom: 18px;
+}
+
+.footer-left p {
+  color: #666;
+
+  line-height: 1.9;
+
+  max-width: 420px;
+}
+
+.footer-links {
+  display: grid;
+
+  grid-template-columns: repeat(2, 180px);
+
+  gap: 18px;
+}
+
+.footer-links a {
+  color: #555;
+
+  transition: 0.35s;
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+
+  transform: translateX(6px);
+}
+
+/*========================================================
+
+            PREMIUM SCROLLBAR
+
+========================================================*/
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3eee5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b8893d;
+
+  border-radius: 999px;
+}
+
+/*========================================================
+
+            GSAP HELPERS
+
+========================================================*/
+
+.reveal {
+  opacity: 0;
+
+  transform: translateY(80px);
+}
+
+.reveal-left {
+  opacity: 0;
+
+  transform: translateX(-80px);
+}
+
+.reveal-right {
+  opacity: 0;
+
+  transform: translateX(80px);
+}
+
+/*========================================================
+
+            FLOATING ANIMATION
+
+========================================================*/
+
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.main-image-card img {
+  animation: floating 6s ease-in-out infinite;
+}
+
+.certificate-badge {
+  animation: floating 7s ease-in-out infinite;
+}
+
+/*========================================================
+
+            RESPONSIVE
+
+========================================================*/
+
+@media (max-width: 1200px) {
+  .product-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .story-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .specifications-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .floating-purchase {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .gallery-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .thumbnail-column {
+    flex-direction: row;
+
+    overflow: auto;
+  }
+
+  .product-information h1 {
+    font-size: 2.9rem;
+  }
+
+  .price-row {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .purchase-actions {
+    flex-direction: column;
+  }
+
+  .quick-specs {
+    grid-template-columns: 1fr;
+  }
+
+  .specifications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .certificate-card {
+    padding: 40px 25px;
+
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .viewer-card {
+    min-height: 450px;
+  }
+
+  .viewer-card img {
+    width: 230px;
+  }
+
+  .footer {
+    padding-top: 50px;
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*========================================================
+
+            PART 4 - PREMIUM FINISH
+
+========================================================*/
+
+/*------------------------------------
+
+Selection
+
+------------------------------------*/
+
+::selection {
+  background: rgba(184, 137, 61, 0.25);
+
+  color: #111;
+}
+
+/*------------------------------------
+
+Smooth Image Transition
+
+------------------------------------*/
+
+#mainImage {
+  transition:
+    transform 0.45s ease,
+    opacity 0.35s ease,
+    filter 0.35s ease;
+
+  will-change: transform;
+}
+
+#mainImage.loading {
+  opacity: 0.25;
+
+  filter: blur(6px);
+}
+
+/*------------------------------------
+
+Thumbnail Shine
+
+------------------------------------*/
+
+.thumbnail {
+  position: relative;
+}
+
+.thumbnail::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    115deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+
+  transform: translateX(-150%);
+
+  transition: 1s;
+}
+
+.thumbnail:hover::before {
+  transform: translateX(150%);
+}
+
+/*------------------------------------
+
+Card Shine
+
+------------------------------------*/
+
+.spec-card,
+.related-card,
+.quick-specs div {
+  position: relative;
+
+  overflow: hidden;
+}
+
+.spec-card::before,
+.related-card::before,
+.quick-specs div::before {
+  content: "";
+
+  position: absolute;
+
+  width: 220%;
+
+  height: 220%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+
+  left: -160%;
+
+  top: -50%;
+
+  transition: 1.1s;
+}
+
+.spec-card:hover::before,
+.related-card:hover::before,
+.quick-specs div:hover::before {
+  left: 120%;
+}
+
+/*------------------------------------
+
+Buttons
+
+------------------------------------*/
+
+.buy-btn,
+.viewer-btn,
+.primary-btn {
+  position: relative;
+
+  overflow: hidden;
+}
+
+.buy-btn::after,
+.viewer-btn::after,
+.primary-btn::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    115deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+
+  transform: translateX(-140%);
+}
+
+.buy-btn:hover::after,
+.viewer-btn:hover::after,
+.primary-btn:hover::after {
+  transition: 0.8s;
+
+  transform: translateX(140%);
+}
+
+/*------------------------------------
+
+Glass Blur
+
+------------------------------------*/
+
+.main-image-card,
+.story-image,
+.viewer-card,
+.certificate-card {
+  backdrop-filter: blur(20px);
+}
+
+/*------------------------------------
+
+Hover Lift
+
+------------------------------------*/
+
+.story-image,
+.viewer-card,
+.main-image-card {
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.story-image:hover,
+.viewer-card:hover,
+.main-image-card:hover {
+  transform: translateY(-10px);
+
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.09);
+}
+
+/*------------------------------------
+
+Floating Background
+
+------------------------------------*/
+
+.background-orb {
+  animation: orbMove 14s ease-in-out infinite;
+}
+
+.orb-two {
+  animation-delay: 3s;
+}
+
+.orb-three {
+  animation-delay: 6s;
+}
+
+@keyframes orbMove {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-40px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/*------------------------------------
+
+Image Zoom Cursor
+
+------------------------------------*/
+
+.main-image-card {
+  cursor: grab;
+}
+
+.main-image-card:active {
+  cursor: grabbing;
+}
+
+/*------------------------------------
+
+Scrollbar (Firefox)
+
+------------------------------------*/
+
+* {
+  scrollbar-width: thin;
+
+  scrollbar-color: #b8893d #f5f1e8;
+}
+
+/*------------------------------------
+
+Focus States
+
+------------------------------------*/
+
+button:focus,
+a:focus {
+  outline: none;
+
+  box-shadow: 0 0 0 4px rgba(184, 137, 61, 0.15);
+}
+
+/*------------------------------------
+
+Loading Skeleton
+
+------------------------------------*/
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #ece7de 25%,
+
+    #f6f3ec 50%,
+
+    #ece7de 75%
+  );
+
+  background-size: 200% 100%;
+
+  animation: skeleton 1.2s infinite;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/*------------------------------------
+
+Fade Utility
+
+------------------------------------*/
+
+.fade-up {
+  opacity: 0;
+
+  transform: translateY(60px);
+}
+
+.fade-left {
+  opacity: 0;
+
+  transform: translateX(-60px);
+}
+
+.fade-right {
+  opacity: 0;
+
+  transform: translateX(60px);
+}
+
+/*------------------------------------
+
+Image Glow
+
+------------------------------------*/
+
+.main-image-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 65%;
+
+  height: 65%;
+
+  border-radius: 50%;
+
+  background: radial-gradient(circle, rgba(184, 137, 61, 0.1), transparent 70%);
+
+  filter: blur(40px);
+
+  z-index: 0;
+}
+
+/*------------------------------------
+
+Related Card CTA
+
+------------------------------------*/
+
+.related-content button {
+  margin-top: 22px;
+
+  width: 100%;
+
+  height: 46px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #111;
+
+  color: #fff;
+
+  transition: 0.35s;
+}
+
+.related-content button:hover {
+  background: #b8893d;
+}
+
+/*------------------------------------
+
+Section Divider
+
+------------------------------------*/
+
+.product-section {
+  position: relative;
+}
+
+.product-section::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -70px;
+
+  width: 100%;
+
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(184, 137, 61, 0.2),
+    transparent
+  );
+}

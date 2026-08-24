@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Numis — Account</title>
+
+    <!-- GSAP -->
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="../css/auth.css" />
+  </head>
+
+  <body>
+    <!-- =================================================
+         BACKGROUND DECORATION
+    ================================================= -->
+
+    <div class="ambient ambient-one"></div>
+
+    <div class="ambient ambient-two"></div>
+
+    <div class="ambient ambient-three"></div>
+
+    <!-- =================================================
+         AUTH PAGE
+    ================================================= -->
+
+    <main class="auth-page">
+      <!-- =================================================
+             LEFT BRAND PANEL
+        ================================================= -->
+
+      <section class="auth-visual">
+        <div class="visual-top">
+          <span class="visual-label"> NUMIS / THE ARCHIVE </span>
+
+          <span class="visual-year"> EST. 2026 </span>
+        </div>
+
+        <div class="visual-center">
+          <div class="coin-orbit orbit-one"></div>
+
+          <div class="coin-orbit orbit-two"></div>
+
+          <div class="visual-coin">
+            <div class="coin-face">
+              <span class="coin-symbol"> ✦ </span>
+
+              <span class="coin-brand"> NUMIS </span>
+
+              <span class="coin-date"> MMXXVI </span>
+            </div>
+          </div>
+
+          <p class="visual-eyebrow">A DIGITAL ARCHIVE OF HISTORY</p>
+
+          <h1>
+            HISTORY
+            <span>HAS VALUE.</span>
+          </h1>
+
+          <p class="visual-description">
+            Enter a world where every object carries a story.
+          </p>
+        </div>
+
+        <div class="visual-bottom">
+          <span> AUTHENTICATED OBJECTS </span>
+
+          <span> RARE CURRENCY </span>
+        </div>
+      </section>
+
+      <!-- =================================================
+             RIGHT AUTH PANEL
+        ================================================= -->
+
+      <section class="auth-panel">
+        <!-- BRAND -->
+
+        <div class="auth-brand">NUMIS<span>®</span></div>
+
+        <!-- TAB SWITCHER -->
+
+        <div class="auth-switcher">
+          <button class="auth-tab active" id="registerTab" type="button">
+            REGISTER
+          </button>
+
+          <button class="auth-tab" id="loginTab" type="button">LOGIN</button>
+
+          <div class="tab-indicator"></div>
+        </div>
+
+        <!-- =================================================
+                 REGISTER FORM
+            ================================================= -->
+
+        <div class="auth-form-container active" id="registerForm">
+          <div class="form-heading">
+            <span> BEGIN YOUR COLLECTION </span>
+
+            <h2>
+              Create an
+              <em>account.</em>
+            </h2>
+
+            <p>
+              Join the Numis archive and discover objects that carry history.
+            </p>
+          </div>
+
+          <form id="registerFormElement">
+            <div class="input-group">
+              <label for="registerUsername"> USERNAME </label>
+
+<input
+    type="text"
+    id="registerUsername"
+    placeholder="Choose a username"
+    required
+/>
+            </div>
+
+            <div class="input-group">
+              <label for="registerEmail"> EMAIL ADDRESS </label>
+
+<input
+    type="email"
+    id="registerEmail"
+    placeholder="Enter your email"
+    required
+/>
+            </div>
+
+            <div class="input-row">
+              <div class="input-group">
+                <label for="registerPassword"> PASSWORD </label>
+
+                <input
+                  type="password"
+                  id="registerPassword"
+                  name="Password"
+                  placeholder="Create password"
+                  required
+                />
+              </div>
+
+              <div class="input-group">
+                <label for="registerContact"> CONTACT NUMBER </label>
+
+                <input
+                  type="tel"
+                  id="registerContact"
+                  name="ContactNumber"
+                  placeholder="Phone number"
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" class="submit-button">
+              <span> CREATE ACCOUNT </span>
+
+              <span> ↗ </span>
+            </button>
+          </form>
+
+          <p class="form-footer">
+            Already have an account?
+
+            <button type="button" class="inline-switch" id="switchToLogin">
+              Login
+            </button>
+          </p>
+        </div>
+
+        <!-- =================================================
+                 LOGIN FORM
+            ================================================= -->
+
+        <div class="auth-form-container" id="loginForm">
+          <div class="form-heading">
+            <span> WELCOME BACK TO THE ARCHIVE </span>
+
+            <h2 id="Text">
+              Enter the
+              <em>archive.</em>
+            </h2>
+
+            <p>
+              Continue your journey through history's most remarkable objects.
+            </p>
+          </div>
+
+          <form id="loginFormElement">
+            <div class="input-group">
+              <label for="loginUsername"> USERNAME </label>
+
+<input
+    type="text"
+    id="loginUsername"
+    placeholder="Enter your username"
+    required
+/>
+            </div>
+
+            <div class="input-group">
+              <label for="loginPassword"> PASSWORD </label>
+
+              <input
+                type="password"
+                id="loginPassword"
+                name="Password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <div class="forgot"></div>
+
+            <div class="form-options">
+              <label class="remember">
+                <input type="checkbox" />
+
+                Remember me
+              </label>
+
+              <a href="#" id="Forgot-Password"> Forgot password? </a>
+            </div>
+
+            <button type="submit" class="submit-button">
+              <span> ENTER ARCHIVE </span>
+
+              <span> ↗ </span>
+            </button>
+          </form>
+
+          <p class="form-footer">
+            Don't have an account?
+
+            <button type="button" class="inline-switch" id="switchToRegister">
+              Register
+            </button>
+          </p>
+        </div>
+        <!-- FORGOT PASSWORD -->
+        <div class="auth-form-container" id="forgotForm">
+          <div class="form-heading">
+            <span>WELCOME BACK TO THE ARCHIVE</span>
+
+            <h2>Forgot <em>password?</em></h2>
+
+            <p>
+              No worries. Enter your email address and we'll send you a link to
+              reset your password.
+            </p>
+          </div>
+
+          <form id="forgotPasswordForm">
+            <div class="input-group">
+              <label>EMAIL ADDRESS</label>
+
+              <input
+                type="email"
+                id="forgotEmail"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <button type="submit" class="submit-button">
+              <span>SEND RESET LINK</span>
+              <span>↗</span>
+            </button>
+          </form>
+
+          <p class="form-footer">
+            <button class="inline-switch" id="backToLogin1">
+              Back to login
+            </button>
+          </p>
+        </div>
+
+        <!-- OTP SCREEN -->
+
+        <div class="auth-form-container" id="otpForm">
+          <div class="form-heading">
+            <span>WELCOME BACK TO THE ARCHIVE</span>
+
+            <h2>Enter the <em>OTP.</em></h2>
+
+            <p>We've sent a 6 digit OTP to your email.</p>
+          </div>
+
+          <form id="otpVerifyForm">
+
+    <div class="input-row">
+        <input maxlength="1" class="otp-box" id="otp1">
+        <input maxlength="1" class="otp-box" id="otp2">
+        <input maxlength="1" class="otp-box" id="otp3">
+        <input maxlength="1" class="otp-box" id="otp4">
+        <input maxlength="1" class="otp-box" id="otp5">
+        <input maxlength="1" class="otp-box" id="otp6">
+    </div>
+
+    <button type="submit" class="submit-button">
+        <span>VERIFY OTP</span>
+        <span>↗</span>
+    </button>
+
+</form>
+<!-- RESET PASSWORD -->
+
+<div class="auth-form-container" id="resetForm">
+
+    <div class="form-heading">
+
+        <span>WELCOME BACK TO THE ARCHIVE</span>
+
+        <h2>Create a <em>new password.</em></h2>
+
+        <p>Please enter your new password.</p>
+
+    </div>
+
+    <form id="resetPasswordForm">
+
+        <div class="input-group">
+
+            <label>NEW PASSWORD</label>
+
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="Enter new password"
+                required
+            />
+
+        </div>
+
+        <button type="submit" class="submit-button">
+            <span>RESET PASSWORD</span>
+            <span>↗</span>
+        </button>
+
+    </form>
+
+</div>
+
+          <p class="form-footer">
+            <button class="inline-switch" id="backToLogin2">
+              Back to login
+            </button>
+          </p>
+        </div>
+      </section>
+    </main>
+    <script src="../js/auth.js"></script>
+  </body>
+</html>

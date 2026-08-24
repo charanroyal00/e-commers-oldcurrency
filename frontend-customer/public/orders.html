@@ -1,0 +1,304 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>NUMIS | Order History</title>
+
+    <link rel="stylesheet" href="./css/orders.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  </head>
+
+  <body>
+    <!--======================================================
+
+                    BACKGROUND ORBS
+
+=======================================================-->
+
+    <div class="background-orb orb-one"></div>
+
+    <div class="background-orb orb-two"></div>
+
+    <div class="background-orb orb-three"></div>
+
+    <!--======================================================
+
+                        NAVBAR
+
+=======================================================-->
+
+    <header class="navbar">
+      <div class="logo">NUM<span>IS</span></div>
+
+      <nav class="nav-links">
+        <a href="index.html"> Explore </a>
+
+        <a href="auctions.html"> Auctions </a>
+
+        <a href="collections.html"> Collections </a>
+
+        <a href="journal.html"> Journal </a>
+      </nav>
+
+      <div class="nav-buttons">
+        <a href="product.html" class="secondary-btn"> Continue Shopping </a>
+
+        <a href="cart.html" class="secondary-btn"> Cart </a>
+
+        <a href="order-history.html" class="primary-btn"> Orders </a>
+      </div>
+    </header>
+
+    <!--======================================================
+
+                    BREADCRUMB
+
+=======================================================-->
+
+    <section class="breadcrumb">
+      <a href="index.html"> Home </a>
+
+      <span> / </span>
+
+      <a href="checkout.html"> Checkout </a>
+
+      <span> / </span>
+
+      <strong> Order History </strong>
+    </section>
+
+    <!--======================================================
+
+                    HERO SECTION
+
+=======================================================-->
+
+    <section class="orders-hero">
+      <span class="hero-label"> PURCHASE ARCHIVE </span>
+
+      <h1>Your Collection History</h1>
+
+      <p>
+        Every authenticated collectible you've purchased is securely stored
+        here. Review previous orders, monitor deliveries, download invoices and
+        revisit the rare pieces that now belong to your personal NUMIS
+        collection.
+      </p>
+    </section>
+
+    <!--======================================================
+
+                ORDER STATISTICS
+
+=======================================================-->
+
+   <!--======================================================
+
+                ORDER STATISTICS
+
+=======================================================-->
+
+<section class="stats-section">
+
+    <div class="stat-card">
+
+        <span>Total Orders</span>
+
+        <h2 id="totalOrders">0</h2>
+
+    </div>
+
+    <div class="stat-card">
+
+        <span>Total Investment</span>
+
+        <h2 id="totalSpent">₹0</h2>
+
+    </div>
+
+    <div class="stat-card">
+
+        <span>Collectibles Owned</span>
+
+        <h2 id="totalItems">0</h2>
+
+    </div>
+
+</section>
+<!--======================================================
+
+                    ORDERS
+
+=======================================================-->
+
+<section class="orders-section">
+
+    <div class="section-title">
+
+        <h2>Your Orders</h2>
+
+        <span id="orderCount">0 Orders</span>
+
+    </div>
+
+    <div id="ordersContainer">
+
+        <!-- JS renders orders here -->
+
+    </div>
+
+</section>
+
+<!--======================================================
+
+                    EMPTY ORDERS
+
+=======================================================-->
+
+<section id="emptyOrders" class="empty-orders hidden">
+
+    <div class="empty-icon">
+
+        📦
+
+    </div>
+
+    <h2>
+
+        No Orders Yet
+
+    </h2>
+
+    <p>
+
+        Your authenticated purchases will appear
+        here once you complete your first order.
+
+    </p>
+
+    <a href="product.html" class="primary-btn">
+
+        Explore Collection
+
+    </a>
+
+</section>
+    <!--======================================================
+
+                    TRUST SECTION
+
+=======================================================-->
+
+    <section class="trust-section">
+      <div class="trust-card">
+        <h3>✓ Certified Authenticity</h3>
+
+        <p>
+          Every collectible in your order history has been professionally
+          authenticated before dispatch.
+        </p>
+      </div>
+
+      <div class="trust-card">
+        <h3>🔒 Secure Transactions</h3>
+
+        <p>
+          Your purchase records are protected with secure payment verification
+          and encrypted transaction history.
+        </p>
+      </div>
+
+      <div class="trust-card">
+        <h3>📦 Museum Grade Packaging</h3>
+
+        <p>
+          Every completed order is delivered in premium archival packaging to
+          preserve collectible quality.
+        </p>
+      </div>
+    </section>
+
+    <!--======================================================
+
+                        FOOTER
+
+=======================================================-->
+
+    <footer class="footer">
+      <div class="footer-left">
+        <h2>NUM<span>IS</span></h2>
+
+        <p>
+          Discover authenticated rare coins, historic banknotes and
+          museum-quality collectibles from trusted sellers around the world.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div>
+          <h4>Marketplace</h4>
+
+          <a href="product.html"> Products </a>
+
+          <a href="auctions.html"> Auctions </a>
+
+          <a href="collections.html"> Collections </a>
+        </div>
+
+        <div>
+          <h4>Company</h4>
+
+          <a href="#"> About </a>
+
+          <a href="#"> Journal </a>
+
+          <a href="#"> Contact </a>
+        </div>
+
+        <div>
+          <h4>Support</h4>
+
+          <a href="#"> Help Center </a>
+
+          <a href="#"> Privacy </a>
+
+          <a href="#"> Terms </a>
+        </div>
+      </div>
+    </footer>
+
+    <!--======================================================
+
+                    GSAP
+
+=======================================================-->
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <!--======================================================
+
+                    ORDER HISTORY JS
+
+=======================================================-->
+
+    <script src="./js/orders.js"></script>
+  </body>
+</html>
