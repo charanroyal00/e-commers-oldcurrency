@@ -1,0 +1,752 @@
+[
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$RACtG74fQyL6Unm6XkOsl0$35XaShpOhdTP9l97Him0nhYliZbGB0LOun96+6epSjw=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-08-24T17:16:45.916Z",
+    "role": "admin",
+    "phone": "",
+    "otp": null,
+    "otp_created_at": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$utoeFfQTLeMFTzsbNquUkp$aTCQg+ZPure1VdWMe9J2eQjpB9ua16d3dZkV+EHstP0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "pranathi",
+    "first_name": "",
+    "last_name": "",
+    "email": "pranathi@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-08-24T17:16:47.807Z",
+    "role": "customer",
+    "phone": "",
+    "otp": null,
+    "otp_created_at": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$7j2J6i8lVRKhocoRdtDZhF$2NdsbOmbJ9ga3JHi0eXAxxBOR0xa8VsRklo/SAq1/e4=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "seller",
+    "first_name": "",
+    "last_name": "",
+    "email": "seller@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-08-24T17:16:49.420Z",
+    "role": "seller",
+    "phone": "",
+    "otp": null,
+    "otp_created_at": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.category",
+  "pk": 1,
+  "fields": {
+    "name": "Coins",
+    "description": ""
+  }
+},
+{
+  "model": "accounts.category",
+  "pk": 2,
+  "fields": {
+    "name": "Old Coins",
+    "description": ""
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 1,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #001",
+    "description": "Details to be verified",
+    "original_price": "6500.00",
+    "discount_percentage": "0.00",
+    "discount_amount": "0.00",
+    "selling_price": "6500.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:00.856Z",
+    "updated_at": "2026-08-24T17:17:00.856Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 2,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #002",
+    "description": "Details to be verified",
+    "original_price": "8500.00",
+    "discount_percentage": "20.00",
+    "discount_amount": "0.00",
+    "selling_price": "6800.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:00.887Z",
+    "updated_at": "2026-08-24T17:17:00.887Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 3,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #003",
+    "description": "Details to be verified",
+    "original_price": "12500.00",
+    "discount_percentage": "10.00",
+    "discount_amount": "0.00",
+    "selling_price": "11250.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:00.902Z",
+    "updated_at": "2026-08-24T17:17:00.902Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 4,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #004",
+    "description": "Details to be verified",
+    "original_price": "6500.00",
+    "discount_percentage": "20.00",
+    "discount_amount": "0.00",
+    "selling_price": "5200.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:00.934Z",
+    "updated_at": "2026-08-24T17:17:00.934Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 5,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #005",
+    "description": "Details to be verified",
+    "original_price": "15000.00",
+    "discount_percentage": "0.00",
+    "discount_amount": "0.00",
+    "selling_price": "15000.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:00.963Z",
+    "updated_at": "2026-08-24T17:17:00.963Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 6,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #006",
+    "description": "Details to be verified",
+    "original_price": "4500.00",
+    "discount_percentage": "15.00",
+    "discount_amount": "0.00",
+    "selling_price": "3825.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:00.987Z",
+    "updated_at": "2026-08-24T17:17:00.987Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 7,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #007",
+    "description": "Details to be verified",
+    "original_price": "3200.00",
+    "discount_percentage": "15.00",
+    "discount_amount": "0.00",
+    "selling_price": "2720.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:01.007Z",
+    "updated_at": "2026-08-24T17:17:01.007Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 8,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #008",
+    "description": "Details to be verified",
+    "original_price": "7500.00",
+    "discount_percentage": "0.00",
+    "discount_amount": "0.00",
+    "selling_price": "7500.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:01.029Z",
+    "updated_at": "2026-08-24T17:17:01.029Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 9,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #009",
+    "description": "Details to be verified",
+    "original_price": "5250.00",
+    "discount_percentage": "0.00",
+    "discount_amount": "0.00",
+    "selling_price": "5250.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:01.055Z",
+    "updated_at": "2026-08-24T17:17:01.055Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 10,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #010",
+    "description": "Details to be verified",
+    "original_price": "3200.00",
+    "discount_percentage": "0.00",
+    "discount_amount": "0.00",
+    "selling_price": "3200.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:01.091Z",
+    "updated_at": "2026-08-24T17:17:01.091Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 11,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #011",
+    "description": "Details to be verified",
+    "original_price": "6500.00",
+    "discount_percentage": "20.00",
+    "discount_amount": "0.00",
+    "selling_price": "5200.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:01.111Z",
+    "updated_at": "2026-08-24T17:17:01.111Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 12,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #012",
+    "description": "Details to be verified",
+    "original_price": "6500.00",
+    "discount_percentage": "15.00",
+    "discount_amount": "0.00",
+    "selling_price": "5525.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:01.143Z",
+    "updated_at": "2026-08-24T17:17:01.143Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 13,
+  "fields": {
+    "seller": 3,
+    "category": 1,
+    "name": "Historical Coin Collection #013",
+    "description": "Details to be verified",
+    "original_price": "10000.00",
+    "discount_percentage": "0.00",
+    "discount_amount": "0.00",
+    "selling_price": "10000.00",
+    "year": "Details to be verified",
+    "ruler": "Details to be verified",
+    "obverse": "Details to be verified",
+    "reverse": "Details to be verified",
+    "denomination": "Details to be verified",
+    "script": "Details to be verified",
+    "condition": "Details to be verified",
+    "authenticity": "Details to be verified",
+    "provenance": "Details to be verified",
+    "stock": 1,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:01.157Z",
+    "updated_at": "2026-08-24T17:17:01.157Z"
+  }
+},
+{
+  "model": "accounts.product",
+  "pk": 14,
+  "fields": {
+    "seller": 3,
+    "category": 2,
+    "name": "East India Company Bombay Presidency Shah Alam II Silver Rupee",
+    "description": "",
+    "original_price": "1800.00",
+    "discount_percentage": "12.00",
+    "discount_amount": "0.00",
+    "selling_price": "1584.00",
+    "year": "",
+    "ruler": "",
+    "obverse": "",
+    "reverse": "",
+    "denomination": "",
+    "script": "",
+    "condition": "",
+    "authenticity": "",
+    "provenance": "",
+    "stock": 10,
+    "status": "Active",
+    "created_at": "2026-08-24T17:17:09.316Z",
+    "updated_at": "2026-08-24T17:17:09.316Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 1,
+  "fields": {
+    "product": 1,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.45_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:00.882Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 2,
+  "fields": {
+    "product": 2,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.47_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:00.898Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 3,
+  "fields": {
+    "product": 3,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.48_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:00.912Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 4,
+  "fields": {
+    "product": 3,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.48_AM_2.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:00.920Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 5,
+  "fields": {
+    "product": 3,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.48_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:00.929Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 6,
+  "fields": {
+    "product": 4,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.49_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:00.942Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 7,
+  "fields": {
+    "product": 4,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.49_AM_2.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:00.950Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 8,
+  "fields": {
+    "product": 4,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.49_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:00.958Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 9,
+  "fields": {
+    "product": 5,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.50_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:00.970Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 10,
+  "fields": {
+    "product": 5,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.50_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:00.983Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 11,
+  "fields": {
+    "product": 6,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.51_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:00.995Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 12,
+  "fields": {
+    "product": 6,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.51_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:01.003Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 13,
+  "fields": {
+    "product": 7,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.52_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.017Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 14,
+  "fields": {
+    "product": 7,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.52_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:01.024Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 15,
+  "fields": {
+    "product": 8,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.53_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.036Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 16,
+  "fields": {
+    "product": 8,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.53_AM_2.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.043Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 17,
+  "fields": {
+    "product": 8,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.53_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:01.051Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 18,
+  "fields": {
+    "product": 9,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.54_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.064Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 19,
+  "fields": {
+    "product": 9,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.54_AM_2.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.071Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 20,
+  "fields": {
+    "product": 9,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.54_AM_3.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.079Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 21,
+  "fields": {
+    "product": 9,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.54_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:01.087Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 22,
+  "fields": {
+    "product": 10,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.55_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.098Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 23,
+  "fields": {
+    "product": 10,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.55_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:01.106Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 24,
+  "fields": {
+    "product": 11,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.56_AM_1.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.120Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 25,
+  "fields": {
+    "product": 11,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.56_AM_2.jpeg",
+    "is_primary": false,
+    "created_at": "2026-08-24T17:17:01.129Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 26,
+  "fields": {
+    "product": 11,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.56_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:01.139Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 27,
+  "fields": {
+    "product": 12,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.57_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:01.154Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 28,
+  "fields": {
+    "product": 13,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.58_AM.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:01.168Z"
+  }
+},
+{
+  "model": "accounts.productimage",
+  "pk": 29,
+  "fields": {
+    "product": 14,
+    "image": "products/WhatsApp_Image_2026-08-01_at_10.16.54_AM_3.jpeg",
+    "is_primary": true,
+    "created_at": "2026-08-24T17:17:09.322Z"
+  }
+}
+]

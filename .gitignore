@@ -6,9 +6,11 @@ __pycache__/
 *.sqlite3
 db.sqlite3
 staticfiles/
-media/
 .venv/
 venv/
+!media/
+!media/products/
+!media/products/*
 
 # Logs
 logs
