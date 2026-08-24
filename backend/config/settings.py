@@ -97,22 +97,31 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # ─────────────────────────────────────────────
-# Database — MySQL
-# ─────────────────────────────────────────────
+import os
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DATABASE_NAME', default='e-commerce'),
-        'USER': config('DATABASE_USER', default='root'),
-        'PASSWORD': config('DATABASE_PASSWORD', default=''),
-        'HOST': config('DATABASE_HOST', default='127.0.0.1'),
-        'PORT': config('DATABASE_PORT', default='3306'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+db_host = config('DATABASE_HOST', default='127.0.0.1')
+
+if config('USE_SQLITE', default=False, cast=bool) or (db_host in ['127.0.0.1', 'localhost'] and not (BASE_DIR / '.env').exists() and not os.environ.get('DATABASE_HOST')):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': config('DATABASE_NAME', default='e-commerce'),
+            'USER': config('DATABASE_USER', default='root'),
+            'PASSWORD': config('DATABASE_PASSWORD', default=''),
+            'HOST': db_host,
+            'PORT': config('DATABASE_PORT', default='3306'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            }
+        }
+    }
 
 
 # ─────────────────────────────────────────────
